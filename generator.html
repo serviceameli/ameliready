@@ -512,12 +512,12 @@ function updateProfits() {
   const cc = chairsCost();
   const chHint = document.getElementById('chairsHint');
   if (chHint) chHint.textContent = S.guests + ' гостей · в готовом решении ' + fmt(cc.base);
+  const cp = document.getElementById('chairsPrices');
+  if (cp) cp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(cc.retail)+'</span>' +
+    '<span class="pl">Проф. скидка</span><span class="pv mid">'+fmt(cc.prof)+'</span>' +
+    '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(cc.base)+'</span>';
   if (S.chairs) {
     if (S.chairsPrice === null) { S.chairsPrice = cc.retail; const el = document.getElementById('chairsPrice'); if(el) el.value = S.chairsPrice; }
-    const cp = document.getElementById('chairsPrices');
-    if (cp) cp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(cc.retail)+'</span>' +
-      '<span class="pl">Проф. скидка</span><span class="pv mid">'+fmt(cc.prof)+'</span>' +
-      '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(cc.base)+'</span>';
     const el = document.getElementById('chairsProfit');
     if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.chairsPrice||0)-cc.base)) + ' ₽</b>';
   }
@@ -592,6 +592,7 @@ document.getElementById('km').oninput = e => { S.km = Math.max(0, +e.target.valu
 function toggleOpt(o) {
   if (o === 'chairs') { S.chairs = !S.chairs; document.getElementById('ocChairs').classList.toggle('on', S.chairs); }
   else { S.cer = !S.cer; document.getElementById('ocCer').classList.toggle('on', S.cer); }
+  updateProfits();
   renderPreview();
 }
 document.getElementById('chairsPrice').oninput = e => { S.chairsPrice = +e.target.value||null; renderPreview(); };
