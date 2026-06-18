@@ -183,13 +183,22 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 .pkgcard .d{font-size:11px;color:var(--light);margin-top:2px;margin-bottom:8px}
 .pkgcard ul.items{margin:0 0 8px 0;padding:0 0 0 14px;font-size:11px;color:var(--mid);line-height:1.6}
 .pkgcard ul.items li{padding:1px 0}
-.pkgcard .cost{font-size:11px;color:var(--mid);margin-bottom:8px}
-.pkgcard .cost s{color:var(--light)}
-.pkgcard .cost b{color:var(--accent)}
+.pkgcard .prices{display:grid;grid-template-columns:1fr auto;gap:2px 10px;margin-bottom:10px;font-size:11px;}
+.pkgcard .prices .pl{color:var(--muted);}
+.pkgcard .prices .pv{text-align:right;white-space:nowrap;}
+.pkgcard .prices .pv.strike{color:var(--light);text-decoration:line-through;}
+.pkgcard .prices .pv.mid{color:var(--mid);}
+.pkgcard .prices .pv.accent{color:var(--accent);font-weight:700;font-size:12px;}
 .pkgcard .priceline{display:flex;align-items:center;gap:8px;margin-bottom:7px}
 .pkgcard .priceline label{font-size:10px;color:var(--light);white-space:nowrap}
 .pkgcard .priceline input{flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none;background:var(--white)}
 .pkgcard .profit{font-size:11px;padding:6px 9px;background:var(--soft);border-left:3px solid var(--accent);color:var(--mid)}
+.optcard .prices{display:grid;grid-template-columns:1fr auto;gap:3px 10px;margin-bottom:10px;font-size:11px;}
+.optcard .prices .pl{color:var(--muted);}
+.optcard .prices .pv{text-align:right;white-space:nowrap;}
+.optcard .prices .pv.strike{color:var(--light);text-decoration:line-through;}
+.optcard .prices .pv.mid{color:var(--mid);}
+.optcard .prices .pv.accent{color:var(--accent);font-weight:700;font-size:12px;}
 /* === ПАНЕЛЬ: опции — заработок === */
 .optcard .profit{font-size:11px;margin-top:7px;padding:6px 9px;background:var(--soft);border-left:3px solid var(--accent);color:var(--mid)}
 .optcard .thumb{height:90px;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--rule);overflow:hidden}
@@ -238,7 +247,8 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
           <div class="sw2"></div>
         </div>
         <div class="extra">
-          <div class="priceline" style="margin-top:6px">
+          <div class="prices" id="chairsPrices" style="margin-top:6px"></div>
+          <div class="priceline">
             <label>Ваша цена клиенту, ₽</label>
             <input type="number" id="chairsPrice" step="1000" style="flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none">
           </div>
@@ -252,7 +262,12 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
           <div class="sw2"></div>
         </div>
         <div class="extra">
-          <div class="priceline" style="margin-top:6px">
+          <div class="prices" style="margin-top:6px">
+            <span class="pl">Без скидки</span><span class="pv strike">95 000 ₽</span>
+            <span class="pl">Проф. скидка</span><span class="pv mid">82 000 ₽</span>
+            <span class="pl">В готовом решении</span><span class="pv accent">70 000 ₽</span>
+          </div>
+          <div class="priceline">
             <label>Ваша цена клиенту, ₽</label>
             <input type="number" id="cerPrice" step="1000" style="flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none">
           </div>
@@ -406,18 +421,18 @@ const TIERS = {
   serv: {
     name: 'Сервировка',
     desc: 'Аккуратная база',
-    retailFix:60000, retailTable:20000, baseFix:40000, baseTable:12000,
+    retailFix:60000, retailTable:20000, profFix:50000, profTable:17000, baseFix:40000, baseTable:12000,
     items: ['Скатерть в палитре сезона','Салфетки в палитре','Подстановочные тарелки','3 бокала на гостя','Номерки для столов']
   },
   comp: {
     name: 'Сервировка + Композиция',
     desc: 'Полная плотность стола',
-    retailFix:80000, retailTable:30000, baseFix:50000, baseTable:18000,
+    retailFix:80000, retailTable:30000, profFix:65000, profTable:25000, baseFix:50000, baseTable:18000,
     items: ['Скатерть в палитре сезона','Салфетки в палитре','Подстановочные тарелки','3 бокала на гостя','Номерки для столов','Свечная композиция на каждый стол']
   }
 };
-const OPT_CHAIRS = {basePerGuest:600, retailPerGuest:1000};
-const OPT_CER = {base:70000, retail:95000};
+const OPT_CHAIRS = {basePerGuest:600, profPerGuest:850, retailPerGuest:1000};
+const OPT_CER = {base:70000, prof:82000, retail:95000};
 
 const PALETTES = {
   oliva: {name:'Олива',  sw:['#FDFDFB','#E9EFE4','#A8B89A','#6F8268']},
@@ -431,8 +446,8 @@ let S = {
   chairs:false, cer:false, chairsPrice:null, cerPrice:null
 };
 const r1k = n => Math.round(n/1000)*1000;
-function tierCost(k){const t=TIERS[k];return{base:r1k(t.baseFix+t.baseTable*S.tables),retail:r1k(t.retailFix+t.retailTable*S.tables)};}
-function chairsCost(){return{base:r1k(OPT_CHAIRS.basePerGuest*S.guests),retail:r1k(OPT_CHAIRS.retailPerGuest*S.guests)};}
+function tierCost(k){const t=TIERS[k];return{base:r1k(t.baseFix+t.baseTable*S.tables),prof:r1k(t.profFix+t.profTable*S.tables),retail:r1k(t.retailFix+t.retailTable*S.tables)};}
+function chairsCost(){return{base:r1k(OPT_CHAIRS.basePerGuest*S.guests),prof:r1k(OPT_CHAIRS.profPerGuest*S.guests),retail:r1k(OPT_CHAIRS.retailPerGuest*S.guests)};}
 
 const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
 
@@ -463,7 +478,11 @@ function buildPkgs() {
         '<div class="t">' + t.name + '</div>' +
         '<div class="d">' + t.desc + '</div>' +
         '<ul class="items">' + t.items.map(i=>'<li>'+i+'</li>').join('') + '</ul>' +
-        '<div class="cost">на ' + S.tables + ' стол(ов): розница <s>' + fmt(c.retail) + '</s> · ваша закупка <b>' + fmt(c.base) + '</b></div>' +
+        '<div class="prices">' +
+          '<span class="pl">Без скидки</span><span class="pv strike">' + fmt(c.retail) + '</span>' +
+          '<span class="pl">Проф. скидка</span><span class="pv mid">' + fmt(c.prof) + '</span>' +
+          '<span class="pl">В готовом решении</span><span class="pv accent">' + fmt(c.base) + '</span>' +
+        '</div>' +
         '<div class="priceline"><label>Ваша цена клиенту, ₽</label>' +
           '<input type="number" step="1000" value="' + S[prKey] + '" data-key="' + prKey + '">' +
         '</div>' +
@@ -486,20 +505,24 @@ function updateProfits() {
     const c = tierCost(k), prKey = k==='serv'?'priceServ':'priceComp';
     const pr = S[prKey] || 0;
     const el = document.getElementById('profit-'+k);
-    if (el) el.innerHTML = 'Заработок: <b>' + fmt(Math.max(0,pr-c.base)) + '</b> · клиент экономит от розницы ' + fmt(Math.max(0,c.retail-pr));
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,pr-c.base)) + ' ₽</b>';
   }
   const cc = chairsCost();
   const chHint = document.getElementById('chairsHint');
-  if (chHint) chHint.textContent = 'закупка ' + OPT_CHAIRS.basePerGuest + ' ₽/гость · на ' + S.guests + ' гостей: ' + fmt(cc.base);
+  if (chHint) chHint.textContent = S.guests + ' гостей · в готовом решении ' + fmt(cc.base);
   if (S.chairs) {
     if (S.chairsPrice === null) { S.chairsPrice = cc.retail; const el = document.getElementById('chairsPrice'); if(el) el.value = S.chairsPrice; }
+    const cp = document.getElementById('chairsPrices');
+    if (cp) cp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(cc.retail)+'</span>' +
+      '<span class="pl">Проф. скидка</span><span class="pv mid">'+fmt(cc.prof)+'</span>' +
+      '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(cc.base)+'</span>';
     const el = document.getElementById('chairsProfit');
-    if (el) el.innerHTML = 'Заработок на стульях: <b>' + fmt(Math.max(0,(S.chairsPrice||0)-cc.base)) + '</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.chairsPrice||0)-cc.base)) + ' ₽</b>';
   }
   if (S.cer) {
     if (S.cerPrice === null) { S.cerPrice = OPT_CER.retail; const el = document.getElementById('cerPrice'); if(el) el.value = S.cerPrice; }
     const el = document.getElementById('cerProfit');
-    if (el) el.innerHTML = 'Заработок на церемонии: <b>' + fmt(Math.max(0,(S.cerPrice||0)-OPT_CER.base)) + '</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.cerPrice||0)-OPT_CER.base)) + ' ₽</b>';
   }
 }
 
