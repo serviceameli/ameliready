@@ -191,7 +191,8 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 .pkgcard .prices .pv.accent{color:var(--accent);font-weight:700;font-size:12px;}
 .pkgcard .priceline{display:flex;align-items:center;gap:8px;margin-bottom:7px}
 .pkgcard .priceline label{font-size:10px;color:var(--light);white-space:nowrap}
-.pkgcard .priceline input{flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none;background:var(--white)}
+.pkgcard .priceline input{flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none;background:var(--white);-moz-appearance:textfield;}
+.pkgcard .priceline input::-webkit-outer-spin-button,.pkgcard .priceline input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .pkgcard .profit{font-size:11px;padding:6px 9px;background:var(--soft);border-left:3px solid var(--accent);color:var(--mid)}
 .optcard .prices{display:grid;grid-template-columns:1fr auto;gap:3px 10px;margin-bottom:10px;font-size:11px;}
 .optcard .prices .pl{color:var(--muted);}
@@ -204,6 +205,7 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 .optcard .thumb{height:90px;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--rule);overflow:hidden}
 #ocCer .thumb{height:auto;display:block}
 .optcard .thumb img{width:100%;height:100%;object-fit:contain;background:#f5f5f3}
+input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 </style>
 </head>
 <body>
