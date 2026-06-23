@@ -638,8 +638,13 @@ function renderPreview() {
     const img2 = document.getElementById('pvCerImg2');
     const second = CER_SECOND[S.pal];
     img1.src = CER_WHITE;
-    if (second) { img2.src = second; img2.style.display = ''; }
-    else { img2.src = ''; img2.style.display = 'none'; }
+    if (second) {
+      img2.src = second; img2.style.display = '';
+      img1.style.objectFit = 'cover';
+    } else {
+      img2.src = ''; img2.style.display = 'none';
+      img1.style.objectFit = 'contain';
+    }
   }
 
   document.getElementById('pvCompCap').textContent =
