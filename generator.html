@@ -208,15 +208,15 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 .pserv-detail .ph-label{font-size:.55em;color:var(--muted);text-align:center;margin-top:.3em;}
 input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 /* ─── СЛАЙД: СОСТАВ СЕРВИРОВКИ ─── */
-.pserv-detail{display:flex;flex-direction:column;padding:3% 5% 2%;gap:0;}
-.pserv-detail .sd-title{font-family:'Cormorant',serif;font-size:1.9em;font-weight:500;letter-spacing:-.02em;margin-bottom:.25em;}
-.pserv-detail .sd-sub{font-size:.68em;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:2%;}
-.pserv-detail .sd-body{display:flex;flex-direction:column;gap:3%;flex:1;}
-.pserv-detail .sd-row{display:flex;gap:3%;flex:1;}
-.pserv-detail .sd-group{display:flex;flex-direction:column;}
-.pserv-detail .sd-group-title{font-size:.65em;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.5em;border-bottom:1px solid var(--accent);padding-bottom:.3em;white-space:nowrap;}
-.pserv-detail .sd-photos{display:flex;gap:5px;flex:1;}
-.pserv-detail .sd-photos .ph{flex:1;background:#f5f5f3;border:1px solid var(--rule);border-radius:3px;overflow:hidden;display:flex;flex-direction:column;}
+.pserv-detail{display:flex;flex-direction:column;padding:3% 5% 2%;gap:0;overflow:hidden;}
+.pserv-detail .sd-title{font-family:'Cormorant',serif;font-size:1.9em;font-weight:500;letter-spacing:-.02em;margin-bottom:.25em;flex-shrink:0;}
+.pserv-detail .sd-sub{font-size:.68em;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:2%;flex-shrink:0;}
+.pserv-detail .sd-body{display:flex;flex-direction:column;gap:2%;flex:1;min-height:0;}
+.pserv-detail .sd-row{display:flex;gap:3%;flex:1;min-height:0;}
+.pserv-detail .sd-group{display:flex;flex-direction:column;min-width:0;min-height:0;}
+.pserv-detail .sd-group-title{font-size:.65em;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.5em;border-bottom:1px solid var(--accent);padding-bottom:.3em;flex-shrink:0;}
+.pserv-detail .sd-photos{display:flex;gap:5px;flex:1;min-height:0;}
+.pserv-detail .sd-photos .ph{flex:1;min-width:0;min-height:0;background:#f5f5f3;border:1px solid var(--rule);border-radius:3px;overflow:hidden;display:flex;flex-direction:column;}
 .pserv-detail .sd-photos .ph img{flex:1;width:100%;min-height:0;object-fit:contain;background:#fff;}
 </style>
 </head>
