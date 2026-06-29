@@ -614,12 +614,20 @@ function renderPreview() {
   const prices = [S.priceServ, S.priceComp].filter(p => p !== null && p > 0);
   document.getElementById('pvFrom').textContent = prices.length ? fmt(Math.min(...prices)) : '—';
 
-  document.getElementById('ptServImg1').src = 'https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%B2%D0%B5%D0%B6%D0%B8%D0%B8%CC%86.png&w=900&q=82';
-  document.getElementById('ptServImg2').src = 'https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D1%80%D1%8B%D0%B6%D0%B5%20%D0%B6%D0%B5%D0%BC%D1%87%D1%83%D0%B3.png&w=900&q=82';
+  const palPhoto = (type, idx) => {
+    const p = (PHOTOS_BY_PAL[S.pal] && PHOTOS_BY_PAL[S.pal][type] && PHOTOS_BY_PAL[S.pal][type][idx])
+            || (PHOTOS_BY_PAL.oliva[type] && PHOTOS_BY_PAL.oliva[type][idx]) || '';
+    return p;
+  };
+  document.getElementById('ptServImg1').src = palPhoto('serv', 0);
+  document.getElementById('ptServImg2').src = palPhoto('serv', 1);
   document.getElementById('ptServItems').innerHTML = TIERS.serv.items.map(i=>'<li>'+i+'</li>').join('');
   document.getElementById('ptServPrice').textContent = S.priceServ ? fmt(S.priceServ) : '—';
 
-  // comp photos set statically in HTML
+  document.getElementById('ptCompImg1').src = palPhoto('comp', 0);
+  document.getElementById('ptCompImg2').src = palPhoto('comp', 1);
+  document.getElementById('ptCompImg3').src = palPhoto('comp', 2);
+  document.getElementById('ptCompImg4').src = palPhoto('comp', 3);
   document.getElementById('ptCompItems').innerHTML = TIERS.comp.items.map(i=>'<li>'+i+'</li>').join('');
   document.getElementById('ptCompPrice').textContent = S.priceComp ? fmt(S.priceComp) : '—';
 
