@@ -123,16 +123,16 @@ th.akc-h{background:#FEF9E3;color:var(--text);}
       <td class="num earn neu" id="earn-bench">—</td>
       <td class="num earn neu" id="marg-bench">—</td>
     </tr>
-    <tr data-key="delivery" data-base="17000" data-discount="no">
-      <td>Доставка</td><td>Фиксированная, без скидки</td>
-      <td class="num">17 000 ₽</td><td class="num" style="color:var(--muted)">нет</td>
+    <tr data-key="delivery" data-base="18000" data-discount="no">
+      <td>Доставка + разгрузка</td><td>Без скидки · мы платим 15 800 ₽</td>
+      <td class="num">18 000 ₽</td><td class="num" style="color:var(--muted)">нет</td>
       <td class="akc"><input type="number" placeholder="вручную"></td>
       <td class="num earn neu" id="earn-delivery">—</td>
       <td class="num earn neu" id="marg-delivery">—</td>
     </tr>
-    <tr data-key="installer" data-base="8000" data-discount="no">
-      <td>Монтажник</td><td>За человека (2 при ≤6 столах, 3 при ≥7)</td>
-      <td class="num">8 000 ₽ / чел</td><td class="num" style="color:var(--muted)">нет</td>
+    <tr data-key="installer" data-base="9200" data-discount="no">
+      <td>Монтажник</td><td>За человека, монтаж + демонтаж · мы платим 8 000 ₽</td>
+      <td class="num">9 200 ₽ / чел</td><td class="num" style="color:var(--muted)">нет</td>
       <td class="akc"><input type="number" placeholder="вручную"></td>
       <td class="num earn neu" id="earn-installer">—</td>
       <td class="num earn neu" id="marg-installer">—</td>
@@ -174,8 +174,8 @@ const PRICE_TABLECLOTH = 2900;
 const PRICE_CANDLES = 1360;
 const PRICE_CEREMONY_BASE = 43000;
 const PRICE_BENCH = 1200;
-const PRICE_DELIVERY = 17000;
-const PRICE_INSTALLER = 8000;
+const PRICE_DELIVERY = 18000;
+const PRICE_INSTALLER = 9200;
 
 const fmt = n => Math.round(n).toLocaleString('ru-RU') + ' ₽';
 const pct = n => (n*100).toFixed(1).replace('.', ',') + '%';
