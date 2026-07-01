@@ -844,21 +844,33 @@ function renderPreview() {
 
     // сброс состояния перед каждым рендером
     const txtCell = document.getElementById('pvCerCellText');
-    c1.style.gridRow = ''; txtCell.style.gridRow = '';
+    c1.style.gridRow = ''; c1.style.gridColumn = '';
+    txtCell.style.gridRow = ''; txtCell.style.gridColumn = '';
+    c2.style.gridRow = ''; c2.style.gridColumn = '';
+    c3.style.gridRow = ''; c3.style.gridColumn = '';
     c2.style.display = ''; c3.style.display = '';
     c2.innerHTML = ''; c3.innerHTML = '';
 
     c1.innerHTML = '<img src="'+CER_UNIVERSAL+'" style="'+imgStyle+'">';
 
     if (cerExtra.length === 0) {
-      c1.style.gridRow = '1 / 3';
-      txtCell.style.gridRow = '1 / 3';
+      // фото слева на всю высоту, текст справа на всю высоту
+      c1.style.gridColumn = '1'; c1.style.gridRow = '1 / 3';
+      txtCell.style.gridColumn = '2'; txtCell.style.gridRow = '1 / 3';
       c2.style.display = 'none'; c3.style.display = 'none';
     } else if (cerExtra.length === 1) {
-      txtCell.style.gridRow = '1 / 3';
+      // 2 фото слева (верх/низ), текст справа на всю высоту
+      c1.style.gridColumn = '1'; c1.style.gridRow = '1';
+      c2.style.gridColumn = '1'; c2.style.gridRow = '2';
+      txtCell.style.gridColumn = '2'; txtCell.style.gridRow = '1 / 3';
       c2.innerHTML = '<img src="'+cerExtra[0]+'" style="'+imgStyle+'">';
       c3.style.display = 'none';
     } else {
+      // 3 фото: универсальная верх-лево, текст верх-право, 2 фото низ
+      c1.style.gridColumn = '1'; c1.style.gridRow = '1';
+      txtCell.style.gridColumn = '2'; txtCell.style.gridRow = '1';
+      c2.style.gridColumn = '1'; c2.style.gridRow = '2';
+      c3.style.gridColumn = '2'; c3.style.gridRow = '2';
       c2.innerHTML = '<img src="'+cerExtra[0]+'" style="'+imgStyle+'">';
       c3.innerHTML = '<img src="'+cerExtra[1]+'" style="'+imgStyle+'">';
     }
