@@ -349,11 +349,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
           <div class="sw2"></div>
         </div>
         <div class="extra">
-          <div class="prices" style="margin-top:6px">
-            <span class="pl">Без скидки</span><span class="pv strike">95 000 ₽</span>
-            <span class="pl">Проф. скидка</span><span class="pv mid">82 000 ₽</span>
-            <span class="pl">В готовом решении</span><span class="pv accent">70 000 ₽</span>
-          </div>
+          <div class="prices" id="cerPrices" style="margin-top:6px"></div>
           <div class="priceline">
             <label>Ваша цена клиенту, ₽</label>
             <input type="number" id="cerPrice" step="1000" style="flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none">
@@ -590,12 +586,12 @@ const MKAD_RATE = 100;
 const TIERS = {
   serv: {
     name: 'Сервировка',
-    retailFix:60000, retailTable:20000, profFix:50000, profTable:17000, baseFix:40000, baseTable:12000,
     items: ['Скатерть круглая / прямоугольная','Салфетки','Подстановочные тарелки (прозрачные с кантом)','Сет бокалов 3 шт','Сет приборов 4 шт (золотые / чёрные)','Номерок для стола']
   }
 };
-const OPT_CER = {base:70000, prof:82000, retail:95000};
-const OPT_SVECHI = {basePerTable:8000, profPerTable:11000, retailPerTable:14000};
+// ── Новая модель цен (см. pricing_internal.html) ──
+const PRICE_GUEST=1550, PRICE_TABLECLOTH=2900, PRICE_CANDLES=1360, PRICE_CEREMONY_BASE=43000, PRICE_BENCH=1200, PRICE_DELIVERY=17000, PRICE_INSTALLER=8000;
+const DISCOUNT=0.30; // скидка на аренду для орга
 
 const PALETTES = {
   oliva: {name:'Зелёный', sw:['#FDFDFB','#E9EFE4','#A8B89A','#6F8268']},
@@ -610,8 +606,23 @@ let S = {
   cer:false, svechi:false, cerPrice:null, svechiPrice:null
 };
 const r1k = n => Math.round(n/1000)*1000;
-function tierCost(k){const t=TIERS[k];return{base:r1k(t.baseFix+t.baseTable*S.tables),prof:r1k(t.profFix+t.profTable*S.tables),retail:r1k(t.retailFix+t.retailTable*S.tables)};}
-function svechiCost(){return{base:r1k(OPT_SVECHI.basePerTable*S.tables),prof:r1k(OPT_SVECHI.profPerTable*S.tables),retail:r1k(OPT_SVECHI.retailPerTable*S.tables)};}
+function installersCount(){ return S.tables <= 6 ? 2 : 3; }
+// retail = цена клиента (без скидки), base = в готовом решении (аренда −30%, логистика без скидки)
+function servCost(){
+  const rental = S.guests*PRICE_GUEST + S.tables*PRICE_TABLECLOTH;
+  const logistics = PRICE_DELIVERY + installersCount()*PRICE_INSTALLER;
+  return { retail: rental+logistics, base: Math.round(rental*(1-DISCOUNT))+logistics };
+}
+function svechiCost(){
+  const c = S.tables*PRICE_CANDLES;
+  return { retail: c, base: Math.round(c*(1-DISCOUNT)) };
+}
+function cerCost(){
+  const benches = Math.max(0, Math.ceil((S.guests-40)/4));
+  const rental = PRICE_CEREMONY_BASE + benches*PRICE_BENCH;
+  const inst = PRICE_INSTALLER;
+  return { retail: rental+inst, base: Math.round(rental*(1-DISCOUNT))+inst };
+}
 
 const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
 
@@ -655,9 +666,9 @@ function buildPkgs() {
   const PHOTOS = PHOTOS_BY_PAL[S.pal] || PHOTOS_BY_PAL.oliva;
   const box = document.getElementById('pkgs'); box.innerHTML = '';
   for (const [k, t] of Object.entries(TIERS)) {
-    const c = tierCost(k);
-    const prKey = k === 'serv' ? 'priceServ' : 'priceComp';
-    if (S[prKey] === null) S[prKey] = r1k(c.retail * 0.8);
+    const c = servCost();
+    const prKey = 'priceServ';
+    if (S[prKey] === null) S[prKey] = c.retail;
     const photos = PHOTOS[k] || [];
     const thumbHtml = photos.filter(Boolean).map(s=>'<img src="'+s+'">').join('');
     const card = document.createElement('div'); card.className = 'pkgcard';
@@ -669,7 +680,6 @@ function buildPkgs() {
         '<div class="incl-note">✓ Доставка и монтаж включены</div>' +
         '<div class="prices">' +
           '<span class="pl">Без скидки</span><span class="pv strike">' + fmt(c.retail) + '</span>' +
-          '<span class="pl">Проф. скидка</span><span class="pv mid">' + fmt(c.prof) + '</span>' +
           '<span class="pl">В готовом решении</span><span class="pv accent">' + fmt(c.base) + '</span>' +
         '</div>' +
         '<div class="priceline"><label>Ваша цена клиенту, ₽</label>' +
@@ -691,9 +701,9 @@ function buildPkgs() {
 
 function updateBudget(){
   const el = document.getElementById('budgetRows'); if(!el) return;
-  const rows = [['Сервировка', S.priceServ, tierCost('serv').base]];
+  const rows = [['Сервировка', S.priceServ, servCost().base]];
   if (S.svechi) rows.push(['Свечи', S.svechiPrice, svechiCost().base]);
-  if (S.cer)    rows.push(['Зона церемонии', S.cerPrice, OPT_CER.base]);
+  if (S.cer)    rows.push(['Зона церемонии', S.cerPrice, cerCost().base]);
   let total=0, profit=0, html='';
   rows.forEach(function(r){ const nm=r[0], pr=r[1], base=r[2]; const p=pr||0; total+=p; profit+=Math.max(0,p-base);
     html += '<div class="b-row"><span class="nm">'+nm+'</span><span class="vl">'+(pr?fmt(pr):'—')+'</span></div>'; });
@@ -703,23 +713,28 @@ function updateBudget(){
 }
 
 function updateProfits() {
-  for (const k of Object.keys(TIERS)) {
-    const c = tierCost(k), prKey = k==='serv'?'priceServ':'priceComp';
-    const pr = S[prKey] || 0;
-    const el = document.getElementById('profit-'+k);
+  {
+    const c = servCost();
+    const pr = S.priceServ || 0;
+    const el = document.getElementById('profit-serv');
     if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,pr-c.base)) + ' ₽</b>';
   }
+  const cerc = cerCost();
+  const cerHint = document.getElementById('cerHint');
+  if (cerHint) cerHint.textContent = 'арка + оформление · в готовом решении ' + fmt(cerc.base);
+  const cerp = document.getElementById('cerPrices');
+  if (cerp) cerp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(cerc.retail)+'</span>' +
+    '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(cerc.base)+'</span>';
   if (S.cer) {
-    if (S.cerPrice === null) { S.cerPrice = OPT_CER.retail; const el = document.getElementById('cerPrice'); if(el) el.value = S.cerPrice; }
+    if (S.cerPrice === null) { S.cerPrice = cerc.retail; const el = document.getElementById('cerPrice'); if(el) el.value = S.cerPrice; }
     const el = document.getElementById('cerProfit');
-    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.cerPrice||0)-OPT_CER.base)) + ' ₽</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.cerPrice||0)-cerc.base)) + ' ₽</b>';
   }
   const sc = svechiCost();
   const svHint = document.getElementById('svechiHint');
   if (svHint) svHint.textContent = S.tables + ' столов · в готовом решении ' + fmt(sc.base);
   const svp = document.getElementById('svechiPrices');
   if (svp) svp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(sc.retail)+'</span>' +
-    '<span class="pl">Проф. скидка</span><span class="pv mid">'+fmt(sc.prof)+'</span>' +
     '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(sc.base)+'</span>';
   if (S.svechi) {
     if (S.svechiPrice === null) { S.svechiPrice = sc.retail; const el = document.getElementById('svechiPrice'); if(el) el.value = S.svechiPrice; }
