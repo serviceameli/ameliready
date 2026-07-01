@@ -298,7 +298,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
         <div class="field"><label>Столов гостей</label><input type="number" id="tables" value="5" min="1" max="30"></div>
       </div>
       <div class="field"><label>Площадка за МКАД, км</label><input type="number" id="km" value="0" min="0" max="300"></div>
-      <div class="autohint">Столы из расчёта 8 гостей на стол. Президиум входит в каждый вариант. За МКАД — 100 ₽/км к доставке.</div>
+      <div class="autohint">Столы из расчёта 8 гостей на стол. За МКАД — 100 ₽/км к доставке.</div>
     </div>
 
     <div class="block">
@@ -391,7 +391,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
         <div class="sub">Два варианта наполнения — выберите свой</div>
         <div class="meta">
           <div><b id="pvGuests">40</b><span>гостей</span></div>
-          <div><b id="pvTables">5 + 1</b><span>столов + президиум</span></div>
+          <div><b id="pvTables">5 + 1</b><span>столов</span></div>
         </div>
         <div class="fromprice">
           <div class="cap">тарифы от</div>
@@ -734,7 +734,7 @@ function renderPreview() {
 
   document.getElementById('pvTitle').textContent = 'Оформление банкета · ' + pal;
   document.getElementById('pvGuests').textContent = S.guests;
-  document.getElementById('pvTables').textContent = S.tables + ' + 1';
+  document.getElementById('pvTables').textContent = S.tables;
   document.getElementById('pvFrom').textContent = S.priceServ ? fmt(S.priceServ) : '—';
 
   const palPhoto = (type, idx) => {
@@ -808,7 +808,7 @@ function renderPreview() {
   }
 
   document.getElementById('pvCompCap').textContent =
-    'Расчёт на ' + S.guests + ' гостей · ' + S.tables + ' столов гостей + президиум · палитры: ' + pal;
+    'Расчёт на ' + S.guests + ' гостей · ' + S.tables + ' столов · палитры: ' + pal;
 
   const rows = [['Сервировка стола', S.priceServ]];
   if (S.svechi) rows.push(['Свечи', S.svechiPrice]);
