@@ -141,7 +141,8 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 .comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:2%;height:64%;}
 .comp-col{border:1px solid var(--rule);display:flex;flex-direction:column;overflow:hidden;}
 .comp-col.feat{border:2px solid var(--accent);box-shadow:0 4px 20px rgba(0,0,0,.06);}
-.comp-photo{height:30%;background:#e8e8e6;overflow:hidden;flex-shrink:0;}
+.comp-photo{height:30%;background:#e8e8e6;overflow:hidden;flex-shrink:0;position:relative;}
+.comp-title{position:absolute;left:0;right:0;bottom:0;padding:10% 6% 5%;font-family:'Cormorant',serif;font-size:1.2em;font-weight:600;color:#fff;letter-spacing:-.01em;background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0));}
 .comp-photo img{width:100%;height:100%;object-fit:cover;}
 .comp-body{padding:5% 6%;display:flex;flex-direction:column;flex:1;}
 .comp-name{font-family:'Cormorant',serif;font-size:1.15em;font-weight:500;margin-bottom:.5em;}
@@ -713,15 +714,16 @@ function renderPreview() {
     'Расчёт на ' + S.guests + ' гостей · ' + S.tables + ' столов гостей + президиум · палитра «' + pal + '»';
 
   const grid = document.getElementById('pvCompGrid'); grid.innerHTML = '';
-  [{key:'serv', tier:TIERS.serv, price:S.priceServ, img:IMGS.light1, feat:false},
-   {key:'comp', tier:TIERS.comp, price:S.priceComp, img:IMGS.full1,  feat:true}
+  const compImg = (type) => (PHOTOS_BY_PAL[S.pal] && PHOTOS_BY_PAL[S.pal][type] && PHOTOS_BY_PAL[S.pal][type][0])
+      || (PHOTOS_BY_PAL.oliva[type] && PHOTOS_BY_PAL.oliva[type][0]) || '';
+  [{key:'serv', tier:TIERS.serv, price:S.priceServ, img:compImg('serv'), title:'Сервировка',        feat:false},
+   {key:'comp', tier:TIERS.comp, price:S.priceComp, img:compImg('comp'), title:'Сервировка + Свечи', feat:true}
   ].forEach(td => {
     const col = document.createElement('div');
     col.className = 'comp-col' + (td.feat ? ' feat' : '');
     col.innerHTML =
-      '<div class="comp-photo">' + (td.img ? '<img src="'+td.img+'">' : '') + '</div>' +
+      '<div class="comp-photo">' + (td.img ? '<img src="'+td.img+'">' : '') + '<div class="comp-title">' + td.title + '</div></div>' +
       '<div class="comp-body">' +
-        '<div class="comp-name">' + td.tier.name + '</div>' +
         '<ul class="comp-items">' + td.tier.items.map(i=>'<li>'+i+'</li>').join('') + '</ul>' +
         '<div class="comp-price"><b>' + (td.price ? fmt(td.price) : '—') + '</b><span>комплект целиком</span></div>' +
       '</div>';
