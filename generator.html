@@ -826,16 +826,30 @@ function renderPreview() {
   document.getElementById('pageCer').style.display = S.cer ? '' : 'none';
   if (S.cer) {
     document.getElementById('pvCerPrice').textContent = S.cerPrice ? fmt(S.cerPrice) : '—';
-    const CER_UNIVERSAL = 'https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%B0%D1%80%D0%BA%D0%B0%20%D0%B2%D0%BE%D0%BB%D0%BD%D0%B0%20%D1%82%D0%BE%D1%82%D0%B0%D0%BB%20%D0%B6%D0%B5%D0%BC%D1%87%D1%83%D0%B3.png&w=1100&q=82';
+    const CER_UNIVERSAL = 'https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%B0%D1%80%D0%BA%D0%B0%20%D0%B2%D0%BE%D0%BB%D0%BD%D0%B0%20%D1%81%20%D0%BB%D0%B0%D0%B2%D0%BA%D0%B0%D0%BC%D0%B8%20%D0%BC%D0%B0%D0%BB.png&w=1100&q=82';
     const CER_BY_PAL = {
       oliva: 'https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%B0%D1%80%D0%BA%D0%B0%20%D0%B2%D0%BE%D0%BB%D0%BD%D0%B0%20%D1%81%20%D0%BB%D0%B0%D0%B2%D0%BA%D0%B0%D0%BC%D0%B8%20%D1%81%D0%B2%D0%B5%D1%82%D0%BB%D0%BE%20%D0%B7%D0%B5%D0%BB.jpg&w=1100&q=82',
       pudra: 'https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%B0%D1%80%D0%BA%D0%B0%20%D0%B2%D0%BE%D0%BB%D0%BD%D0%B0%20%D1%81%20%D0%BB%D0%B0%D0%B2%D0%BA%D0%B0%D0%BC%D0%B8%20%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0%D1%8F%20%D1%81%D0%B0%D0%BA%D1%83%D1%80%D0%B0.jpg&w=1100&q=82'
     };
-    const cerPhotos = [CER_UNIVERSAL, ...S.pals.map(k => CER_BY_PAL[k]).filter(Boolean)];
+    const cerExtra = S.pals.map(k => CER_BY_PAL[k]).filter(Boolean);
     const cerBox = document.getElementById('pvCerPhoto');
-    cerBox.innerHTML = cerPhotos.map(u =>
-      '<img src="'+u+'" style="flex:1;width:100%;object-fit:cover;background:#fff">'
-    ).join('');
+    if (cerExtra.length === 0) {
+      // только универсальная — на всю высоту
+      cerBox.style.cssText = 'width:52%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;';
+      cerBox.innerHTML = '<img src="'+CER_UNIVERSAL+'" style="flex:1;width:100%;object-fit:cover;">';
+    } else if (cerExtra.length === 1) {
+      // универсальная + одна палитрная — вертикально
+      cerBox.style.cssText = 'width:52%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;gap:2px;';
+      cerBox.innerHTML = [CER_UNIVERSAL, cerExtra[0]].map(u=>'<img src="'+u+'" style="flex:1;width:100%;object-fit:cover;">').join('');
+    } else {
+      // универсальная сверху (60%), две палитрные рядом снизу (40%)
+      cerBox.style.cssText = 'width:52%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;gap:2px;';
+      cerBox.innerHTML =
+        '<img src="'+CER_UNIVERSAL+'" style="flex:3;width:100%;object-fit:cover;">' +
+        '<div style="flex:2;display:flex;gap:2px;">' +
+          cerExtra.map(u=>'<img src="'+u+'" style="flex:1;object-fit:cover;">').join('') +
+        '</div>';
+    }
   }
 
   document.getElementById('pageSvechi').style.display = S.svechi ? '' : 'none';
