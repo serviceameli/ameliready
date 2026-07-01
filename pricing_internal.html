@@ -58,14 +58,6 @@ td.earn.neg{color:var(--red);}
 td.earn.neu{color:var(--muted);}
 th.akc-h{background:#FEF9E3;color:var(--text);}
 
-/* Рентабельность (бывший блок 3) */
-.rent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:10px;}
-.rent-card{border:1px solid var(--rule);border-radius:10px;padding:16px 18px;}
-.rent-card .d{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;}
-.rent-card .cond{font-size:12px;color:var(--mid);line-height:1.7;}
-.rent-card .earn-line{margin-top:10px;padding-top:8px;border-top:1px solid var(--rule);font-size:13px;font-weight:700;}
-.rent-card .earn-line.ok{color:var(--green);}
-.rent-card .earn-line.bad{color:var(--red);}
 
 
 /* Блок логистики */
@@ -149,9 +141,6 @@ th.akc-h{background:#FEF9E3;color:var(--text);}
 </table>
 <div class="note">Акционная цена — спецпредложение на единицу позиции. Заработок = акционная − скидка орга −30% (для аренды). Для логистики заработок = акционная − базовая.</div>
 
-<!-- Рентабельность (переехала из бывшего блока 3) -->
-<h3 style="font-size:13px;font-weight:700;margin:28px 0 6px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);">Рентабельность при текущих гостях / столах</h3>
-<div class="rent-grid" id="rentGrid"></div>
 
 <!-- ═══ БЛОК 2 — ИНТЕРАКТИВНЫЙ РАСЧЁТ ═══ -->
 <h2><span class="n">2</span>Расчёт заработка Амели</h2>
@@ -253,24 +242,6 @@ function render(){
     ' &nbsp;|&nbsp; Доставка: <b>'+fmt(PRICE_DELIVERY)+'</b> · Монтаж: <b>'+c.installers+' × '+fmt(PRICE_INSTALLER)+' = '+fmt(c.installation)+'</b>' +
     (c.ceremonyInstaller ? ' · Монтажник церемонии: <b>'+fmt(c.ceremonyInstaller)+'</b>' : '');
 
-  // Рентабельность (бывший блок 3) — теперь в блоке 1
-  document.getElementById('rentGrid').innerHTML = rates.map(d => {
-    const rentalDiscounted = c.rentalPart * (1 - d);
-    const earn = rentalDiscounted - c.logistics;
-    const marg = c.totalClient > 0 ? earn / c.totalClient : 0;
-    const ok = earn >= 0;
-    return '<div class="rent-card">' +
-      '<div class="d">Скидка орга −'+(d*100)+'%</div>' +
-      '<div class="cond">' +
-        'Цена клиента: <b>'+fmt(c.totalClient)+'</b><br>' +
-        'Аренда со скидкой: <b>'+fmt(rentalDiscounted)+'</b><br>' +
-        'Логистика: <b>'+fmt(c.logistics)+'</b>' +
-      '</div>' +
-      '<div class="earn-line '+(ok?'ok':'bad')+'">' +
-        (ok ? '✓ Зарабатываем: ' : '✗ Убыток: ') +
-        fmt(Math.abs(earn)) + ' · ' + (marg*100).toFixed(1).replace('.',',') + '%' +
-      '</div></div>';
-  }).join('');
 }
 
 ['guests','tables'].forEach(id => document.getElementById(id).oninput = render);
