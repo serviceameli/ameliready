@@ -46,16 +46,26 @@ tr.total td{font-weight:700;border-top:2px solid var(--text);border-bottom:none;
 .calc-table td.lbl{font-weight:500;}
 .calc-table tr.margin td{color:var(--mid);font-size:12px;}
 
-/* Блок 3 */
-.min-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:10px;}
-.min-card{border:1px solid var(--rule);border-radius:10px;padding:16px 18px;}
-.min-card .d{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;}
-.min-card .cond{font-size:12px;color:var(--mid);line-height:1.6;}
-.min-card .verdict{margin-top:10px;font-weight:700;font-size:14px;}
-.min-card .verdict.ok{color:var(--green);}
-.min-card .verdict.bad{color:var(--red);}
 .note{font-size:12px;color:var(--muted);line-height:1.7;margin-top:12px;}
 .note code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:11px;}
+
+/* Акционная таблица */
+td.akc input{width:100px;border:1px solid var(--rule);border-radius:5px;padding:5px 7px;font-family:inherit;font-size:13px;text-align:right;outline:none;}
+td.akc input:focus{border-color:var(--text);}
+td.earn{font-weight:600;}
+td.earn.pos{color:var(--green);}
+td.earn.neg{color:var(--red);}
+td.earn.neu{color:var(--muted);}
+th.akc-h{background:#FEF9E3;color:var(--text);}
+
+/* Рентабельность (бывший блок 3) */
+.rent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:10px;}
+.rent-card{border:1px solid var(--rule);border-radius:10px;padding:16px 18px;}
+.rent-card .d{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;}
+.rent-card .cond{font-size:12px;color:var(--mid);line-height:1.7;}
+.rent-card .earn-line{margin-top:10px;padding-top:8px;border-top:1px solid var(--rule);font-size:13px;font-weight:700;}
+.rent-card .earn-line.ok{color:var(--green);}
+.rent-card .earn-line.bad{color:var(--red);}
 
 /* Блок 4 — ценообразование сета */
 .price-ladder{background:var(--soft);border:1px solid var(--rule);border-radius:10px;padding:20px 22px;max-width:480px;}
@@ -83,23 +93,77 @@ tr.total td{font-weight:700;border-top:2px solid var(--text);border-bottom:none;
 <h1>Внутренний расчёт тарифов</h1>
 <div class="subtitle">Ameli Rental · только для внутреннего использования. Не показывать оргам и клиентам.</div>
 
-<!-- ═══ БЛОК 1 — БАЗОВЫЕ ТАРИФЫ ═══ -->
-<h2><span class="n">1</span>Базовые тарифы (цена для клиента)</h2>
-<table>
+<!-- ═══ БЛОК 1 — ПРАЙС ПО ПОЗИЦИЯМ ═══ -->
+<h2><span class="n">1</span>Прайс по позициям</h2>
+<table id="priceTable">
   <thead>
-    <tr><th>Позиция</th><th>Описание</th><th class="num">Цена клиенту</th><th>Скидка орга</th></tr>
+    <tr>
+      <th>Позиция</th>
+      <th>Описание</th>
+      <th class="num">Базовая (сайт)</th>
+      <th class="num">Скидка орга −30%</th>
+      <th class="num akc-h">Акционная цена</th>
+      <th class="num akc-h">Заработок</th>
+      <th class="num akc-h">Маржа</th>
+    </tr>
   </thead>
   <tbody>
-    <tr><td>Сет на гостя</td><td>Бокалы, тарелка, приборы, стул</td><td class="num">1 550 ₽ / гость</td><td>да</td></tr>
-    <tr><td>Скатерть + номерок</td><td>Текстиль стола, за стол</td><td class="num">2 900 ₽ / стол</td><td>да</td></tr>
-    <tr><td>Свечи</td><td>Композиция на стол, за стол</td><td class="num">1 360 ₽ / стол</td><td>да</td></tr>
-    <tr><td>Зона церемонии</td><td>База до 40 гостей</td><td class="num">43 000 ₽</td><td>да (аренда)</td></tr>
-    <tr><td>Лавка церемонии</td><td>На каждые 4 гостя свыше 40</td><td class="num">1 200 ₽ / лавка</td><td>да</td></tr>
-    <tr><td>Доставка</td><td>Фиксированная</td><td class="num">17 000 ₽</td><td><b>нет</b></td></tr>
-    <tr><td>Монтажник</td><td>За человека (2 при ≤6 столах, 3 при ≥7)</td><td class="num">8 000 ₽ / чел</td><td><b>нет</b></td></tr>
+    <tr data-key="guest" data-base="1550" data-discount="yes">
+      <td>Сет на гостя</td><td>Бокалы, тарелка, приборы, стул</td>
+      <td class="num">1 550 ₽ / гость</td><td class="num">1 085 ₽</td>
+      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="num earn neu" id="earn-guest">—</td>
+      <td class="num earn neu" id="marg-guest">—</td>
+    </tr>
+    <tr data-key="table" data-base="2900" data-discount="yes">
+      <td>Скатерть + номерок</td><td>Текстиль стола, за стол</td>
+      <td class="num">2 900 ₽ / стол</td><td class="num">2 030 ₽</td>
+      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="num earn neu" id="earn-table">—</td>
+      <td class="num earn neu" id="marg-table">—</td>
+    </tr>
+    <tr data-key="candles" data-base="1360" data-discount="yes">
+      <td>Свечи</td><td>Композиция на стол, за стол</td>
+      <td class="num">1 360 ₽ / стол</td><td class="num">952 ₽</td>
+      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="num earn neu" id="earn-candles">—</td>
+      <td class="num earn neu" id="marg-candles">—</td>
+    </tr>
+    <tr data-key="ceremony" data-base="43000" data-discount="yes">
+      <td>Зона церемонии</td><td>База до 40 гостей</td>
+      <td class="num">43 000 ₽</td><td class="num">30 100 ₽</td>
+      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="num earn neu" id="earn-ceremony">—</td>
+      <td class="num earn neu" id="marg-ceremony">—</td>
+    </tr>
+    <tr data-key="bench" data-base="1200" data-discount="yes">
+      <td>Лавка церемонии</td><td>На каждые 4 гостя свыше 40</td>
+      <td class="num">1 200 ₽ / лавка</td><td class="num">840 ₽</td>
+      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="num earn neu" id="earn-bench">—</td>
+      <td class="num earn neu" id="marg-bench">—</td>
+    </tr>
+    <tr data-key="delivery" data-base="17000" data-discount="no">
+      <td>Доставка</td><td>Фиксированная, без скидки</td>
+      <td class="num">17 000 ₽</td><td class="num" style="color:var(--muted)">нет</td>
+      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="num earn neu" id="earn-delivery">—</td>
+      <td class="num earn neu" id="marg-delivery">—</td>
+    </tr>
+    <tr data-key="installer" data-base="8000" data-discount="no">
+      <td>Монтажник</td><td>За человека (2 при ≤6 столах, 3 при ≥7)</td>
+      <td class="num">8 000 ₽ / чел</td><td class="num" style="color:var(--muted)">нет</td>
+      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="num earn neu" id="earn-installer">—</td>
+      <td class="num earn neu" id="marg-installer">—</td>
+    </tr>
   </tbody>
 </table>
-<div class="note">Скидка орга применяется <b>только на аренду</b> (гости, скатерти, свечи, аренда церемонии). Доставка, базовый монтаж и монтаж церемонии — <b>всегда без скидки</b>.</div>
+<div class="note">Акционная цена — спецпредложение на единицу позиции. Заработок = акционная − скидка орга −30% (для аренды). Для логистики заработок = акционная − базовая.</div>
+
+<!-- Рентабельность (переехала из бывшего блока 3) -->
+<h3 style="font-size:13px;font-weight:700;margin:28px 0 6px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);">Рентабельность при текущих гостях / столах</h3>
+<div class="rent-grid" id="rentGrid"></div>
 
 <!-- ═══ БЛОК 2 — ИНТЕРАКТИВНЫЙ РАСЧЁТ ═══ -->
 <h2><span class="n">2</span>Расчёт заработка Амели</h2>
@@ -147,10 +211,6 @@ tr.total td{font-weight:700;border-top:2px solid var(--text);border-bottom:none;
 </div>
 <div class="benefit-box" id="benefitBox" style="display:none;max-width:480px;"></div>
 
-<!-- ═══ БЛОК 3 — МИНИМАЛЬНЫЙ ЗАКАЗ ═══ -->
-<h2><span class="n">3</span>Минимальный заказ · рентабельность</h2>
-<div class="note">Заказ рентабелен, когда дисконтированная аренда покрывает логистику: <code>аренда × (1 − скидка) ≥ логистика</code>. Иначе заказ уходит в минус.</div>
-<div class="min-grid" id="minGrid"></div>
 
 <script>
 const PRICE_GUEST = 1550;
@@ -231,18 +291,57 @@ function render(){
     ' &nbsp;|&nbsp; Доставка: <b>'+fmt(PRICE_DELIVERY)+'</b> · Монтаж: <b>'+c.installers+' × '+fmt(PRICE_INSTALLER)+' = '+fmt(c.installation)+'</b>' +
     (c.ceremonyInstaller ? ' · Монтажник церемонии: <b>'+fmt(c.ceremonyInstaller)+'</b>' : '');
 
-  // Блок 3 — рентабельность
-  document.getElementById('minGrid').innerHTML = rates.map((d, i) => {
+  // Рентабельность (бывший блок 3) — теперь в блоке 1
+  document.getElementById('rentGrid').innerHTML = rates.map(d => {
     const rentalDiscounted = c.rentalPart * (1 - d);
-    const ok = rentalDiscounted >= c.logistics;
-    return '<div class="min-card"><div class="d">Скидка −'+(d*100)+'%</div>' +
-      '<div class="cond">Аренда со скидкой: <b>'+fmt(rentalDiscounted)+'</b><br>Логистика: <b>'+fmt(c.logistics)+'</b></div>' +
-      '<div class="verdict '+(ok?'ok':'bad')+'">'+(ok?'✓ Рентабельно':'✗ В минус')+'</div></div>';
+    const earn = rentalDiscounted - c.logistics;
+    const marg = c.totalClient > 0 ? earn / c.totalClient : 0;
+    const ok = earn >= 0;
+    return '<div class="rent-card">' +
+      '<div class="d">Скидка орга −'+(d*100)+'%</div>' +
+      '<div class="cond">' +
+        'Цена клиента: <b>'+fmt(c.totalClient)+'</b><br>' +
+        'Аренда со скидкой: <b>'+fmt(rentalDiscounted)+'</b><br>' +
+        'Логистика: <b>'+fmt(c.logistics)+'</b>' +
+      '</div>' +
+      '<div class="earn-line '+(ok?'ok':'bad')+'">' +
+        (ok ? '✓ Зарабатываем: ' : '✗ Убыток: ') +
+        fmt(Math.abs(earn)) + ' · ' + (marg*100).toFixed(1).replace('.',',') + '%' +
+      '</div></div>';
   }).join('');
 }
 
 ['guests','tables'].forEach(id => document.getElementById(id).oninput = render);
 ['candles','ceremony'].forEach(id => document.getElementById(id).onchange = render);
+
+// Блок 1 — акционные цены
+function updateRowEarn(key, base, hasDiscount, akc){
+  const baseline = hasDiscount ? Math.round(base * 0.7) : base;
+  const earnEl = document.getElementById('earn-'+key);
+  const margEl = document.getElementById('marg-'+key);
+  if(!akc){ earnEl.textContent='—'; margEl.textContent='—'; earnEl.className='num earn neu'; margEl.className='num earn neu'; return; }
+  const earn = akc - baseline;
+  const marg = akc > 0 ? earn / akc : 0;
+  const cls = 'num earn ' + (earn > 0 ? 'pos' : earn < 0 ? 'neg' : 'neu');
+  earnEl.textContent = (earn >= 0 ? '+' : '') + fmt(earn);
+  earnEl.className = cls;
+  margEl.textContent = (marg >= 0 ? '+' : '') + (marg*100).toFixed(1).replace('.',',') + '%';
+  margEl.className = cls;
+}
+
+document.querySelectorAll('#priceTable tbody tr').forEach(row => {
+  const key = row.dataset.key;
+  const base = +row.dataset.base;
+  const hasDiscount = row.dataset.discount === 'yes';
+  const inp = row.querySelector('input');
+  const saved = localStorage.getItem('ameli_akc_'+key);
+  if(saved){ inp.value = saved; updateRowEarn(key, base, hasDiscount, +saved); }
+  inp.oninput = function(){
+    const v = +this.value || 0;
+    localStorage.setItem('ameli_akc_'+key, this.value);
+    updateRowEarn(key, base, hasDiscount, v);
+  };
+});
 
 // Блок 4 — выгода орга
 function renderBenefit(){
