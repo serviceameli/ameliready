@@ -717,7 +717,7 @@ function updateProfits() {
     const c = servCost();
     const pr = S.priceServ || 0;
     const el = document.getElementById('profit-serv');
-    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,pr-c.base)) + ' ₽</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,pr-c.base)) + '</b>';
   }
   const cerc = cerCost();
   const cerHint = document.getElementById('cerHint');
@@ -728,7 +728,7 @@ function updateProfits() {
   if (S.cer) {
     if (S.cerPrice === null) { S.cerPrice = cerc.retail; const el = document.getElementById('cerPrice'); if(el) el.value = S.cerPrice; }
     const el = document.getElementById('cerProfit');
-    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.cerPrice||0)-cerc.base)) + ' ₽</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.cerPrice||0)-cerc.base)) + '</b>';
   }
   const sc = svechiCost();
   const svHint = document.getElementById('svechiHint');
@@ -739,7 +739,7 @@ function updateProfits() {
   if (S.svechi) {
     if (S.svechiPrice === null) { S.svechiPrice = sc.retail; const el = document.getElementById('svechiPrice'); if(el) el.value = S.svechiPrice; }
     const el = document.getElementById('svechiProfit');
-    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.svechiPrice||0)-sc.base)) + ' ₽</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.svechiPrice||0)-sc.base)) + '</b>';
   }
   updateBudget();
 }
