@@ -218,6 +218,15 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 .pserv-detail .sd-photos{display:flex;gap:5px;flex:1;min-height:0;}
 .pserv-detail .sd-photos .ph{flex:1;min-width:0;min-height:0;background:#ffffff;border:1px solid var(--rule);border-radius:3px;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;padding:2% 4% 5%;box-sizing:border-box;}
 .pserv-detail .sd-photos .ph img{width:100%;height:100%;object-fit:contain;background:transparent;display:block;}
+/* ─── СЛАЙДЫ ТЕКСТИЛЯ ─── */
+.ptextile{display:flex;flex-direction:column;padding:3% 5% 2.5%;overflow:hidden;}
+.ptextile .tx-title{font-family:'Cormorant',serif;font-size:1.9em;font-weight:500;letter-spacing:-.02em;margin-bottom:.2em;flex-shrink:0;}
+.ptextile .tx-sub{font-size:.68em;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:2.2%;flex-shrink:0;}
+.ptextile .tx-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3% 2.5%;flex:1;min-height:0;}
+.ptextile .tx-cell{display:flex;flex-direction:column;min-height:0;min-width:0;}
+.ptextile .tx-ph{flex:1;min-height:0;background:#ffffff;border:1px solid var(--rule);border-radius:3px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:6%;box-sizing:border-box;}
+.ptextile .tx-ph img{width:100%;height:100%;object-fit:contain;background:#fff;display:block;}
+.ptextile .tx-label{font-size:.6em;color:var(--mid);text-align:center;margin-top:.5em;line-height:1.3;flex-shrink:0;}
 </style>
 </head>
 <body>
@@ -391,6 +400,51 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
           </div>
         </div>
 
+      </div>
+    </div>
+
+    <!-- слайд текстиль: Скатерти -->
+    <div class="page ptextile">
+      <div class="tx-title">Скатерти</div>
+      <div class="tx-sub">Круглый стол</div>
+      <div class="tx-grid">
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20_%D0%90%D0%BB%D1%8C%D1%84%D0%B0_%20%D0%BE%D0%BB%D0%B8%D0%B2%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BA%D1%80%D1%83%D0%B3%D0%BB%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть Альфа оливковая круглая</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20_%D0%90%D0%BB%D1%8C%D1%84%D0%B0_%20%D0%BF%D0%BB%D0%BE%D0%BC%D0%B1%D0%B8%D1%80%20%D0%BA%D1%80%D1%83%D0%B3%D0%BB%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть Альфа пломбир круглая</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20%D0%BA%D0%B0%D0%BD%D0%B2%D0%B0%D1%81%20_%D0%93%D0%B0%D0%BC%D0%BC%D0%B0_%20%D1%87%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BA%D1%80%D1%83%D0%B3%D0%BB%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть канвас Гамма черная круглая</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20_%D0%90%D0%BB%D1%8C%D1%84%D0%B0_%20%D1%81%D0%BD%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F%20%D0%BA%D1%80%D1%83%D0%B3%D0%BB%D0%B0%D1%8F-1.png&w=900&q=82" alt=""></div><div class="tx-label">Скатерть Альфа снежная круглая</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20%D0%B1%D0%B0%D1%80%D1%85%D0%B0%D1%82%D0%BD%D0%B0%D1%8F%20_%D0%91%D0%B5%D1%82%D0%B0_%20%D0%B1%D0%BB%D0%B5%D0%B4%D0%BD%D0%BE-%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BA%D1%80%D1%83%D0%B3%D0%BB%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть бархатная Бета бледно-розовая круглая</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20%D0%BA%D0%B0%D0%BD%D0%B2%D0%B0%D1%81%20_%D0%93%D0%B0%D0%BC%D0%BC%D0%B0_%20%D1%84%D0%B8%D1%81%D1%82%D0%B0%D1%88%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BA%D1%80%D1%83%D0%B3%D0%BB%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть канвас Гамма фисташковая круглая</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20%D0%BA%D0%B0%D0%BD%D0%B2%D0%B0%D1%81%20_%D0%93%D0%B0%D0%BC%D0%BC%D0%B0_%20%D1%80%D0%BE%D0%B7%D0%B0%20%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%20%D0%BA%D1%80%D1%83%D0%B3%D0%BB%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть канвас Гамма роза мента круглая</div></div>
+      </div>
+    </div>
+
+    <!-- слайд текстиль: Скатерти -->
+    <div class="page ptextile">
+      <div class="tx-title">Скатерти</div>
+      <div class="tx-sub">Прямоугольный стол</div>
+      <div class="tx-grid">
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20_%D0%90%D0%BB%D1%8C%D1%84%D0%B0%2B_%20%D0%BE%D0%BB%D0%B8%D0%B2%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BF%D1%80%D1%8F%D0%BC%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть Альфа+ оливковая прямоугольная</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20_%D0%90%D0%BB%D1%8C%D1%84%D0%B0%2B_%20%D0%BF%D0%BB%D0%BE%D0%BC%D0%B1%D0%B8%D1%80%20%D0%BF%D1%80%D1%8F%D0%BC%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть Альфа+ пломбир прямоугольная</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20%D0%BA%D0%B0%D0%BD%D0%B2%D0%B0%D1%81%20_%D0%93%D0%B0%D0%BC%D0%BC%D0%B0_%20%D1%87%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D1%8F%D0%BC%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть канвас Гамма черная прямоугольная</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20_%D0%90%D0%BB%D1%8C%D1%84%D0%B0%2B_%20%D1%81%D0%BD%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D1%8F%D0%BC%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть Альфа+ снежная прямоугольная</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20%D0%B1%D0%B0%D1%80%D1%85%D0%B0%D1%82%D0%BD%D0%B0%D1%8F%20_%D0%91%D0%B5%D1%82%D0%B0%2B_%20%D0%B1%D0%BB%D0%B5%D0%B4%D0%BD%D0%BE-%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BF%D1%80%D1%8F%D0%BC%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть бархатная Бета+ бледно-розовая прямоугольная</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20%D0%BA%D0%B0%D0%BD%D0%B2%D0%B0%D1%81%20_%D0%93%D0%B0%D0%BC%D0%BC%D0%B0%2B_%20%D1%84%D0%B8%D1%81%D1%82%D0%B0%D1%88%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BF%D1%80%D1%8F%D0%BC%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть канвас Гамма+ фисташковая прямоугольная</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20%D0%BA%D0%B0%D0%BD%D0%B2%D0%B0%D1%81%20_%D0%93%D0%B0%D0%BC%D0%BC%D0%B0_%20%D1%80%D0%BE%D0%B7%D0%B0%20%D0%BC%D0%B5%D0%BD%D1%82%D0%B0%20%D0%BF%D1%80%D1%8F%D0%BC%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Скатерть канвас Гамма роза мента прямоугольная</div></div>
+      </div>
+    </div>
+
+    <!-- слайд текстиль: Салфетки -->
+    <div class="page ptextile">
+      <div class="tx-title">Салфетки</div>
+      <div class="tx-sub">Палитра сезона</div>
+      <div class="tx-grid">
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%B0%D0%BB%D1%84%D0%B5%D1%82%D0%BA%D0%B0%20_%D0%90%D0%BB%D1%8C%D1%84%D0%B0_%20%D0%BE%D0%BB%D0%B8%D0%B2%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Салфетка Альфа оливковая</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%B0%D0%BB%D1%84%D0%B5%D1%82%D0%BA%D0%B0%20_%D0%90%D0%BB%D1%8C%D1%84%D0%B0_%20%D0%BF%D0%BB%D0%BE%D0%BC%D0%B1%D0%B8%D1%80-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Салфетка Альфа пломбир</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%B0%D0%BB%D1%84%D0%B5%D1%82%D0%BA%D0%B0%20_%D0%90%D0%BB%D1%8C%D1%84%D0%B0_%20%D1%87%D0%B5%D1%80%D0%BD%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Салфетка Альфа черная</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%B0%D0%BB%D1%84%D0%B5%D1%82%D0%BA%D0%B0%20_%D0%90%D0%BB%D1%8C%D1%84%D0%B0_%20%D1%81%D0%BD%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Салфетка Альфа снежная</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%B0%D0%BB%D1%84%D0%B5%D1%82%D0%BA%D0%B0%20%D0%B1%D0%B0%D1%80%D1%85%D0%B0%D1%82%D0%BD%D0%B0%D1%8F%20_%D0%91%D0%B5%D1%82%D0%B0_%20%D0%B1%D0%BB%D0%B5%D0%B4%D0%BD%D0%BE-%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Салфетка бархатная Бета бледно-розовая</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%B0%D0%BB%D1%84%D0%B5%D1%82%D0%BA%D0%B0%20%D0%BA%D0%B0%D0%BD%D0%B2%D0%B0%D1%81%20_%D0%93%D0%B0%D0%BC%D0%BC%D0%B0_%20%D1%84%D0%B8%D1%81%D1%82%D0%B0%D1%88%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F-1.png&w=900&q=82" alt=""></div><div class="tx-label">Салфетка канвас Гамма фисташковая</div></div>
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%B0%D0%BB%D1%84%D0%B5%D1%82%D0%BA%D0%B0%20%D0%BA%D0%B0%D0%BD%D0%B2%D0%B0%D1%81%20_%D0%93%D0%B0%D0%BC%D0%BC%D0%B0_%20%D1%80%D0%BE%D0%B7%D0%B0%20%D0%BC%D0%B5%D0%BD%D1%82%D0%B0-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Салфетка канвас Гамма роза мента</div></div>
       </div>
     </div>
 

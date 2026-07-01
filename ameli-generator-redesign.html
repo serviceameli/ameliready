@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMELI · Генератор презентации — редизайн</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Нейтральная палитра — жёлтый убран */
+    --accent:        #2B2A26;   /* тёплый графит — линии, активная рамка */
+    --accent-soft:   #6B6A62;   /* приглушённый — буллеты, hover */
+    --text:          #2D2C28;
+    --mid:           #6B6A62;
+    --muted:         #8A8A82;
+    --light:         #9A9A92;
+    --rule:          #E8E8E2;
+    --field-border:  #E0E0DA;
+    --soft-bg:       #FAFAF8;
+    --white:         #FFFFFF;
+    --page-bg:       #F2F1EC;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    font-family:'Montserrat',sans-serif;
+    color:var(--text);
+    background:var(--page-bg);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- Шапка: светлая вместо чёрной ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    height:56px;
+    background:var(--soft-bg);
+    border-bottom:1px solid var(--rule);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 32px;
+  }
+  .topbar .brand{
+    font-size:13px;font-weight:700;
+    letter-spacing:0.3px;            /* срезанная разрядка на длинной строке */
+    color:var(--text);
+  }
+  .topbar .brand span{color:var(--muted);font-weight:600;}
+  .topbar .hint{
+    font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0.2px;
+  }
+
+  /* ---------- Раскладка ---------- */
+  .layout{
+    display:grid;
+    grid-template-columns:380px 1fr;
+    gap:24px;
+    max-width:1500px;margin:0 auto;
+    padding:24px 24px 60px;
+    align-items:start;
+  }
+
+  /* ---------- Левая панель ---------- */
+  .panel{
+    background:var(--white);
+    border:1px solid var(--rule);
+    border-radius:14px;
+    padding:32px;
+  }
+  .block{margin-bottom:40px;}
+  .block:last-child{margin-bottom:0;}
+
+  .kicker{
+    font-size:12px;font-weight:600;
+    letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--light);
+    margin-bottom:18px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .kicker::after{content:"";flex:1;height:1px;background:var(--rule);}
+
+  .field-label{
+    font-size:12px;font-weight:600;color:var(--mid);
+    margin-bottom:6px;display:block;
+  }
+  .field{
+    width:100%;height:48px;
+    border:1px solid var(--field-border);
+    border-radius:8px;
+    padding:0 14px;
+    font-family:inherit;font-size:15px;color:var(--text);
+    background:var(--white);
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .field:focus{
+    outline:none;
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(43,42,38,0.06);
+  }
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+  .field-single{margin-bottom:10px;}
+  .note{
+    font-size:12px;line-height:1.6;color:var(--muted);
+    margin-top:4px;
+  }
+
+  /* Палитра-свотчи */
+  .swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .swatch{
+    border:1px solid var(--rule);border-radius:10px;
+    overflow:hidden;cursor:pointer;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .swatch.active{border-color:var(--accent);box-shadow:0 0 0 3px rgba(43,42,38,0.06);}
+  .swatch .strip{display:flex;height:40px;}
+  .swatch .strip i{flex:1;}
+  .swatch .name{
+    font-size:12px;font-weight:600;text-align:center;
+    padding:7px 0;color:var(--text);
+  }
+
+  /* Карточка тарифа в панели — сокращённая */
+  .tier{
+    border:1px solid var(--rule);border-radius:12px;
+    padding:18px;margin-bottom:14px;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .tier.focused{border-color:var(--accent);box-shadow:0 4px 20px rgba(0,0,0,0.06);}
+  .tier-imgs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+  .tier-imgs .ph{
+    aspect-ratio:4/3;border-radius:8px;
+    background:linear-gradient(135deg,#f4f2ec,#e9e6dd);
+  }
+  .tier h4{font-size:16px;font-weight:600;margin-bottom:2px;}
+  .tier .sub{font-size:12px;color:var(--muted);margin-bottom:12px;}
+  .tier ul{list-style:none;}
+  .tier li{
+    font-size:13px;line-height:1.7;color:var(--mid);
+    padding-left:16px;position:relative;
+  }
+  .tier li::before{
+    content:"";position:absolute;left:2px;top:9px;
+    width:4px;height:4px;border-radius:50%;
+    background:var(--accent-soft);   /* нейтральный буллет вместо жёлтого */
+  }
+  .price-line{
+    font-size:13px;color:var(--muted);margin-top:12px;
+  }
+  .price-line s{color:var(--light);}
+  .price-line b{color:var(--text);font-weight:600;}
+  .earn{
+    margin-top:10px;padding:10px 12px;
+    background:var(--soft-bg);border-radius:8px;
+    border-left:2px solid var(--accent);
+    font-size:12px;color:var(--mid);
+  }
+  .earn b{color:var(--text);}
+
+  /* ---------- Правая колонка: sticky-превью ---------- */
+  .preview-col{position:sticky;top:80px;}
+  .preview-label{
+    font-size:11px;font-weight:600;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--light);margin-bottom:14px;
+  }
+  .card{
+    background:var(--white);
+    border:1px solid var(--rule);
+    border-radius:16px;overflow:hidden;
+  }
+  .card-imgs{display:grid;grid-template-columns:1fr 1fr;}
+  .card-imgs .ph{
+    aspect-ratio:16/10;
+    background:linear-gradient(135deg,#f4f2ec,#e7e3d9);
+    position:relative;
+  }
+  .logo-tag{
+    position:absolute;top:16px;left:16px;
+    background:rgba(255,255,255,0.82);
+    backdrop-filter:blur(2px);
+    font-size:10px;font-weight:600;letter-spacing:1px;
+    color:var(--muted);padding:6px 12px;border-radius:6px;
+  }
+  .card-body{padding:32px;}
+  .card-body .eyebrow{
+    font-size:11px;font-weight:600;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--light);margin-bottom:10px;
+  }
+  .card-body h2{
+    font-family:'Cormorant',serif;
+    font-size:40px;font-weight:500;line-height:1.05;
+    letter-spacing:-0.5px;color:var(--text);
+    margin-bottom:8px;
+  }
+  .card-body .lede{font-size:14px;color:var(--mid);margin-bottom:24px;}
+  .metrics{display:flex;gap:36px;margin-bottom:24px;}
+  .metric .v{font-size:26px;font-weight:600;line-height:1;}
+  .metric .l{
+    font-size:11px;font-weight:600;letter-spacing:1px;
+    text-transform:uppercase;color:var(--light);margin-top:6px;
+  }
+  .accent-rule{width:64px;height:2px;background:var(--accent);margin-top:8px;}
+  .price-block{text-align:right;}
+  .price-block .l{
+    font-size:11px;font-weight:600;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--light);margin-bottom:4px;
+  }
+  .price-block .v{
+    font-family:'Cormorant',serif;
+    font-size:42px;font-weight:600;color:var(--text);line-height:1;
+  }
+  .card-foot{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    padding-top:8px;
+  }
+
+  /* ---------- Блок "выберите плотность" — 3 колонки ---------- */
+  .density{
+    background:var(--white);border:1px solid var(--rule);
+    border-radius:16px;padding:40px;margin-top:24px;
+  }
+  .density .eyebrow{
+    font-size:11px;font-weight:600;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--light);margin-bottom:10px;
+  }
+  .density h3{
+    font-family:'Cormorant',serif;font-size:30px;font-weight:500;
+    letter-spacing:-0.3px;margin-bottom:6px;
+  }
+  .density .sub{font-size:13px;color:var(--muted);margin-bottom:28px;}
+  .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .tcard{
+    border:1px solid var(--rule);border-radius:12px;
+    padding:28px;display:flex;flex-direction:column;
+  }
+  .tcard.featured{
+    border:2px solid var(--accent);
+    box-shadow:0 4px 20px rgba(0,0,0,0.06);
+  }
+  .tcard .img{
+    aspect-ratio:16/9;border-radius:8px;margin-bottom:18px;
+    background:linear-gradient(135deg,#f4f2ec,#e7e3d9);
+  }
+  .tcard h4{font-size:17px;font-weight:600;margin-bottom:14px;}
+  .tcard ul{list-style:none;margin-bottom:20px;}
+  .tcard li{
+    font-size:13px;line-height:1.7;color:var(--mid);
+    padding-left:16px;position:relative;
+  }
+  .tcard li::before{
+    content:"";position:absolute;left:2px;top:9px;
+    width:4px;height:4px;border-radius:50%;background:var(--accent-soft);
+  }
+  .tcard .foot{margin-top:auto;}
+  .tcard .old{font-size:13px;color:var(--light);text-decoration:line-through;}
+  .tcard .now{font-family:'Cormorant',serif;font-size:28px;font-weight:600;line-height:1;margin:2px 0 4px;}
+  .tcard .tag{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--light);}
+
+  .cta{
+    width:100%;height:52px;border:none;border-radius:10px;
+    background:var(--accent);color:#fff;
+    font-family:inherit;font-size:13px;font-weight:600;
+    letter-spacing:1px;text-transform:uppercase;
+    cursor:pointer;margin-top:8px;transition:opacity .2s;
+  }
+  .cta:hover{opacity:0.88;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">AMELI <span>· Генератор презентации для партнёра</span></div>
+  <div class="hint">В презентацию идут все три варианта с вашими ценами — клиент выбирает наполнение</div>
+</div>
+
+<div class="layout">
+  <!-- ЛЕВАЯ ПАНЕЛЬ -->
+  <div class="panel">
+    <div class="block">
+      <div class="kicker">1 · Гости и столы</div>
+      <div class="field-row">
+        <div>
+          <label class="field-label">Гостей</label>
+          <input class="field" value="40" id="guests">
+        </div>
+        <div>
+          <label class="field-label">Столов гостей</label>
+          <input class="field" value="5" id="tables">
+        </div>
+      </div>
+      <div class="field-single">
+        <label class="field-label">Площадка за МКАД, км</label>
+        <input class="field" value="0">
+      </div>
+      <p class="note">Столы из расчёта 8 гостей на стол. Президиум входит в каждый вариант. За МКАД — 100 ₽/км к доставке, считается автоматически.</p>
+    </div>
+
+    <div class="block">
+      <div class="kicker">2 · Палитра</div>
+      <div class="swatches">
+        <div class="swatch active">
+          <div class="strip"><i style="background:#cfd6b8"></i><i style="background:#e8ead9"></i><i style="background:#b9c29a"></i></div>
+          <div class="name">Олива</div>
+        </div>
+        <div class="swatch">
+          <div class="strip"><i style="background:#efe6d6"></i><i style="background:#e2d2b8"></i><i style="background:#d8c4a0"></i></div>
+          <div class="name">Жемчуг</div>
+        </div>
+        <div class="swatch">
+          <div class="strip"><i style="background:#f4e3df"></i><i style="background:#e9c9c2"></i><i style="background:#dcae a4"></i></div>
+          <div class="name">Пудра</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="kicker">3 · Три варианта · ваши цены</div>
+
+      <div class="tier focused">
+        <div class="tier-imgs"><div class="ph"></div><div class="ph"></div></div>
+        <h4>Лёгкий</h4>
+        <div class="sub">Аккуратная база</div>
+        <ul>
+          <li>Скатерть в палитре сезона</li>
+          <li>Салфетки в палитре</li>
+          <li>Подстановочные тарелки</li>
+        </ul>
+        <div class="price-line">на 5 столов: <s>160 000 ₽</s> · закупка <b>100 000 ₽</b></div>
+        <div class="field-single" style="margin-top:12px;">
+          <label class="field-label">Ваша цена клиенту, ₽</label>
+          <input class="field" value="128000">
+        </div>
+        <div class="earn"><b>Заработок 28 000 ₽</b> · клиент экономит 32 000 ₽</div>
+      </div>
+
+      <div class="tier">
+        <div class="tier-imgs"><div class="ph"></div><div class="ph"></div></div>
+        <h4>Полный</h4>
+        <div class="sub">Оптимум по плотности</div>
+        <ul>
+          <li>Всё из «Лёгкого» + сет из 3 свечей</li>
+          <li>Доп. бокалы на гостя</li>
+        </ul>
+        <div class="price-line">на 5 столов: <s>230 000 ₽</s> · закупка <b>140 000 ₽</b></div>
+        <div class="field-single" style="margin-top:12px;">
+          <label class="field-label">Ваша цена клиенту, ₽</label>
+          <input class="field" value="184000">
+        </div>
+        <div class="earn"><b>Заработок 44 000 ₽</b> · клиент экономит 46 000 ₽</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ПРАВАЯ КОЛОНКА -->
+  <div class="preview-col">
+    <div class="preview-label">Живое превью · так увидит ваш клиент</div>
+
+    <div class="card">
+      <div class="card-imgs">
+        <div class="ph"><div class="logo-tag">ВАШ ЛОГОТИП</div></div>
+        <div class="ph"></div>
+      </div>
+      <div class="card-body">
+        <div class="eyebrow">Готовое оформление свадьбы</div>
+        <h2>Оформление банкета · Олива</h2>
+        <div class="lede">Три варианта наполнения — выберите свой внутри</div>
+        <div class="metrics">
+          <div class="metric"><div class="v">40</div><div class="l">гостей</div></div>
+          <div class="metric"><div class="v">5 + 1</div><div class="l">столов + президиум</div></div>
+        </div>
+        <div class="card-foot">
+          <div class="accent-rule"></div>
+          <div class="price-block">
+            <div class="l">варианты от</div>
+            <div class="v">128 000 ₽</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="density">
+      <div class="eyebrow">Варианты наполнения</div>
+      <h3>Выберите плотность оформления</h3>
+      <div class="sub">Расчёт на 40 гостей · 5 столов + президиум · палитра «Олива»</div>
+      <div class="cols">
+        <div class="tcard">
+          <div class="img"></div>
+          <h4>Лёгкий</h4>
+          <ul>
+            <li>Скатерть в палитре сезона</li>
+            <li>Салфетки в палитре</li>
+            <li>Подстановочные тарелки</li>
+            <li>3 бокала на гостя</li>
+          </ul>
+          <div class="foot">
+            <div class="old">160 000 ₽</div>
+            <div class="now">128 000 ₽</div>
+            <div class="tag">комплект целиком</div>
+          </div>
+        </div>
+        <div class="tcard featured">
+          <div class="img"></div>
+          <h4>Полный</h4>
+          <ul>
+            <li>Скатерть в палитре сезона</li>
+            <li>Салфетки в палитре</li>
+            <li>Подстановочные тарелки</li>
+            <li>3 бокала на гостя</li>
+            <li>Сет из 3 свечей или шар на стол</li>
+          </ul>
+          <div class="foot">
+            <div class="old">230 000 ₽</div>
+            <div class="now">184 000 ₽</div>
+            <div class="tag">комплект целиком</div>
+          </div>
+        </div>
+        <div class="tcard">
+          <div class="img"></div>
+          <h4>Максимум</h4>
+          <ul>
+            <li>Скатерть в палитре сезона</li>
+            <li>Салфетки в палитре</li>
+            <li>Подстановочные тарелки</li>
+            <li>3 бокала на гостя</li>
+            <li>Сет из 9 свечей с зеркалом</li>
+            <li>Кольца для салфеток</li>
+          </ul>
+          <div class="foot">
+            <div class="old">300 000 ₽</div>
+            <div class="now">240 000 ₽</div>
+            <div class="tag">комплект целиком</div>
+          </div>
+        </div>
+      </div>
+      <button class="cta">Скачать PDF ↓</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Подсветка связи: фокус в поле слева → подсвечивается карточка тарифа
+  document.querySelectorAll('.tier .field').forEach(f=>{
+    const tier=f.closest('.tier');
+    f.addEventListener('focus',()=>{
+      document.querySelectorAll('.tier').forEach(t=>t.classList.remove('focused'));
+      tier.classList.add('focused');
+    });
+  });
+  // Свотчи палитры
+  document.querySelectorAll('.swatch').forEach(s=>{
+    s.addEventListener('click',()=>{
+      document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('active'));
+      s.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
