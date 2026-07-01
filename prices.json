@@ -1,0 +1,9 @@
+{
+  "guest": 900,
+  "table": 1400,
+  "candles": 800,
+  "ceremony": 25000,
+  "bench": 500,
+  "delivery": 16000,
+  "installer": 8500
+}

@@ -102,22 +102,6 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 .p1 .meta span{font-size:.78em;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
 .p1 .yline{position:absolute;left:5%;bottom:9%;width:7%;height:3px;background:var(--accent);}
 
-/* ─── СЛАЙДЫ 2–3: ТАРИФЫ ─── */
-.ptier{display:flex;flex-direction:column;}
-.ptier .pt-photos{display:grid;grid-template-columns:1fr 1fr;height:62%;background:#ffffff;gap:2%;padding:2.5% 3%;box-sizing:border-box;}
-.ptier .pt-photos-4{grid-template-columns:repeat(4,1fr);}
-.ptier .pt-photos img{width:100%;height:100%;object-fit:contain;background:#ffffff;min-width:0;}
-.ptier .pt-bottom{padding:2.5% 5% 2%;display:flex;gap:5%;align-items:flex-start;border-top:2px solid var(--accent);flex:1;}
-.ptier .pt-meta{min-width:160px;display:flex;flex-direction:column;}
-.ptier .pt-num{font-size:.62em;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.4em;}
-.ptier .pt-name{font-family:'Cormorant',serif;font-size:1.5em;font-weight:500;letter-spacing:-.02em;color:var(--text);line-height:1.2;}
-.ptier .pt-price{margin-top:auto;padding-top:.8em;}
-.ptier .pt-price .cap{font-size:.62em;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
-.ptier .pt-price .val{font-family:'Cormorant',serif;font-size:1.5em;font-weight:600;letter-spacing:-.02em;}
-.ptier .pt-items{list-style:none;display:flex;flex-direction:column;gap:.3em;flex:1;}
-.ptier .pt-items li{font-size:.82em;color:var(--mid);display:flex;align-items:baseline;gap:.5em;line-height:1.4;}
-.ptier .pt-items li::before{content:'';width:3px;height:3px;background:var(--accent);flex-shrink:0;display:inline-block;transform:translateY(-2px);}
-
 /* ─── СЛАЙДЫ 4–5: ОПЦИИ ─── */
 .popt{display:flex;}
 .popt .opt-photo{width:52%;background:#ffffff;overflow:hidden;flex-shrink:0;padding:3% 2.5% 3% 5%;box-sizing:border-box;}
@@ -141,20 +125,6 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 .pcomp .yrule2{width:6%;height:2px;background:var(--accent);margin:.6em 0 .8em;}
 .pcomp h2{font-size:1.55em;font-weight:600;letter-spacing:-.01em;}
 .pcomp .capline{font-size:.82em;color:var(--mid);margin-top:.3em;margin-bottom:1em;}
-.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:2%;height:64%;}
-.comp-col{border:1px solid var(--rule);display:flex;flex-direction:column;overflow:hidden;}
-.comp-col.feat{border:2px solid var(--accent);box-shadow:0 4px 20px rgba(0,0,0,.06);}
-.comp-photo{height:30%;background:#e8e8e6;overflow:hidden;flex-shrink:0;position:relative;}
-.comp-title{position:absolute;left:0;right:0;bottom:0;padding:10% 6% 5%;font-family:'Cormorant',serif;font-size:1.2em;font-weight:600;color:#fff;letter-spacing:-.01em;background:linear-gradient(to top,rgba(0,0,0,.55),rgba(0,0,0,0));}
-.comp-photo img{width:100%;height:100%;object-fit:cover;}
-.comp-body{padding:5% 6%;display:flex;flex-direction:column;flex:1;}
-.comp-name{font-family:'Cormorant',serif;font-size:1.15em;font-weight:500;margin-bottom:.5em;}
-.comp-items{list-style:none;flex:1;}
-.comp-items li{font-size:.68em;color:var(--mid);padding:.18em 0;display:flex;gap:.4em;align-items:baseline;line-height:1.4;}
-.comp-items li::before{content:'';width:3px;height:3px;background:var(--accent-soft);flex-shrink:0;transform:translateY(-2px);}
-.comp-price{border-top:1px solid var(--rule);padding-top:.5em;margin-top:.5em;}
-.comp-price b{font-size:1.25em;font-weight:600;letter-spacing:-.01em;display:block;}
-.comp-price span{font-size:.62em;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
 .pcomp .contact{position:absolute;bottom:3.5%;right:5%;text-align:right;font-size:.88em;color:var(--text);}
 .pcomp .contact b{font-weight:600;}
 .pcomp .contact span{display:block;font-size:.85em;color:var(--muted);margin-top:.15em;}
@@ -169,12 +139,14 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 .pcond .contact span{display:block;font-size:.85em;color:var(--muted);margin-top:.15em;}
 
 @media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
   body{background:#fff;}
   .topbar,.panel,.preview-label{display:none!important;}
   .layout{display:block;height:auto;overflow:visible;}
   .preview-col{overflow:visible;height:auto;padding:0;}
   .preview{padding:0;gap:0;}
   .page{max-width:none;box-shadow:none;page-break-after:always;width:100%;border-radius:0;}
+  .preview .page:last-child{page-break-after:auto;}
   @page{size:A4 landscape;margin:0;}
 }
 
@@ -197,7 +169,7 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 .pkgcard .priceline label{font-size:10px;color:var(--light);white-space:nowrap}
 .pkgcard .priceline input{flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none;background:var(--white);-moz-appearance:textfield;}
 .pkgcard .priceline input::-webkit-outer-spin-button,.pkgcard .priceline input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-.pkgcard .profit{font-size:11px;padding:6px 9px;background:var(--soft);border-left:3px solid var(--accent);color:var(--mid)}
+.pkgcard .profit{font-size:11px;padding:6px 9px;background:var(--soft-bg);border-left:3px solid var(--accent);color:var(--mid)}
 .optcard .prices{display:grid;grid-template-columns:1fr auto;gap:3px 10px;margin-bottom:10px;font-size:11px;}
 .optcard .prices .pl{color:var(--muted);}
 .optcard .prices .pv{text-align:right;white-space:nowrap;}
@@ -205,7 +177,7 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 .optcard .prices .pv.mid{color:var(--mid);}
 .optcard .prices .pv.accent{color:var(--accent);font-weight:700;font-size:12px;}
 /* === ПАНЕЛЬ: опции — заработок === */
-.optcard .profit{font-size:11px;margin-top:7px;padding:6px 9px;background:var(--soft);border-left:3px solid var(--accent);color:var(--mid)}
+.optcard .profit{font-size:11px;margin-top:7px;padding:6px 9px;background:var(--soft-bg);border-left:3px solid var(--accent);color:var(--mid)}
 .optcard .thumb{height:90px;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:#ffffff;overflow:hidden}
 #ocCer .thumb{height:auto;display:block}
 .optcard .thumb img{width:100%;height:100%;object-fit:contain;background:#ffffff}
@@ -244,9 +216,6 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 .serv-swatches .sw-colors{flex:1;display:flex;}
 .serv-swatches .sw-colors i{flex:1;}
 .serv-swatches .sw-nm{padding:.7em .4em;text-align:center;font-size:.95em;font-family:'Cormorant',serif;font-weight:600;color:var(--text);}
-.ptier .pt-swatch{display:flex;gap:2px;margin-top:.7em;height:9px;width:75%;}
-.ptier .pt-swatch i{flex:1;}
-.ptier .pt-palnote{font-size:.72em;color:var(--mid);line-height:1.55;align-self:center;flex:1;}
 /* ─── СЛАЙД-ОПИСАНИЕ СЕРВИРОВКИ (2 колонки) ─── */
 .pserv-desc{display:flex;}
 .pserv-desc .sd-left{width:40%;padding:4.5% 4%;display:flex;flex-direction:column;box-sizing:border-box;border-right:2px solid var(--accent);}
@@ -586,8 +555,6 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 
 </div><!-- /layout -->
 <script>
-const IMGS = {"light1": "", "light2": "", "full1": "", "full2": "", "full3": "", "full4": "", "max1": "", "max2": "", "max3": "", "cer1": "https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%B0%D1%80%D0%BA%D0%B0%20%D0%B2%D0%BE%D0%BB%D0%BD%D0%B0%20%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0%D1%8F%20%2B%20%D1%84%D0%B8%D0%BE%D0%BB%D0%B5%D1%82.png&w=900&q=82", "cer2": "https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%B0%D1%80%D0%BA%D0%B0%20%D0%B2%D0%BE%D0%BB%D0%BD%D0%B0%20%D1%82%D0%BE%D1%82%D0%B0%D0%BB%20%D0%B6%D0%B5%D0%BC%D1%87%D1%83%D0%B3.png&w=900&q=82", "ch1": "https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%93%D0%BE%D1%81%D1%82_%20%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82", "ch2": "https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%93%D0%BE%D1%81%D1%82_%20%D0%BF%D1%80%D0%BE%D0%B7%D1%80%D0%B0%D1%87%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82", "ch3": "https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%93%D0%BE%D1%81%D1%82_%20%D1%8F%D0%BD%D1%82%D0%B0%D1%80%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82", "ch4": "https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%A1%D0%BE%D1%85%D0%BE_%20%D1%87%D0%B5%D1%80%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82", "ch5": ""};
-
 const GUESTS_PER_TABLE = 8;
 const MKAD_RATE = 100;
 
@@ -601,8 +568,27 @@ const TIERS = {
 const PRICE_GUEST=1550, PRICE_TABLECLOTH=2900, PRICE_CANDLES=1360, PRICE_CEREMONY_BASE=43000, PRICE_BENCH=1200, PRICE_DELIVERY=18000, PRICE_INSTALLER=9200;
 const DISCOUNT=0.30;
 
-// Акционные цены из калькулятора (localStorage)
-function akc(key, fallback){ const v = +localStorage.getItem('ameli_akc_'+key); return (v && v > 0) ? v : fallback; }
+// ── Акционные цены ──
+// Приоритет: параметры в URL (?g=900&t=1400...) → prices.json из репозитория → базовые константы.
+const AKC = {};
+const AKC_URL_KEYS = { g:'guest', t:'table', c:'candles', cer:'ceremony', b:'bench', d:'delivery', i:'installer' };
+(function(){
+  const q = new URLSearchParams(location.search);
+  for (const [short, key] of Object.entries(AKC_URL_KEYS)) {
+    const v = +q.get(short);
+    if (v > 0) AKC[key] = v;
+  }
+})();
+fetch('prices.json?v=' + Date.now())
+  .then(r => r.ok ? r.json() : null)
+  .then(j => {
+    if (!j) return;
+    let changed = false;
+    for (const k in j) { if (!(k in AKC) && +j[k] > 0) { AKC[k] = +j[k]; changed = true; } }
+    if (changed && typeof refreshAll === 'function') refreshAll();
+  })
+  .catch(()=>{}); // file:// или нет файла — работаем на константах
+function akc(key, fallback){ return (AKC[key] > 0) ? AKC[key] : fallback; }
 
 function servCostAkc(){
   const rental = S.guests * akc('guest', PRICE_GUEST) + S.tables * akc('table', PRICE_TABLECLOTH);
@@ -739,17 +725,6 @@ function updateBudget(){
 
 function updateProfits() {
   {
-    const li = document.getElementById('logisticsInfo');
-    if (li) {
-      const inst = installersCount();
-      li.innerHTML = '<span class="cap">Логистика (входит в цену, без скидки)</span>' +
-        'Доставка: <b>' + fmt(PRICE_DELIVERY) + '</b><br>' +
-        'Монтаж: <b>' + inst + ' × ' + fmt(PRICE_INSTALLER) + ' = ' + fmt(inst*PRICE_INSTALLER) + '</b> (' + inst + ' монтажника)<br>' +
-        'Итого логистика: <b>' + fmt(PRICE_DELIVERY + inst*PRICE_INSTALLER) + '</b>';
-    }
-  }
-  {
-    const c = servCost();
     const pr = S.priceServ || 0;
     const el = document.getElementById('profit-serv');
     if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,pr-servCostAkc())) + '</b>';
@@ -787,13 +762,8 @@ function renderPreview() {
   const pal = S.pals.map(k=>PALETTES[k].name).join(', ');
 
   document.getElementById('pvGuests').textContent = S.guests;
-  document.getElementById('pvTables').textContent = S.tables;
+  document.getElementById('pvTables').textContent = S.tables + ' + 1'; // гостевые + президиум
 
-  const palPhoto = (type, idx) => {
-    const p = (PHOTOS_BY_PAL[S.pal] && PHOTOS_BY_PAL[S.pal][type] && PHOTOS_BY_PAL[S.pal][type][idx])
-            || (PHOTOS_BY_PAL.oliva[type] && PHOTOS_BY_PAL.oliva[type][idx]) || '';
-    return p;
-  };
   document.getElementById('ptServItems').innerHTML = TIERS.serv.items.map(i=>'<li>'+i+'</li>').join('');
   document.getElementById('ptServPrice').textContent = S.priceServ ? fmt(S.priceServ) : '—';
   document.getElementById('ptServCap').textContent = 'Стоимость декора на ' + S.guests + ' гостей и ' + S.tables + ' столов';
@@ -938,14 +908,6 @@ inp.onchange = e => {
 
 function render() { buildPals(); buildPkgs(); renderPreview(); }
 render();
-
-(function(){
-  // ceremony grid
-  const cg = document.getElementById('pvCerGrid');
-  if (cg) ['cer1','cer2'].forEach(k => {
-    if (IMGS[k]) { const img = document.createElement('img'); img.src = IMGS[k]; img.style.cssText='width:100%;height:100%;object-fit:contain;background:#fff'; cg.appendChild(img); }
-  });
-})();
 </script>
 </body>
 </html>

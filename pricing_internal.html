@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>Ameli · Внутренний расчёт тарифов</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -145,6 +146,23 @@ th.akc-h{background:#FEF9E3;color:var(--text);}
   <span id="saveMsg" style="display:none;margin-left:14px;font-size:13px;color:var(--green);font-weight:600;">✓ Сохранено</span>
 </div>
 
+<!-- Блок передачи цен в генератор -->
+<div id="shareBox" style="display:none;margin-top:18px;border:2px solid var(--text);border-radius:8px;padding:16px 18px;">
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px;">Передать цены в генератор</div>
+
+  <div style="font-size:13px;margin-bottom:6px;"><b>Способ 1 · для всех партнёров.</b> Скопируй JSON и вставь его в файл <code>prices.json</code> в репозитории (GitHub → prices.json → ✏️ Edit → вставить → Commit). Через пару минут цены обновятся у всех.</div>
+  <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:16px;">
+    <textarea id="jsonOut" readonly rows="4" style="flex:1;font-family:monospace;font-size:12px;border:1px solid var(--rule);border-radius:6px;padding:8px 10px;resize:vertical;"></textarea>
+    <button onclick="copyShare('jsonOut',this)" style="background:var(--accent);color:var(--text);border:none;border-radius:6px;padding:9px 16px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">Копировать JSON</button>
+  </div>
+
+  <div style="font-size:13px;margin-bottom:6px;"><b>Способ 2 · точечно / спеццены.</b> Ссылка на генератор с зашитыми ценами — можно отправить конкретному партнёру. Учти: цены в ссылке имеют приоритет над prices.json и не обновятся при смене прайса.</div>
+  <div style="display:flex;gap:10px;align-items:center;">
+    <input id="linkOut" readonly style="flex:1;font-family:monospace;font-size:12px;border:1px solid var(--rule);border-radius:6px;padding:8px 10px;" >
+    <button onclick="copyShare('linkOut',this)" style="background:var(--accent);color:var(--text);border:none;border-radius:6px;padding:9px 16px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">Копировать ссылку</button>
+  </div>
+</div>
+
 
 <!-- ═══ БЛОК 2 — ИНТЕРАКТИВНЫЙ РАСЧЁТ ═══ -->
 <h2><span class="n">2</span>Расчёт заработка Амели</h2>
@@ -278,15 +296,45 @@ document.querySelectorAll('#priceTable tbody tr').forEach(row => {
   };
 });
 
+function collectAkc(){
+  const o = {};
+  document.querySelectorAll('#priceTable tbody tr').forEach(row => {
+    const inp = row.querySelector('input');
+    if(inp.value && +inp.value > 0) o[row.dataset.key] = +inp.value;
+  });
+  return o;
+}
+
+const AKC_SHORT = { guest:'g', table:'t', candles:'c', ceremony:'cer', bench:'b', delivery:'d', installer:'i' };
+
 function saveAll(){
+  const o = collectAkc();
+  // localStorage — чтобы введённые значения не терялись при перезагрузке этой страницы
   document.querySelectorAll('#priceTable tbody tr').forEach(row => {
     const inp = row.querySelector('input');
     if(inp.value) localStorage.setItem('ameli_akc_'+row.dataset.key, inp.value);
     else localStorage.removeItem('ameli_akc_'+row.dataset.key);
   });
+  // JSON для prices.json
+  document.getElementById('jsonOut').value = JSON.stringify(o, null, 2);
+  // Ссылка на генератор с ценами в URL
+  const params = Object.entries(o).map(([k,v]) => AKC_SHORT[k]+'='+v).join('&');
+  const genUrl = location.href.replace(/pricing_internal\.html.*$/, 'generator.html');
+  document.getElementById('linkOut').value = params ? genUrl+'?'+params : genUrl;
+  document.getElementById('shareBox').style.display = 'block';
   const msg = document.getElementById('saveMsg');
   msg.style.display = 'inline';
   setTimeout(() => msg.style.display = 'none', 2500);
+}
+
+function copyShare(id, btn){
+  const el = document.getElementById(id);
+  el.select();
+  navigator.clipboard.writeText(el.value).then(() => {
+    const t = btn.textContent;
+    btn.textContent = '✓ Скопировано';
+    setTimeout(() => btn.textContent = t, 1800);
+  });
 }
 
 render();
