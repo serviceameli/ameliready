@@ -594,7 +594,6 @@ const TIERS = {
     items: ['Скатерть круглая / прямоугольная','Салфетки','Подстановочные тарелки (прозрачные с кантом)','Сет бокалов 3 шт','Сет приборов 4 шт (золотые / чёрные)','Номерок для стола']
   }
 };
-const OPT_CHAIRS = {basePerGuest:600, profPerGuest:850, retailPerGuest:1000};
 const OPT_CER = {base:70000, prof:82000, retail:95000};
 const OPT_SVECHI = {basePerTable:8000, profPerTable:11000, retailPerTable:14000};
 
@@ -608,11 +607,10 @@ const PALETTES = {
 let S = {
   pals:['oliva'], pal:'oliva', guests:40, tables:5, tablesManual:false, km:0,
   priceServ:null, priceServManual:false,
-  chairs:false, cer:false, svechi:false, chairsPrice:null, cerPrice:null, svechiPrice:null
+  cer:false, svechi:false, cerPrice:null, svechiPrice:null
 };
 const r1k = n => Math.round(n/1000)*1000;
 function tierCost(k){const t=TIERS[k];return{base:r1k(t.baseFix+t.baseTable*S.tables),prof:r1k(t.profFix+t.profTable*S.tables),retail:r1k(t.retailFix+t.retailTable*S.tables)};}
-function chairsCost(){return{base:r1k(OPT_CHAIRS.basePerGuest*S.guests),prof:r1k(OPT_CHAIRS.profPerGuest*S.guests),retail:r1k(OPT_CHAIRS.retailPerGuest*S.guests)};}
 function svechiCost(){return{base:r1k(OPT_SVECHI.basePerTable*S.tables),prof:r1k(OPT_SVECHI.profPerTable*S.tables),retail:r1k(OPT_SVECHI.retailPerTable*S.tables)};}
 
 const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
