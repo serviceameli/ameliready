@@ -471,36 +471,6 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       </div>
     </div>
 
-    <!-- слайд 4: Стулья (если включено) -->
-    <div class="page popt" id="pageChairs" style="display:none">
-      <div class="opt-photo" id="pvChairsPhoto"><div class="ph-grid" id="pvChairsGrid"></div></div>
-      <div class="opt-body">
-        <div class="opt-lbl">Опция</div>
-        <div class="opt-name">Стулья</div>
-        <div class="opt-desc">Госты, сохо или кроссбеки — модели без сборки. Количество — по числу гостей.</div>
-        <div class="opt-price">
-          <div class="cap">цена, на <span id="pvChairsGuests">40</span> гостей</div>
-          <div class="val" id="pvChairsPrice">—</div>
-        </div>
-      </div>
-      <div class="contact"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
-    </div>
-
-    <!-- слайд 5: Зона церемонии (если включено) -->
-    <div class="page popt" id="pageCer" style="display:none">
-      <div class="opt-photo" id="pvCerPhoto" style="display:flex;flex-direction:column;gap:2px;"><img id="pvCerImg1" src="" style="flex:1;width:100%;object-fit:cover;background:#fff"><img id="pvCerImg2" src="" style="flex:1;width:100%;object-fit:cover;background:#fff"></div>
-      <div class="opt-body">
-        <div class="opt-lbl">Опция</div>
-        <div class="opt-name">Зона<br>церемонии</div>
-        <div class="opt-desc">Арка с драпировкой в палитре комплекта, оформление зоны, лавки или стулья гостевые по согласованию.</div>
-        <div class="opt-price">
-          <div class="cap">цена комплекта</div>
-          <div class="val" id="pvCerPrice">—</div>
-        </div>
-      </div>
-      <div class="contact"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
-    </div>
-
     <!-- слайд: Свечи (если включено) -->
     <div class="page popt" id="pageSvechi" style="display:none">
       <div class="opt-photo"><div class="ph-grid" id="pvSvechiGrid"></div></div>
@@ -516,6 +486,36 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       <div class="contact"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
     </div>
 
+    <!-- слайд 4: Стулья (если включено) -->
+    <div class="page popt" id="pageChairs" style="display:none">
+      <div class="opt-photo" id="pvChairsPhoto"><div class="ph-grid" id="pvChairsGrid"></div></div>
+      <div class="opt-body">
+        <div class="opt-lbl">Опция</div>
+        <div class="opt-name">Стулья</div>
+        <div class="opt-desc">Госты, сохо или кроссбеки — модели без сборки. Количество — по числу гостей. Монтаж включён в стоимость.</div>
+        <div class="opt-price">
+          <div class="cap">цена, на <span id="pvChairsGuests">40</span> гостей</div>
+          <div class="val" id="pvChairsPrice">—</div>
+        </div>
+      </div>
+      <div class="contact"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
+    </div>
+
+    <!-- слайд 5: Зона церемонии (если включено) -->
+    <div class="page popt" id="pageCer" style="display:none">
+      <div class="opt-photo" id="pvCerPhoto" style="display:flex;flex-direction:column;gap:2px;"><img id="pvCerImg1" src="" style="flex:1;width:100%;object-fit:cover;background:#fff"><img id="pvCerImg2" src="" style="flex:1;width:100%;object-fit:cover;background:#fff"></div>
+      <div class="opt-body">
+        <div class="opt-lbl">Опция</div>
+        <div class="opt-name">Зона<br>церемонии</div>
+        <div class="opt-desc">Арка с драпировкой в палитре комплекта, оформление зоны, лавки или стулья гостевые по согласованию. Монтаж включён в стоимость.</div>
+        <div class="opt-price">
+          <div class="cap">цена комплекта</div>
+          <div class="val" id="pvCerPrice">—</div>
+        </div>
+      </div>
+      <div class="contact"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
+    </div>
+
     <!-- слайд 6: сравнение тарифов -->
     <div class="page pcomp" id="pageCompare">
       <div class="lbl">Ваш комплект</div>
@@ -523,6 +523,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       <h2>Итоговый расчёт</h2>
       <div class="capline" id="pvCompCap"></div>
       <div class="summary" id="pvSummary"></div>
+      <div style="margin-top:1em;font-size:.8em;color:var(--muted);">Доставка и монтаж входят в стоимость комплекта.</div>
       <div class="contact"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
     </div>
 
@@ -554,7 +555,7 @@ const TIERS = {
   serv: {
     name: 'Сервировка',
     retailFix:60000, retailTable:20000, profFix:50000, profTable:17000, baseFix:40000, baseTable:12000,
-    items: ['Скатерть белая / в оттенке палитры','Салфетка белая / в оттенке палитры','Подстановочные тарелки (прозрачные с кантом)','Сет бокалов 3 шт (прозрачные / цветные)','Сет приборов 4 шт (золотые / чёрные)','Номерок для стола']
+    items: ['Скатерть белая / в оттенке палитры','Салфетка белая / в оттенке палитры','Подстановочные тарелки (прозрачные с кантом)','Сет бокалов 3 шт (прозрачные / цветные)','Сет приборов 4 шт (золотые / чёрные)','Номерок для стола','Доставка и монтаж включены в стоимость']
   }
 };
 const OPT_CHAIRS = {basePerGuest:600, profPerGuest:850, retailPerGuest:1000};
