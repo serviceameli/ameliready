@@ -342,21 +342,6 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
           <div class="profit" id="svechiProfit">—</div>
         </div>
       </div>
-      <div class="optcard" id="ocChairs">
-        <div class="thumb" id="chairsThumb"></div>
-        <div class="head" onclick="toggleOpt('chairs')">
-          <div><div class="t">Стулья</div><div class="d" id="chairsHint">количество — по числу гостей</div></div>
-          <div class="sw2"></div>
-        </div>
-        <div class="extra">
-          <div class="prices" id="chairsPrices" style="margin-top:6px"></div>
-          <div class="priceline">
-            <label>Ваша цена клиенту, ₽</label>
-            <input type="number" id="chairsPrice" step="1000" style="flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none">
-          </div>
-          <div class="profit" id="chairsProfit">—</div>
-        </div>
-      </div>
       <div class="optcard" id="ocCer">
         <div class="thumb" style="display:block;background:#fff;overflow:hidden"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%B0%D1%80%D0%BA%D0%B0%20%D0%B2%D0%BE%D0%BB%D0%BD%D0%B0%20%D1%81%20%D0%BB%D0%B0%D0%B2%D0%BA%D0%B0%D0%BC%D0%B8%20%D0%BC%D0%B0%D0%BB.png&w=1100&q=82" style="width:100%;height:auto;display:block"></div>
         <div class="head" onclick="toggleOpt('cer')">
@@ -543,19 +528,13 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       <div class="contact"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
     </div>
 
-    <!-- слайд 4: Стулья (если включено) -->
-    <div class="page popt" id="pageChairs" style="display:none">
-      <div class="opt-photo" id="pvChairsPhoto"><div class="ph-grid" id="pvChairsGrid"></div></div>
-      <div class="opt-body">
-        <div class="opt-lbl">Опция</div>
-        <div class="opt-name">Стулья</div>
-        <div class="opt-desc">Госты, сохо или кроссбеки — модели без сборки. Количество — по числу гостей. Монтаж включён в стоимость.</div>
-        <div class="opt-price">
-          <div class="cap">цена, на <span id="pvChairsGuests">40</span> гостей</div>
-          <div class="val" id="pvChairsPrice">—</div>
-        </div>
+    <!-- слайд: Стулья (входят в комплект) -->
+    <div class="page ptextile" id="pageChairs">
+      <div class="tx-title">Стулья</div>
+      <div class="tx-sub">Входят в комплект</div>
+      <div class="tx-grid">
+        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%93%D0%BE%D1%81%D1%82_%20%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82"></div><div class="tx-label">Гост · зелёный</div></div><div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%93%D0%BE%D1%81%D1%82_%20%D0%BF%D1%80%D0%BE%D0%B7%D1%80%D0%B0%D1%87%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82"></div><div class="tx-label">Гост · прозрачный</div></div><div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%93%D0%BE%D1%81%D1%82_%20%D1%8F%D0%BD%D1%82%D0%B0%D1%80%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82"></div><div class="tx-label">Гост · янтарный</div></div><div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%A1%D0%BE%D1%85%D0%BE_%20%D1%87%D0%B5%D1%80%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82"></div><div class="tx-label">Сохо · чёрный</div></div>
       </div>
-      <div class="contact"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
     </div>
 
     <!-- слайд 5: Зона церемонии (если включено) -->
@@ -716,7 +695,6 @@ function updateBudget(){
   const el = document.getElementById('budgetRows'); if(!el) return;
   const rows = [['Сервировка', S.priceServ, tierCost('serv').base]];
   if (S.svechi) rows.push(['Свечи', S.svechiPrice, svechiCost().base]);
-  if (S.chairs) rows.push(['Стулья', S.chairsPrice, chairsCost().base]);
   if (S.cer)    rows.push(['Зона церемонии', S.cerPrice, OPT_CER.base]);
   let total=0, profit=0, html='';
   rows.forEach(function(r){ const nm=r[0], pr=r[1], base=r[2]; const p=pr||0; total+=p; profit+=Math.max(0,p-base);
@@ -732,18 +710,6 @@ function updateProfits() {
     const pr = S[prKey] || 0;
     const el = document.getElementById('profit-'+k);
     if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,pr-c.base)) + ' ₽</b>';
-  }
-  const cc = chairsCost();
-  const chHint = document.getElementById('chairsHint');
-  if (chHint) chHint.textContent = S.guests + ' гостей · в готовом решении ' + fmt(cc.base);
-  const cp = document.getElementById('chairsPrices');
-  if (cp) cp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(cc.retail)+'</span>' +
-    '<span class="pl">Проф. скидка</span><span class="pv mid">'+fmt(cc.prof)+'</span>' +
-    '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(cc.base)+'</span>';
-  if (S.chairs) {
-    if (S.chairsPrice === null) { S.chairsPrice = cc.retail; const el = document.getElementById('chairsPrice'); if(el) el.value = S.chairsPrice; }
-    const el = document.getElementById('chairsProfit');
-    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.chairsPrice||0)-cc.base)) + ' ₽</b>';
   }
   if (S.cer) {
     if (S.cerPrice === null) { S.cerPrice = OPT_CER.retail; const el = document.getElementById('cerPrice'); if(el) el.value = S.cerPrice; }
@@ -810,12 +776,6 @@ function renderPreview() {
   }
   document.getElementById('pageTierServ').insertAdjacentHTML('afterend', palHtml);
 
-  document.getElementById('pageChairs').style.display = S.chairs ? '' : 'none';
-  if (S.chairs) {
-    document.getElementById('pvChairsGuests').textContent = S.guests;
-    document.getElementById('pvChairsPrice').textContent = S.chairsPrice ? fmt(S.chairsPrice) : '—';
-  }
-
   document.getElementById('pageCer').style.display = S.cer ? '' : 'none';
   if (S.cer) {
     document.getElementById('pvCerPrice').textContent = S.cerPrice ? fmt(S.cerPrice) : '—';
@@ -846,7 +806,6 @@ function renderPreview() {
 
   const rows = [['Сервировка стола', S.priceServ]];
   if (S.svechi) rows.push(['Свечи', S.svechiPrice]);
-  if (S.chairs) rows.push(['Стулья', S.chairsPrice]);
   if (S.cer)    rows.push(['Зона церемонии', S.cerPrice]);
   let total = 0, html = '';
   rows.forEach(([nm,pr]) => { total += (pr||0); html += '<div class="sum-row"><span class="nm">'+nm+'</span><span class="vl">'+(pr?fmt(pr):'—')+'</span></div>'; });
@@ -871,13 +830,11 @@ document.getElementById('km').oninput = e => { S.km = Math.max(0, +e.target.valu
 
 
 function toggleOpt(o) {
-  if (o === 'chairs') { S.chairs = !S.chairs; document.getElementById('ocChairs').classList.toggle('on', S.chairs); }
-  else if (o === 'cer') { S.cer = !S.cer; document.getElementById('ocCer').classList.toggle('on', S.cer); }
+  if (o === 'cer') { S.cer = !S.cer; document.getElementById('ocCer').classList.toggle('on', S.cer); }
   else if (o === 'svechi') { S.svechi = !S.svechi; document.getElementById('ocSvechi').classList.toggle('on', S.svechi); }
   updateProfits();
   renderPreview();
 }
-document.getElementById('chairsPrice').oninput = e => { S.chairsPrice = +e.target.value||null; updateProfits(); renderPreview(); };
 document.getElementById('cerPrice').oninput = e => { S.cerPrice = +e.target.value||null; updateProfits(); renderPreview(); };
 document.getElementById('svechiPrice').oninput = e => { S.svechiPrice = +e.target.value||null; updateProfits(); renderPreview(); };
 
@@ -897,19 +854,10 @@ function render() { buildPals(); buildPkgs(); renderPreview(); }
 render();
 
 (function(){
-  const g = document.getElementById('pvChairsGrid'); if (!g) return;
-  ['ch1','ch2','ch3','ch4'].forEach(k => {
-    if (IMGS[k]) { const img = document.createElement('img'); img.src = IMGS[k]; g.appendChild(img); }
-  });
   // ceremony grid
   const cg = document.getElementById('pvCerGrid');
   if (cg) ['cer1','cer2'].forEach(k => {
     if (IMGS[k]) { const img = document.createElement('img'); img.src = IMGS[k]; img.style.cssText='width:100%;height:100%;object-fit:contain;background:#fff'; cg.appendChild(img); }
-  });
-  // chairs thumb in panel
-  const th = document.getElementById('chairsThumb');
-  if (th) ['ch1','ch2','ch3','ch4'].forEach(k => {
-    if (IMGS[k]) { const img = document.createElement('img'); img.src = IMGS[k]; th.appendChild(img); }
   });
 })();
 </script>
