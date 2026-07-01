@@ -842,28 +842,25 @@ function renderPreview() {
     const c2 = document.getElementById('pvCerCell2');
     const c3 = document.getElementById('pvCerCell3');
 
+    // сброс состояния перед каждым рендером
+    const txtCell = document.getElementById('pvCerCellText');
+    c1.style.gridRow = ''; txtCell.style.gridRow = '';
+    c2.style.display = ''; c3.style.display = '';
+    c2.innerHTML = ''; c3.innerHTML = '';
+
     c1.innerHTML = '<img src="'+CER_UNIVERSAL+'" style="'+imgStyle+'">';
 
     if (cerExtra.length === 0) {
-      // 1 фото — текст по центру занимает правую половину обе строки
-      document.getElementById('pvCerCellText').style.gridRow = '1 / 3';
-      c2.innerHTML = ''; c3.innerHTML = '';
-      c2.style.display = 'none'; c3.style.display = 'none';
       c1.style.gridRow = '1 / 3';
+      txtCell.style.gridRow = '1 / 3';
+      c2.style.display = 'none'; c3.style.display = 'none';
     } else if (cerExtra.length === 1) {
-      // 2 фото — текст по центру справа на обе строки
-      document.getElementById('pvCerCellText').style.gridRow = '1 / 3';
-      c1.style.gridRow = '';
+      txtCell.style.gridRow = '1 / 3';
       c2.innerHTML = '<img src="'+cerExtra[0]+'" style="'+imgStyle+'">';
-      c2.style.display = '';
-      c3.innerHTML = ''; c3.style.display = 'none';
+      c3.style.display = 'none';
     } else {
-      // 3 фото — сетка полная
-      document.getElementById('pvCerCellText').style.gridRow = '';
-      c1.style.gridRow = '';
       c2.innerHTML = '<img src="'+cerExtra[0]+'" style="'+imgStyle+'">';
       c3.innerHTML = '<img src="'+cerExtra[1]+'" style="'+imgStyle+'">';
-      c2.style.display = ''; c3.style.display = '';
     }
   }
 
