@@ -851,8 +851,8 @@ function renderPreview() {
       c2.style.display = 'none'; c3.style.display = 'none';
       c1.style.gridRow = '1 / 3';
     } else if (cerExtra.length === 1) {
-      // 2 фото — текст по центру справа сверху, вторая фото слева снизу
-      document.getElementById('pvCerCellText').style.gridRow = '';
+      // 2 фото — текст по центру справа на обе строки
+      document.getElementById('pvCerCellText').style.gridRow = '1 / 3';
       c1.style.gridRow = '';
       c2.innerHTML = '<img src="'+cerExtra[0]+'" style="'+imgStyle+'">';
       c2.style.display = '';
