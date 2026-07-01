@@ -244,6 +244,19 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 .ptier .pt-swatch{display:flex;gap:2px;margin-top:.7em;height:9px;width:75%;}
 .ptier .pt-swatch i{flex:1;}
 .ptier .pt-palnote{font-size:.72em;color:var(--mid);line-height:1.55;align-self:center;flex:1;}
+/* ─── СЛАЙД-ОПИСАНИЕ СЕРВИРОВКИ (2 колонки) ─── */
+.pserv-desc{display:flex;}
+.pserv-desc .sd-left{width:40%;padding:4.5% 4%;display:flex;flex-direction:column;box-sizing:border-box;border-right:2px solid var(--accent);}
+.pserv-desc .pt-num{font-size:.62em;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:.5em;}
+.pserv-desc .pt-name{font-family:'Cormorant',serif;font-size:1.7em;font-weight:500;letter-spacing:-.02em;margin-bottom:1.1em;}
+.pserv-desc .pt-items{list-style:none;display:flex;flex-direction:column;gap:.45em;margin-bottom:1.2em;}
+.pserv-desc .pt-items li{font-size:.82em;color:var(--mid);display:flex;align-items:baseline;gap:.5em;line-height:1.4;}
+.pserv-desc .pt-items li::before{content:'';width:3px;height:3px;background:var(--accent);flex-shrink:0;display:inline-block;transform:translateY(-2px);}
+.pserv-desc .sd-price{margin-top:auto;}
+.pserv-desc .sd-price .cap{font-size:.62em;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.pserv-desc .sd-price .val{font-family:'Cormorant',serif;font-size:1.9em;font-weight:600;letter-spacing:-.02em;}
+.pserv-desc .sd-swatches{flex:1;padding:3.5%;box-sizing:border-box;background:#faf9f6;}
+.pserv-desc .serv-swatches{height:100%;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:5%;background:transparent;padding:0;align-items:stretch;}
 </style>
 </head>
 <body>
@@ -369,19 +382,14 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
     </div>
 
     <!-- слайд 2: Сервировка -->
-    <div class="page ptier" id="pageTierServ">
-      <div class="serv-swatches" id="servSwatches"></div>
-      <div class="pt-bottom">
-        <div class="pt-meta">
-          <div class="pt-num">КОМПЛЕКТ СТОЛА</div>
-          <div class="pt-name">Сервировка</div>
-          <div class="pt-price">
-            <div class="cap">цена комплекта</div>
-            <div class="val" id="ptServPrice">—</div>
-          </div>
-        </div>
+    <div class="page pserv-desc" id="pageTierServ">
+      <div class="sd-left">
+        <div class="pt-num">Комплект стола</div>
+        <div class="pt-name">Сервировка</div>
         <ul class="pt-items" id="ptServItems"></ul>
+        <div class="sd-price"><div class="cap">цена комплекта</div><div class="val" id="ptServPrice">—</div></div>
       </div>
+      <div class="sd-swatches"><div class="serv-swatches" id="servSwatches"></div></div>
     </div>
 
 
