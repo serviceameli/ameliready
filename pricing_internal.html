@@ -56,6 +56,26 @@ tr.total td{font-weight:700;border-top:2px solid var(--text);border-bottom:none;
 .min-card .verdict.bad{color:var(--red);}
 .note{font-size:12px;color:var(--muted);line-height:1.7;margin-top:12px;}
 .note code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:11px;}
+
+/* Блок 4 — ценообразование сета */
+.price-ladder{background:var(--soft);border:1px solid var(--rule);border-radius:10px;padding:20px 22px;max-width:480px;}
+.price-ladder .row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule);font-size:14px;}
+.price-ladder .row:last-child{border-bottom:none;}
+.price-ladder .row .lbl{color:var(--mid);}
+.price-ladder .row .val{font-weight:600;text-decoration:line-through;color:var(--muted);}
+.price-ladder .row.promo .val{text-decoration:none;color:var(--text);}
+.price-ladder .row.deal .val{text-decoration:none;font-size:16px;font-weight:700;}
+.price-ladder input.price-in{width:130px;border:1px solid var(--rule);border-radius:6px;padding:7px 10px;font-family:inherit;font-size:14px;font-weight:600;text-align:right;outline:none;}
+.price-ladder input.price-in:focus{border-color:var(--text);}
+.benefit-box{margin-top:14px;padding:12px 16px;background:#FEF9E3;border:2px solid var(--accent);border-radius:8px;font-size:15px;font-weight:700;}
+.benefit-box .sub{font-size:12px;font-weight:400;color:var(--mid);margin-top:2px;}
+
+/* Блок логистики */
+.logistics-box{border:2px solid var(--text);border-radius:8px;padding:14px 18px;margin-bottom:20px;font-size:13px;}
+.logistics-box .lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px;}
+.logistics-box .row{display:flex;justify-content:space-between;margin-bottom:4px;color:var(--mid);}
+.logistics-box .row b{color:var(--text);}
+.logistics-box .total{display:flex;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--rule);font-weight:700;font-size:14px;}
 </style>
 </head>
 <body>
@@ -90,6 +110,8 @@ tr.total td{font-weight:700;border-top:2px solid var(--text);border-bottom:none;
   <label class="chk"><input type="checkbox" id="ceremony"> Зона церемонии</label>
 </div>
 
+<div class="logistics-box" id="logisticsBox"></div>
+
 <table class="calc-table">
   <thead>
     <tr>
@@ -102,6 +124,28 @@ tr.total td{font-weight:700;border-top:2px solid var(--text);border-bottom:none;
   <tbody id="calcBody"></tbody>
 </table>
 <div class="note" id="breakdown"></div>
+
+<!-- ═══ БЛОК 4 — ЦЕНООБРАЗОВАНИЕ СЕТА ═══ -->
+<h2><span class="n">4</span>Ценообразование сета</h2>
+<div class="price-ladder">
+  <div class="row">
+    <span class="lbl">Без скидки (сайт)</span>
+    <span class="val" id="p-full">—</span>
+  </div>
+  <div class="row promo">
+    <span class="lbl">Проф. скидка −30%</span>
+    <span class="val" id="p-promo">—</span>
+  </div>
+  <div class="row deal">
+    <span class="lbl">В готовом решении</span>
+    <input type="number" class="price-in" id="p-deal" placeholder="вручную" min="0">
+  </div>
+  <div class="row">
+    <span class="lbl">Ваша цена клиенту</span>
+    <input type="number" class="price-in" id="p-org" placeholder="цена орга" min="0">
+  </div>
+</div>
+<div class="benefit-box" id="benefitBox" style="display:none;max-width:480px;"></div>
 
 <!-- ═══ БЛОК 3 — МИНИМАЛЬНЫЙ ЗАКАЗ ═══ -->
 <h2><span class="n">3</span>Минимальный заказ · рентабельность</h2>
@@ -167,6 +211,19 @@ function render(){
     vals.map(v => '<td class="num'+(ameliCol?' ameli':'')+'">'+v+'</td>').join('') + '</tr>'
   ).join('');
 
+  // Блок 4 — автоцены
+  document.getElementById('p-full').textContent  = fmt(c.totalClient);
+  document.getElementById('p-promo').textContent = fmt(c.rentalPart * 0.7 + c.logistics);
+  renderBenefit();
+
+  // Блок логистики
+  document.getElementById('logisticsBox').innerHTML =
+    '<div class="lbl">Логистика (входит в цену, без скидки)</div>' +
+    '<div class="row"><span>Доставка:</span><span><b>'+fmt(PRICE_DELIVERY)+'</b></span></div>' +
+    '<div class="row"><span>Монтаж: <b>'+c.installers+' × '+fmt(PRICE_INSTALLER)+' = '+fmt(c.installation)+'</b> ('+c.installers+' монтажника)</span></div>' +
+    (c.ceremonyInstaller ? '<div class="row"><span>Монтажник церемонии:</span><span><b>'+fmt(c.ceremonyInstaller)+'</b></span></div>' : '') +
+    '<div class="total"><span>Итого логистика:</span><span>'+fmt(c.logistics)+'</span></div>';
+
   // Разбивка
   document.getElementById('breakdown').innerHTML =
     'Аренда: <b>'+fmt(c.rental)+'</b> · Свечи: <b>'+fmt(c.candles)+'</b> · Церемония (аренда): <b>'+fmt(c.ceremonyRental)+'</b>' +
@@ -186,6 +243,35 @@ function render(){
 
 ['guests','tables'].forEach(id => document.getElementById(id).oninput = render);
 ['candles','ceremony'].forEach(id => document.getElementById(id).onchange = render);
+
+// Блок 4 — выгода орга
+function renderBenefit(){
+  const deal = +document.getElementById('p-deal').value;
+  const org  = +document.getElementById('p-org').value;
+  const box  = document.getElementById('benefitBox');
+  if(!deal || !org){ box.style.display='none'; return; }
+  const benefit = org - deal;
+  box.style.display = 'block';
+  if(benefit > 0){
+    box.innerHTML = 'Ваша выгода: <span style="color:var(--green)">'+fmt(benefit)+'</span>' +
+      '<div class="sub">Орг продаёт за '+fmt(org)+', берёт у нас за '+fmt(deal)+'</div>';
+  } else if(benefit === 0){
+    box.innerHTML = 'Выгоды нет — орг продаёт по нашей цене';
+  } else {
+    box.innerHTML = '<span style="color:var(--red)">Орг уходит в минус: '+fmt(benefit)+'</span>' +
+      '<div class="sub">Цена клиенту ниже цены готового решения</div>';
+  }
+}
+document.getElementById('p-deal').oninput = function(){
+  localStorage.setItem('ameli_serv_deal', this.value);
+  renderBenefit();
+};
+document.getElementById('p-org').oninput = renderBenefit;
+
+// Восстановить сохранённую цену
+const saved = localStorage.getItem('ameli_serv_deal');
+if(saved) document.getElementById('p-deal').value = saved;
+
 render();
 </script>
 </body>

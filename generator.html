@@ -314,7 +314,6 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
         <div class="field"><label>Столов гостей</label><input type="number" id="tables" value="5" min="4" max="8"></div>
       </div>
       <div class="autohint" style="margin-bottom:14px">Вы можете поменять количество столов вручную.</div>
-      <div class="logi-note" id="logisticsInfo"></div>
       <div class="field"><label>Площадка за МКАД, км</label><input type="number" id="km" value="0" min="0" max="300"></div>
       <div class="autohint">За МКАД — 100 ₽/км к доставке.</div>
     </div>
@@ -596,6 +595,7 @@ const TIERS = {
 // ── Новая модель цен (см. pricing_internal.html) ──
 const PRICE_GUEST=1550, PRICE_TABLECLOTH=2900, PRICE_CANDLES=1360, PRICE_CEREMONY_BASE=43000, PRICE_BENCH=1200, PRICE_DELIVERY=17000, PRICE_INSTALLER=8000;
 const DISCOUNT=0.30; // скидка на аренду для орга
+function getDealPrice(fallback){ const v = +localStorage.getItem('ameli_serv_deal'); return (v && v > 0) ? v : fallback; }
 
 const PALETTES = {
   oliva: {name:'Зелёный', sw:['#FDFDFB','#E9EFE4','#A8B89A','#6F8268']},
@@ -684,7 +684,8 @@ function buildPkgs() {
         '<div class="incl-note">✓ Доставка и монтаж включены</div>' +
         '<div class="prices">' +
           '<span class="pl">Без скидки</span><span class="pv strike">' + fmt(c.retail) + '</span>' +
-          '<span class="pl">В готовом решении</span><span class="pv accent">' + fmt(c.base) + '</span>' +
+          '<span class="pl">Проф. скидка −30%</span><span class="pv strike" style="text-decoration:none;color:var(--mid,#5A5A54)">' + fmt(c.base) + '</span>' +
+          '<span class="pl">В готовом решении</span><span class="pv accent">' + fmt(getDealPrice(c.base)) + '</span>' +
         '</div>' +
         '<div class="priceline"><label>Ваша цена клиенту, ₽</label>' +
           '<input type="number" step="1000" value="' + S[prKey] + '" data-key="' + prKey + '">' +
@@ -705,7 +706,7 @@ function buildPkgs() {
 
 function updateBudget(){
   const el = document.getElementById('budgetRows'); if(!el) return;
-  const rows = [['Сервировка', S.priceServ, servCost().base]];
+  const rows = [['Сервировка', S.priceServ, getDealPrice(servCost().base)]];
   if (S.svechi) rows.push(['Свечи', S.svechiPrice, svechiCost().base]);
   if (S.cer)    rows.push(['Зона церемонии', S.cerPrice, cerCost().base]);
   let total=0, profit=0, html='';
@@ -731,7 +732,7 @@ function updateProfits() {
     const c = servCost();
     const pr = S.priceServ || 0;
     const el = document.getElementById('profit-serv');
-    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,pr-c.base)) + '</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,pr-getDealPrice(c.base))) + '</b>';
   }
   const cerc = cerCost();
   const cerHint = document.getElementById('cerHint');
