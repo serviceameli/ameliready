@@ -228,6 +228,13 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 .ptextile .tx-ph{flex:1;min-height:0;background:#ffffff;border:1px solid var(--rule);border-radius:3px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:6%;box-sizing:border-box;}
 .ptextile .tx-ph img{width:100%;height:100%;object-fit:contain;background:#fff;display:block;}
 .ptextile .tx-label{font-size:.6em;color:var(--mid);text-align:center;margin-top:.5em;line-height:1.3;flex-shrink:0;}
+.pcomp .summary{margin-top:1.2em;}
+.pcomp .sum-row{display:flex;justify-content:space-between;align-items:baseline;padding:.75em 0;border-bottom:1px solid var(--rule);font-size:.95em;}
+.pcomp .sum-row .nm{color:var(--text);}
+.pcomp .sum-row .vl{font-family:'Cormorant',serif;font-size:1.35em;font-weight:600;color:var(--text);}
+.pcomp .sum-total{display:flex;justify-content:space-between;align-items:baseline;padding:1em 0 0;margin-top:.4em;border-top:2px solid var(--accent);}
+.pcomp .sum-total .nm{font-size:.72em;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+.pcomp .sum-total .vl{font-family:'Cormorant',serif;font-size:2.2em;font-weight:600;color:var(--accent);}
 </style>
 </head>
 <body>
@@ -258,12 +265,27 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
     </div>
 
     <div class="block">
-      <div class="kicker">3 · Два варианта декора стола · ваши цены</div>
+      <div class="kicker">3 · Декор стола · ваша цена</div>
       <div id="pkgs"></div>
     </div>
 
     <div class="block">
       <div class="kicker">4 · Опции</div>
+      <div class="optcard" id="ocSvechi">
+        <div class="thumb" style="display:block;background:#fff;overflow:hidden"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%9D%D0%B0%D0%B1%D0%BE%D1%80%20%D1%81%D0%B2%D0%B5%D1%87%D0%B5%D0%B8%CC%86%20%D1%81%20%D0%BF%D1%83%D0%BB%D1%8C%D1%82%D0%BE%D0%BC%20%20_%D0%AD%D1%80%D1%83%D0%BA%D1%82%D0%BE_%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%B8%CC%86-1.jpg&w=900&q=82" style="width:100%;height:auto;display:block"></div>
+        <div class="head" onclick="toggleOpt('svechi')">
+          <div><div class="t">Свечи</div><div class="d" id="svechiHint">композиция на каждый стол</div></div>
+          <div class="sw2"></div>
+        </div>
+        <div class="extra">
+          <div class="prices" id="svechiPrices" style="margin-top:6px"></div>
+          <div class="priceline">
+            <label>Ваша цена клиенту, ₽</label>
+            <input type="number" id="svechiPrice" step="1000" style="flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none">
+          </div>
+          <div class="profit" id="svechiProfit">—</div>
+        </div>
+      </div>
       <div class="optcard" id="ocChairs">
         <div class="thumb" id="chairsThumb"></div>
         <div class="head" onclick="toggleOpt('chairs')">
@@ -345,7 +367,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       </div>
       <div class="pt-bottom">
         <div class="pt-meta">
-          <div class="pt-num">ТАРИФ 01 / 02</div>
+          <div class="pt-num">КОМПЛЕКТ СТОЛА</div>
           <div class="pt-name">Сервировка</div>
           <div class="pt-price">
             <div class="cap">цена комплекта</div>
@@ -449,27 +471,6 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       </div>
     </div>
 
-    <!-- слайд 3: Сервировка + Композиция -->: Сервировка + Композиция -->
-    <div class="page ptier" id="pageTierComp">
-      <div class="pt-photos pt-photos-4">
-        <img id="ptCompImg1" src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%9D%D0%B0%D0%B1%D0%BE%D1%80%20%D1%81%D0%B2%D0%B5%D1%87%D0%B5%D0%B8%CC%86%20%D1%81%20%D0%BF%D1%83%D0%BB%D1%8C%D1%82%D0%BE%D0%BC%20%20_%D0%AD%D1%80%D1%83%D0%BA%D1%82%D0%BE_%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%B8%CC%86-1.jpg&w=900&q=82" alt="">
-        <img id="ptCompImg2" src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%9D%D0%B0%D0%B1%D0%BE%D1%80%20%D1%81%D0%B2%D0%B5%D1%87%D0%B5%D0%B8%CC%86%20%D1%81%20%D0%BF%D1%83%D0%BB%D1%8C%D1%82%D0%BE%D0%BC%20_%D0%AD%D1%80%D1%83%D0%BA%D1%82%D0%BE_%20%D0%B4%D1%8B%D0%BC%D1%87%D0%B0%D1%82%D1%8B%D0%B8%CC%86-1.jpg&w=900&q=82" alt="">
-        <img id="ptCompImg3" src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%9D%D0%B0%D0%B1%D0%BE%D1%80%20%D1%81%D0%B2%D0%B5%D1%87%D0%B5%D0%B8%CC%86%20%D1%81%20%D0%BF%D1%83%D0%BB%D1%8C%D1%82%D0%BE%D0%BC%20_%D0%AD%D1%80%D1%83%D0%BA%D1%82%D0%BE_%20%D0%B7%D0%BE%D0%BB%D0%BE%D1%82%D0%BE%D0%B8%CC%86-1.jpg&w=900&q=82" alt="">
-        <img id="ptCompImg4" src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%9D%D0%B0%D0%B1%D0%BE%D1%80%20%D0%BF%D0%BE%D0%B4%D1%81%D0%B2%D0%B5%D1%87%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%20_%D0%A0%D0%B0%D0%B2%D0%B5%D0%BD%D0%BA%D0%BB%D0%BE_%20%D0%B8%20%D1%81%D0%B2%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D0%BE%D0%B4%D0%BD%D1%8B%D0%B5%20%D1%81%D0%B2%D0%B5%D1%87%D0%B8%20_%D0%9B%D0%B0%D0%B2%D0%B3%D1%83%D0%B4_-1.png&w=900&q=82" alt="">
-      </div>
-      <div class="pt-bottom">
-        <div class="pt-meta">
-          <div class="pt-num">ТАРИФ 02 / 02</div>
-          <div class="pt-name">Сервировка<br>+ Композиция</div>
-          <div class="pt-price">
-            <div class="cap">цена комплекта</div>
-            <div class="val" id="ptCompPrice">—</div>
-          </div>
-        </div>
-        <ul class="pt-items" id="ptCompItems"></ul>
-      </div>
-    </div>
-
     <!-- слайд 4: Стулья (если включено) -->
     <div class="page popt" id="pageChairs" style="display:none">
       <div class="opt-photo" id="pvChairsPhoto"><div class="ph-grid" id="pvChairsGrid"></div></div>
@@ -500,13 +501,28 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       <div class="contact"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
     </div>
 
+    <!-- слайд: Свечи (если включено) -->
+    <div class="page popt" id="pageSvechi" style="display:none">
+      <div class="opt-photo"><div class="ph-grid" id="pvSvechiGrid"></div></div>
+      <div class="opt-body">
+        <div class="opt-lbl">Опция</div>
+        <div class="opt-name">Свечи</div>
+        <div class="opt-desc">Композиция из 6 электронных свечей с пультом на каждый гостевой стол. Безопасно, без воска и открытого огня.</div>
+        <div class="opt-price">
+          <div class="cap">цена комплекта</div>
+          <div class="val" id="pvSvechiPrice">—</div>
+        </div>
+      </div>
+      <div class="contact"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
+    </div>
+
     <!-- слайд 6: сравнение тарифов -->
     <div class="page pcomp" id="pageCompare">
-      <div class="lbl">Варианты наполнения</div>
+      <div class="lbl">Ваш комплект</div>
       <div class="yrule2"></div>
-      <h2>Выберите ваш формат</h2>
+      <h2>Итоговый расчёт</h2>
       <div class="capline" id="pvCompCap"></div>
-      <div class="comp-grid" id="pvCompGrid"></div>
+      <div class="summary" id="pvSummary"></div>
       <div class="contact"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
     </div>
 
@@ -539,15 +555,11 @@ const TIERS = {
     name: 'Сервировка',
     retailFix:60000, retailTable:20000, profFix:50000, profTable:17000, baseFix:40000, baseTable:12000,
     items: ['Скатерть белая / в оттенке палитры','Салфетка белая / в оттенке палитры','Подстановочные тарелки (прозрачные с кантом)','Сет бокалов 3 шт (прозрачные / цветные)','Сет приборов 4 шт (золотые / чёрные)','Номерок для стола']
-  },
-  comp: {
-    name: 'Сервировка + Композиция',
-    retailFix:80000, retailTable:30000, profFix:65000, profTable:25000, baseFix:50000, baseTable:18000,
-    items: ['Скатерть белая / в оттенке палитры','Салфетка белая / в оттенке палитры','Подстановочные тарелки (прозрачные с кантом)','Сет бокалов 3 шт (прозрачные / цветные)','Сет приборов 4 шт (золотые / чёрные)','Номерок для стола','Композиция из 6 электронных свечей']
   }
 };
 const OPT_CHAIRS = {basePerGuest:600, profPerGuest:850, retailPerGuest:1000};
 const OPT_CER = {base:70000, prof:82000, retail:95000};
+const OPT_SVECHI = {basePerTable:8000, profPerTable:11000, retailPerTable:14000};
 
 const PALETTES = {
   oliva: {name:'Олива',  sw:['#FDFDFB','#E9EFE4','#A8B89A','#6F8268']},
@@ -558,12 +570,13 @@ const PALETTES = {
 
 let S = {
   pal:'oliva', guests:40, tables:5, tablesManual:false, km:0,
-  priceServ:null, priceComp:null, pricesManual:{serv:false,comp:false},
-  chairs:false, cer:false, chairsPrice:null, cerPrice:null
+  priceServ:null, priceServManual:false,
+  chairs:false, cer:false, svechi:false, chairsPrice:null, cerPrice:null, svechiPrice:null
 };
 const r1k = n => Math.round(n/1000)*1000;
 function tierCost(k){const t=TIERS[k];return{base:r1k(t.baseFix+t.baseTable*S.tables),prof:r1k(t.profFix+t.profTable*S.tables),retail:r1k(t.retailFix+t.retailTable*S.tables)};}
 function chairsCost(){return{base:r1k(OPT_CHAIRS.basePerGuest*S.guests),prof:r1k(OPT_CHAIRS.profPerGuest*S.guests),retail:r1k(OPT_CHAIRS.retailPerGuest*S.guests)};}
+function svechiCost(){return{base:r1k(OPT_SVECHI.basePerTable*S.tables),prof:r1k(OPT_SVECHI.profPerTable*S.tables),retail:r1k(OPT_SVECHI.retailPerTable*S.tables)};}
 
 const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
 
@@ -627,7 +640,7 @@ function buildPkgs() {
   box.querySelectorAll('input[data-key]').forEach(inp => {
     inp.oninput = e => {
       const pk = e.target.dataset.key; S[pk] = +e.target.value || null;
-      S.pricesManual[pk==='priceServ'?'serv':'comp'] = true;
+      S.priceServManual = true;
       updateProfits(); renderPreview();
     };
   });
@@ -658,6 +671,18 @@ function updateProfits() {
     const el = document.getElementById('cerProfit');
     if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.cerPrice||0)-OPT_CER.base)) + ' ₽</b>';
   }
+  const sc = svechiCost();
+  const svHint = document.getElementById('svechiHint');
+  if (svHint) svHint.textContent = S.tables + ' столов · в готовом решении ' + fmt(sc.base);
+  const svp = document.getElementById('svechiPrices');
+  if (svp) svp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(sc.retail)+'</span>' +
+    '<span class="pl">Проф. скидка</span><span class="pv mid">'+fmt(sc.prof)+'</span>' +
+    '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(sc.base)+'</span>';
+  if (S.svechi) {
+    if (S.svechiPrice === null) { S.svechiPrice = sc.retail; const el = document.getElementById('svechiPrice'); if(el) el.value = S.svechiPrice; }
+    const el = document.getElementById('svechiProfit');
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.svechiPrice||0)-sc.base)) + ' ₽</b>';
+  }
 }
 
 function renderPreview() {
@@ -666,8 +691,7 @@ function renderPreview() {
   document.getElementById('pvTitle').textContent = 'Оформление банкета · ' + pal;
   document.getElementById('pvGuests').textContent = S.guests;
   document.getElementById('pvTables').textContent = S.tables + ' + 1';
-  const prices = [S.priceServ, S.priceComp].filter(p => p !== null && p > 0);
-  document.getElementById('pvFrom').textContent = prices.length ? fmt(Math.min(...prices)) : '—';
+  document.getElementById('pvFrom').textContent = S.priceServ ? fmt(S.priceServ) : '—';
 
   const palPhoto = (type, idx) => {
     const p = (PHOTOS_BY_PAL[S.pal] && PHOTOS_BY_PAL[S.pal][type] && PHOTOS_BY_PAL[S.pal][type][idx])
@@ -678,13 +702,6 @@ function renderPreview() {
   document.getElementById('ptServImg2').src = palPhoto('serv', 1);
   document.getElementById('ptServItems').innerHTML = TIERS.serv.items.map(i=>'<li>'+i+'</li>').join('');
   document.getElementById('ptServPrice').textContent = S.priceServ ? fmt(S.priceServ) : '—';
-
-  document.getElementById('ptCompImg1').src = palPhoto('comp', 0);
-  document.getElementById('ptCompImg2').src = palPhoto('comp', 1);
-  document.getElementById('ptCompImg3').src = palPhoto('comp', 2);
-  document.getElementById('ptCompImg4').src = palPhoto('comp', 3);
-  document.getElementById('ptCompItems').innerHTML = TIERS.comp.items.map(i=>'<li>'+i+'</li>').join('');
-  document.getElementById('ptCompPrice').textContent = S.priceComp ? fmt(S.priceComp) : '—';
 
   document.getElementById('pageChairs').style.display = S.chairs ? '' : 'none';
   if (S.chairs) {
@@ -710,25 +727,24 @@ function renderPreview() {
     }
   }
 
+  document.getElementById('pageSvechi').style.display = S.svechi ? '' : 'none';
+  if (S.svechi) {
+    document.getElementById('pvSvechiPrice').textContent = S.svechiPrice ? fmt(S.svechiPrice) : '—';
+    const CANDLES = ['https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%9D%D0%B0%D0%B1%D0%BE%D1%80%20%D1%81%D0%B2%D0%B5%D1%87%D0%B5%D0%B8%CC%86%20%D1%81%20%D0%BF%D1%83%D0%BB%D1%8C%D1%82%D0%BE%D0%BC%20%20_%D0%AD%D1%80%D1%83%D0%BA%D1%82%D0%BE_%20%D0%B1%D0%B5%D0%BB%D1%8B%D0%B8%CC%86-1.jpg&w=900&q=82','https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%9D%D0%B0%D0%B1%D0%BE%D1%80%20%D1%81%D0%B2%D0%B5%D1%87%D0%B5%D0%B8%CC%86%20%D1%81%20%D0%BF%D1%83%D0%BB%D1%8C%D1%82%D0%BE%D0%BC%20_%D0%AD%D1%80%D1%83%D0%BA%D1%82%D0%BE_%20%D0%B4%D1%8B%D0%BC%D1%87%D0%B0%D1%82%D1%8B%D0%B8%CC%86-1.jpg&w=900&q=82','https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%9D%D0%B0%D0%B1%D0%BE%D1%80%20%D1%81%D0%B2%D0%B5%D1%87%D0%B5%D0%B8%CC%86%20%D1%81%20%D0%BF%D1%83%D0%BB%D1%8C%D1%82%D0%BE%D0%BC%20_%D0%AD%D1%80%D1%83%D0%BA%D1%82%D0%BE_%20%D0%B7%D0%BE%D0%BB%D0%BE%D1%82%D0%BE%D0%B8%CC%86-1.jpg&w=900&q=82','https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%9D%D0%B0%D0%B1%D0%BE%D1%80%20%D0%BF%D0%BE%D0%B4%D1%81%D0%B2%D0%B5%D1%87%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%20_%D0%A0%D0%B0%D0%B2%D0%B5%D0%BD%D0%BA%D0%BB%D0%BE_%20%D0%B8%20%D1%81%D0%B2%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D0%BE%D0%B4%D0%BD%D1%8B%D0%B5%20%D1%81%D0%B2%D0%B5%D1%87%D0%B8%20_%D0%9B%D0%B0%D0%B2%D0%B3%D1%83%D0%B4_-1.png&w=900&q=82'];
+    document.getElementById('pvSvechiGrid').innerHTML = CANDLES.map(u=>'<img src="'+u+'">').join('');
+  }
+
   document.getElementById('pvCompCap').textContent =
     'Расчёт на ' + S.guests + ' гостей · ' + S.tables + ' столов гостей + президиум · палитра «' + pal + '»';
 
-  const grid = document.getElementById('pvCompGrid'); grid.innerHTML = '';
-  const compImg = (type) => (PHOTOS_BY_PAL[S.pal] && PHOTOS_BY_PAL[S.pal][type] && PHOTOS_BY_PAL[S.pal][type][0])
-      || (PHOTOS_BY_PAL.oliva[type] && PHOTOS_BY_PAL.oliva[type][0]) || '';
-  [{key:'serv', tier:TIERS.serv, price:S.priceServ, img:compImg('serv'), title:'Сервировка',        feat:false},
-   {key:'comp', tier:TIERS.comp, price:S.priceComp, img:compImg('comp'), title:'Сервировка + Свечи', feat:true}
-  ].forEach(td => {
-    const col = document.createElement('div');
-    col.className = 'comp-col' + (td.feat ? ' feat' : '');
-    col.innerHTML =
-      '<div class="comp-photo">' + (td.img ? '<img src="'+td.img+'">' : '') + '<div class="comp-title">' + td.title + '</div></div>' +
-      '<div class="comp-body">' +
-        '<ul class="comp-items">' + td.tier.items.map(i=>'<li>'+i+'</li>').join('') + '</ul>' +
-        '<div class="comp-price"><b>' + (td.price ? fmt(td.price) : '—') + '</b><span>комплект целиком</span></div>' +
-      '</div>';
-    grid.appendChild(col);
-  });
+  const rows = [['Сервировка стола', S.priceServ]];
+  if (S.svechi) rows.push(['Свечи', S.svechiPrice]);
+  if (S.chairs) rows.push(['Стулья', S.chairsPrice]);
+  if (S.cer)    rows.push(['Зона церемонии', S.cerPrice]);
+  let total = 0, html = '';
+  rows.forEach(([nm,pr]) => { total += (pr||0); html += '<div class="sum-row"><span class="nm">'+nm+'</span><span class="vl">'+(pr?fmt(pr):'—')+'</span></div>'; });
+  html += '<div class="sum-total"><span class="nm">Итого комплект</span><span class="vl">'+fmt(total)+'</span></div>';
+  document.getElementById('pvSummary').innerHTML = html;
 
   document.getElementById('pvKmLine').textContent =
     S.km > 0 ? ' Для данной площадки (' + S.km + ' км за МКАД): +' + fmt(S.km*MKAD_RATE) + ' к доставке.' : '';
@@ -745,12 +761,14 @@ document.getElementById('km').oninput = e => { S.km = Math.max(0, +e.target.valu
 
 function toggleOpt(o) {
   if (o === 'chairs') { S.chairs = !S.chairs; document.getElementById('ocChairs').classList.toggle('on', S.chairs); }
-  else { S.cer = !S.cer; document.getElementById('ocCer').classList.toggle('on', S.cer); }
+  else if (o === 'cer') { S.cer = !S.cer; document.getElementById('ocCer').classList.toggle('on', S.cer); }
+  else if (o === 'svechi') { S.svechi = !S.svechi; document.getElementById('ocSvechi').classList.toggle('on', S.svechi); }
   updateProfits();
   renderPreview();
 }
 document.getElementById('chairsPrice').oninput = e => { S.chairsPrice = +e.target.value||null; renderPreview(); };
 document.getElementById('cerPrice').oninput = e => { S.cerPrice = +e.target.value||null; renderPreview(); };
+document.getElementById('svechiPrice').oninput = e => { S.svechiPrice = +e.target.value||null; renderPreview(); };
 
 document.getElementById('orgName').oninput = e => { const v = e.target.value||'Ваша студия'; document.querySelectorAll('.cName').forEach(n=>n.textContent=v); };
 document.getElementById('orgPhone').oninput = e => { const v = e.target.value||'+7 ___ ___-__-__'; document.querySelectorAll('.cPhone').forEach(n=>n.textContent=v); };
