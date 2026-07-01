@@ -140,6 +140,10 @@ th.akc-h{background:#FEF9E3;color:var(--text);}
   </tbody>
 </table>
 <div class="note">Акционная цена — спецпредложение на единицу позиции. Заработок = акционная − скидка орга −30% (для аренды). Для логистики заработок = акционная − базовая.</div>
+<div style="margin-top:16px;">
+  <button id="saveBtn" onclick="saveAll()" style="background:var(--text);color:#fff;border:none;border-radius:8px;padding:11px 24px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;">Сохранить цены → в конструктор</button>
+  <span id="saveMsg" style="display:none;margin-left:14px;font-size:13px;color:var(--green);font-weight:600;">✓ Сохранено</span>
+</div>
 
 
 <!-- ═══ БЛОК 2 — ИНТЕРАКТИВНЫЙ РАСЧЁТ ═══ -->
@@ -270,11 +274,20 @@ document.querySelectorAll('#priceTable tbody tr').forEach(row => {
   const saved = localStorage.getItem('ameli_akc_'+key);
   if(saved){ inp.value = saved; updateRowEarn(key, base, hasDiscount, +saved); }
   inp.oninput = function(){
-    const v = +this.value || 0;
-    localStorage.setItem('ameli_akc_'+key, this.value);
-    updateRowEarn(key, base, hasDiscount, v);
+    updateRowEarn(key, base, hasDiscount, +this.value || 0);
   };
 });
+
+function saveAll(){
+  document.querySelectorAll('#priceTable tbody tr').forEach(row => {
+    const inp = row.querySelector('input');
+    if(inp.value) localStorage.setItem('ameli_akc_'+row.dataset.key, inp.value);
+    else localStorage.removeItem('ameli_akc_'+row.dataset.key);
+  });
+  const msg = document.getElementById('saveMsg');
+  msg.style.display = 'inline';
+  setTimeout(() => msg.style.display = 'none', 2500);
+}
 
 render();
 </script>

@@ -593,9 +593,24 @@ const TIERS = {
   }
 };
 // ── Новая модель цен (см. pricing_internal.html) ──
-const PRICE_GUEST=1550, PRICE_TABLECLOTH=2900, PRICE_CANDLES=1360, PRICE_CEREMONY_BASE=43000, PRICE_BENCH=1200, PRICE_DELIVERY=17000, PRICE_INSTALLER=8000;
-const DISCOUNT=0.30; // скидка на аренду для орга
-function getDealPrice(fallback){ const v = +localStorage.getItem('ameli_serv_deal'); return (v && v > 0) ? v : fallback; }
+const PRICE_GUEST=1550, PRICE_TABLECLOTH=2900, PRICE_CANDLES=1360, PRICE_CEREMONY_BASE=43000, PRICE_BENCH=1200, PRICE_DELIVERY=18000, PRICE_INSTALLER=9200;
+const DISCOUNT=0.30;
+
+// Акционные цены из калькулятора (localStorage)
+function akc(key, fallback){ const v = +localStorage.getItem('ameli_akc_'+key); return (v && v > 0) ? v : fallback; }
+
+function servCostAkc(){
+  const rental = S.guests * akc('guest', PRICE_GUEST) + S.tables * akc('table', PRICE_TABLECLOTH);
+  const inst = installersCount();
+  const logistics = akc('delivery', PRICE_DELIVERY) + inst * akc('installer', PRICE_INSTALLER);
+  return rental + logistics;
+}
+function svechiCostAkc(){ return S.tables * akc('candles', PRICE_CANDLES); }
+function cerCostAkc(){
+  const benches = Math.max(0, Math.ceil((S.guests-40)/4));
+  const rental = akc('ceremony', PRICE_CEREMONY_BASE) + benches * akc('bench', PRICE_BENCH);
+  return rental + akc('installer', PRICE_INSTALLER);
+}
 
 const PALETTES = {
   oliva: {name:'Зелёный', sw:['#FDFDFB','#E9EFE4','#A8B89A','#6F8268']},
@@ -685,7 +700,7 @@ function buildPkgs() {
         '<div class="prices">' +
           '<span class="pl">Без скидки</span><span class="pv strike">' + fmt(c.retail) + '</span>' +
           '<span class="pl">Проф. скидка −30%</span><span class="pv strike" style="text-decoration:none;color:var(--mid,#5A5A54)">' + fmt(c.base) + '</span>' +
-          '<span class="pl">В готовом решении</span><span class="pv accent">' + fmt(getDealPrice(c.base)) + '</span>' +
+          '<span class="pl">В готовом решении</span><span class="pv accent">' + fmt(servCostAkc()) + '</span>' +
         '</div>' +
         '<div class="priceline"><label>Ваша цена клиенту, ₽</label>' +
           '<input type="number" step="1000" value="' + S[prKey] + '" data-key="' + prKey + '">' +
@@ -706,9 +721,9 @@ function buildPkgs() {
 
 function updateBudget(){
   const el = document.getElementById('budgetRows'); if(!el) return;
-  const rows = [['Сервировка', S.priceServ, getDealPrice(servCost().base)]];
-  if (S.svechi) rows.push(['Свечи', S.svechiPrice, svechiCost().base]);
-  if (S.cer)    rows.push(['Зона церемонии', S.cerPrice, cerCost().base]);
+  const rows = [['Сервировка', S.priceServ, servCostAkc()]];
+  if (S.svechi) rows.push(['Свечи', S.svechiPrice, svechiCostAkc()]);
+  if (S.cer)    rows.push(['Зона церемонии', S.cerPrice, cerCostAkc()]);
   let total=0, profit=0, html='';
   rows.forEach(function(r){ const nm=r[0], pr=r[1], base=r[2]; const p=pr||0; total+=p; profit+=Math.max(0,p-base);
     html += '<div class="b-row"><span class="nm">'+nm+'</span><span class="vl">'+(pr?fmt(pr):'—')+'</span></div>'; });
@@ -732,29 +747,31 @@ function updateProfits() {
     const c = servCost();
     const pr = S.priceServ || 0;
     const el = document.getElementById('profit-serv');
-    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,pr-getDealPrice(c.base))) + '</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,pr-servCostAkc())) + '</b>';
   }
   const cerc = cerCost();
+  const cercAkc = cerCostAkc();
   const cerHint = document.getElementById('cerHint');
-  if (cerHint) cerHint.textContent = 'арка + оформление · в готовом решении ' + fmt(cerc.base);
+  if (cerHint) cerHint.textContent = 'арка + оформление · в готовом решении ' + fmt(cercAkc);
   const cerp = document.getElementById('cerPrices');
   if (cerp) cerp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(cerc.retail)+'</span>' +
-    '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(cerc.base)+'</span>';
+    '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(cercAkc)+'</span>';
   if (S.cer) {
     if (S.cerPrice === null) { S.cerPrice = cerc.retail; const el = document.getElementById('cerPrice'); if(el) el.value = S.cerPrice; }
     const el = document.getElementById('cerProfit');
-    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.cerPrice||0)-cerc.base)) + '</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.cerPrice||0)-cercAkc)) + '</b>';
   }
   const sc = svechiCost();
+  const scAkc = svechiCostAkc();
   const svHint = document.getElementById('svechiHint');
-  if (svHint) svHint.textContent = S.tables + ' столов · в готовом решении ' + fmt(sc.base);
+  if (svHint) svHint.textContent = S.tables + ' столов · в готовом решении ' + fmt(scAkc);
   const svp = document.getElementById('svechiPrices');
   if (svp) svp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(sc.retail)+'</span>' +
-    '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(sc.base)+'</span>';
+    '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(scAkc)+'</span>';
   if (S.svechi) {
     if (S.svechiPrice === null) { S.svechiPrice = sc.retail; const el = document.getElementById('svechiPrice'); if(el) el.value = S.svechiPrice; }
     const el = document.getElementById('svechiProfit');
-    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.svechiPrice||0)-sc.base)) + '</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.svechiPrice||0)-scAkc)) + '</b>';
   }
   updateBudget();
 }
