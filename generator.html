@@ -274,7 +274,9 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 .pserv-pair .pair-row-head{font-family:'Cormorant',serif;font-size:1.1em;font-weight:600;display:flex;align-items:center;gap:.6em;flex-shrink:0;}
 .pserv-pair .pair-row-photos{flex:1;display:flex;gap:2%;min-height:0;}
 .pserv-pair .pair-row-photos img{flex:1;min-width:0;object-fit:contain;background:#fff;border:1px solid var(--rule);}
-</style>
+.incl-note{margin:.3em 0 1em;padding:.6em .8em;background:var(--soft-bg);border-left:3px solid var(--accent);font-size:.8em;color:var(--text);font-weight:600;line-height:1.35;}
+.pkgcard .incl-note{margin:0 0 10px;padding:7px 9px;font-size:11px;}
+.pserv-desc .incl-note{font-size:.82em;}</style>
 </head>
 <body>
 
@@ -404,6 +406,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
         <div class="pt-num">Комплект стола</div>
         <div class="pt-name">Сервировка</div>
         <ul class="pt-items" id="ptServItems"></ul>
+        <div class="incl-note">✓ Доставка и монтаж включены в стоимость</div>
         <div class="sd-price"><div class="cap">цена комплекта</div><div class="val" id="ptServPrice">—</div></div>
       </div>
       <div class="sd-right" id="sdRight"></div>
@@ -586,7 +589,7 @@ const TIERS = {
   serv: {
     name: 'Сервировка',
     retailFix:60000, retailTable:20000, profFix:50000, profTable:17000, baseFix:40000, baseTable:12000,
-    items: ['Скатерть белая / в оттенке палитры','Салфетка белая / в оттенке палитры','Подстановочные тарелки (прозрачные с кантом)','Сет бокалов 3 шт (прозрачные / цветные)','Сет приборов 4 шт (золотые / чёрные)','Номерок для стола','Доставка и монтаж включены в стоимость']
+    items: ['Скатерть белая / в оттенке палитры','Салфетка белая / в оттенке палитры','Подстановочные тарелки (прозрачные с кантом)','Сет бокалов 3 шт (прозрачные / цветные)','Сет приборов 4 шт (золотые / чёрные)','Номерок для стола']
   }
 };
 const OPT_CHAIRS = {basePerGuest:600, profPerGuest:850, retailPerGuest:1000};
@@ -663,6 +666,7 @@ function buildPkgs() {
       '<div class="body">' +
         '<div class="t">' + t.name + '</div>' +
         '<ul class="items">' + t.items.map(i=>'<li>'+i+'</li>').join('') + '</ul>' +
+        '<div class="incl-note">✓ Доставка и монтаж включены</div>' +
         '<div class="prices">' +
           '<span class="pl">Без скидки</span><span class="pv strike">' + fmt(c.retail) + '</span>' +
           '<span class="pl">Проф. скидка</span><span class="pv mid">' + fmt(c.prof) + '</span>' +
