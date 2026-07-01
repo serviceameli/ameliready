@@ -842,12 +842,12 @@ function renderPreview() {
       cerBox.style.cssText = 'width:52%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;gap:2px;';
       cerBox.innerHTML = [CER_UNIVERSAL, cerExtra[0]].map(u=>'<img src="'+u+'" style="flex:1;width:100%;object-fit:cover;">').join('');
     } else {
-      // универсальная сверху (60%), две палитрные рядом снизу (40%)
-      cerBox.style.cssText = 'width:52%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;gap:2px;';
+      // универсальная слева на всю высоту, палитрные стопкой справа
+      cerBox.style.cssText = 'width:52%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;flex-direction:row;gap:2px;';
       cerBox.innerHTML =
-        '<img src="'+CER_UNIVERSAL+'" style="flex:3;width:100%;object-fit:cover;">' +
-        '<div style="flex:2;display:flex;gap:2px;">' +
-          cerExtra.map(u=>'<img src="'+u+'" style="flex:1;object-fit:cover;">').join('') +
+        '<img src="'+CER_UNIVERSAL+'" style="flex:1;min-width:0;object-fit:cover;">' +
+        '<div style="flex:1;display:flex;flex-direction:column;gap:2px;">' +
+          cerExtra.map(u=>'<img src="'+u+'" style="flex:1;width:100%;min-height:0;object-fit:cover;">').join('') +
         '</div>';
     }
   }
