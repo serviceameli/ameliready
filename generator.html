@@ -537,9 +537,9 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
     </div>
 
     <!-- слайд 5: Зона церемонии (если включено) -->
-    <div class="page popt" id="pageCer" style="display:none">
-      <div class="opt-photo" id="pvCerPhoto" style="display:flex;flex-direction:column;gap:2px;"></div>
-      <div class="opt-body">
+    <div class="page" id="pageCer" style="display:none;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2px;background:#f0ede8;">
+      <div id="pvCerCell1" style="overflow:hidden;background:#fff;"></div>
+      <div id="pvCerCellText" style="background:#fff;display:flex;flex-direction:column;justify-content:center;padding:7% 8%;position:relative;">
         <div class="opt-lbl">Опция</div>
         <div class="opt-name">Зона<br>церемонии</div>
         <div class="opt-desc">Арка с драпировкой в палитре комплекта, оформление зоны, лавки или стулья гостевые по согласованию. Монтаж включён в стоимость.</div>
@@ -547,8 +547,10 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
           <div class="cap">цена комплекта</div>
           <div class="val" id="pvCerPrice">—</div>
         </div>
+        <div class="contact" style="position:absolute;bottom:5%;right:8%;"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
       </div>
-      <div class="contact"><b class="cName">Ваша студия</b><span class="cPhone">+7 ___ ___-__-__</span></div>
+      <div id="pvCerCell2" style="overflow:hidden;background:#fff;"></div>
+      <div id="pvCerCell3" style="overflow:hidden;background:#fff;"></div>
     </div>
 
     <!-- слайд 6: сравнение тарифов -->
@@ -823,7 +825,8 @@ function renderPreview() {
   }
   document.getElementById('pageTierServ').insertAdjacentHTML('afterend', palHtml);
 
-  document.getElementById('pageCer').style.display = S.cer ? '' : 'none';
+  const cerEl = document.getElementById('pageCer');
+  cerEl.style.display = S.cer ? 'grid' : 'none';
   if (S.cer) {
     document.getElementById('pvCerPrice').textContent = S.cerPrice ? fmt(S.cerPrice) : '—';
     const CER_UNIVERSAL = 'https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%B0%D1%80%D0%BA%D0%B0%20%D0%B2%D0%BE%D0%BB%D0%BD%D0%B0%20%D1%81%20%D0%BB%D0%B0%D0%B2%D0%BA%D0%B0%D0%BC%D0%B8%20%D0%BC%D0%B0%D0%BB.png&w=1100&q=82';
@@ -832,21 +835,35 @@ function renderPreview() {
       pudra: 'https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%B0%D1%80%D0%BA%D0%B0%20%D0%B2%D0%BE%D0%BB%D0%BD%D0%B0%20%D1%81%20%D0%BB%D0%B0%D0%B2%D0%BA%D0%B0%D0%BC%D0%B8%20%D1%80%D0%BE%D0%B7%D0%BE%D0%B2%D0%B0%D1%8F%20%D1%81%D0%B0%D0%BA%D1%83%D1%80%D0%B0.jpg&w=1100&q=82'
     };
     const cerExtra = S.pals.map(k => CER_BY_PAL[k]).filter(Boolean);
-    const cerBox = document.getElementById('pvCerPhoto');
+    const imgStyle = 'width:100%;height:100%;object-fit:contain;background:#fff;display:block;';
+
+    // сетка 2×2: cell1=фото, cellText=текст, cell2=фото, cell3=фото
+    const c1 = document.getElementById('pvCerCell1');
+    const c2 = document.getElementById('pvCerCell2');
+    const c3 = document.getElementById('pvCerCell3');
+
+    c1.innerHTML = '<img src="'+CER_UNIVERSAL+'" style="'+imgStyle+'">';
+
     if (cerExtra.length === 0) {
-      // только универсальная — на всю высоту
-      cerBox.style.cssText = 'width:52%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;';
-      cerBox.innerHTML = '<img src="'+CER_UNIVERSAL+'" style="flex:1;width:100%;object-fit:cover;">';
+      // 1 фото — текст по центру занимает правую половину обе строки
+      document.getElementById('pvCerCellText').style.gridRow = '1 / 3';
+      c2.innerHTML = ''; c3.innerHTML = '';
+      c2.style.display = 'none'; c3.style.display = 'none';
+      c1.style.gridRow = '1 / 3';
     } else if (cerExtra.length === 1) {
-      // универсальная + одна палитрная — вертикально
-      cerBox.style.cssText = 'width:52%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;gap:2px;';
-      cerBox.innerHTML = [CER_UNIVERSAL, cerExtra[0]].map(u=>'<img src="'+u+'" style="flex:1;width:100%;object-fit:cover;">').join('');
+      // 2 фото — текст по центру справа сверху, вторая фото слева снизу
+      document.getElementById('pvCerCellText').style.gridRow = '';
+      c1.style.gridRow = '';
+      c2.innerHTML = '<img src="'+cerExtra[0]+'" style="'+imgStyle+'">';
+      c2.style.display = '';
+      c3.innerHTML = ''; c3.style.display = 'none';
     } else {
-      // 3 фото в ряд горизонтально
-      cerBox.style.cssText = 'width:65%;background:#fff;overflow:hidden;flex-shrink:0;display:flex;flex-direction:row;gap:2px;';
-      cerBox.innerHTML = [CER_UNIVERSAL, ...cerExtra].map(u =>
-        '<img src="'+u+'" style="flex:1;min-width:0;object-fit:cover;">'
-      ).join('');
+      // 3 фото — сетка полная
+      document.getElementById('pvCerCellText').style.gridRow = '';
+      c1.style.gridRow = '';
+      c2.innerHTML = '<img src="'+cerExtra[0]+'" style="'+imgStyle+'">';
+      c3.innerHTML = '<img src="'+cerExtra[1]+'" style="'+imgStyle+'">';
+      c2.style.display = ''; c3.style.display = '';
     }
   }
 
