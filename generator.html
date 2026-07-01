@@ -289,6 +289,9 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 .btn-link:hover{opacity:.88;}
 .links-note{font-size:12px;color:var(--mid);line-height:1.5;margin-bottom:2px;}
 .links-note b{color:var(--text);}
+.logi-note{font-size:11px;color:var(--mid);line-height:1.65;background:var(--soft-bg);border-radius:8px;padding:10px 11px;margin-bottom:14px;}
+.logi-note b{color:var(--text);}
+.logi-note .cap{display:block;font-weight:600;color:var(--text);margin-bottom:4px;text-transform:uppercase;letter-spacing:.03em;font-size:10px;}
 </style>
 </head>
 <body>
@@ -311,6 +314,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
         <div class="field"><label>Столов гостей</label><input type="number" id="tables" value="5" min="4" max="8"></div>
       </div>
       <div class="autohint" style="margin-bottom:14px">Вы можете поменять количество столов вручную.</div>
+      <div class="logi-note" id="logisticsInfo"></div>
       <div class="field"><label>Площадка за МКАД, км</label><input type="number" id="km" value="0" min="0" max="300"></div>
       <div class="autohint">За МКАД — 100 ₽/км к доставке.</div>
     </div>
@@ -668,7 +672,7 @@ function buildPkgs() {
   for (const [k, t] of Object.entries(TIERS)) {
     const c = servCost();
     const prKey = 'priceServ';
-    if (S[prKey] === null) S[prKey] = c.retail;
+    if (S.priceServ === null || !S.priceServManual) S.priceServ = c.retail;
     const photos = PHOTOS[k] || [];
     const thumbHtml = photos.filter(Boolean).map(s=>'<img src="'+s+'">').join('');
     const card = document.createElement('div'); card.className = 'pkgcard';
@@ -713,6 +717,16 @@ function updateBudget(){
 }
 
 function updateProfits() {
+  {
+    const li = document.getElementById('logisticsInfo');
+    if (li) {
+      const inst = installersCount();
+      li.innerHTML = '<span class="cap">Логистика (входит в цену, без скидки)</span>' +
+        'Доставка: <b>' + fmt(PRICE_DELIVERY) + '</b><br>' +
+        'Монтаж: <b>' + inst + ' × ' + fmt(PRICE_INSTALLER) + ' = ' + fmt(inst*PRICE_INSTALLER) + '</b> (' + inst + ' монтажника)<br>' +
+        'Итого логистика: <b>' + fmt(PRICE_DELIVERY + inst*PRICE_INSTALLER) + '</b>';
+    }
+  }
   {
     const c = servCost();
     const pr = S.priceServ || 0;
@@ -831,14 +845,15 @@ function renderPreview() {
 
 const clampG = v => Math.min(60, Math.max(40, v));
 const clampT = v => Math.min(8, Math.max(4, v));
+function refreshAll(){ buildPkgs(); renderPreview(); }
 document.getElementById('guests').oninput = e => {
   S.guests = clampG(+e.target.value || 40);
   if (!S.tablesManual) { S.tables = clampT(Math.ceil(S.guests/GUESTS_PER_TABLE)); document.getElementById('tables').value = S.tables; }
-  renderPreview();
+  refreshAll();
 };
-document.getElementById('guests').onchange = e => { e.target.value = S.guests; renderPreview(); };
-document.getElementById('tables').oninput = e => { S.tables = clampT(+e.target.value||4); S.tablesManual = true; renderPreview(); };
-document.getElementById('tables').onchange = e => { e.target.value = S.tables; renderPreview(); };
+document.getElementById('guests').onchange = e => { e.target.value = S.guests; refreshAll(); };
+document.getElementById('tables').oninput = e => { S.tables = clampT(+e.target.value||4); S.tablesManual = true; refreshAll(); };
+document.getElementById('tables').onchange = e => { e.target.value = S.tables; refreshAll(); };
 document.getElementById('km').oninput = e => { S.km = Math.max(0, +e.target.value||0); renderPreview(); };
 
 
