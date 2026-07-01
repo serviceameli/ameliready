@@ -755,6 +755,7 @@ function updateProfits() {
   if (cerHint) cerHint.textContent = 'арка + оформление · в готовом решении ' + fmt(cercAkc);
   const cerp = document.getElementById('cerPrices');
   if (cerp) cerp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(cerc.retail)+'</span>' +
+    '<span class="pl">Проф. скидка −30%</span><span class="pv" style="color:var(--mid,#5A5A54)">'+fmt(cerc.base)+'</span>' +
     '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(cercAkc)+'</span>';
   if (S.cer) {
     if (S.cerPrice === null) { S.cerPrice = cerc.retail; const el = document.getElementById('cerPrice'); if(el) el.value = S.cerPrice; }
@@ -767,6 +768,7 @@ function updateProfits() {
   if (svHint) svHint.textContent = S.tables + ' столов · в готовом решении ' + fmt(scAkc);
   const svp = document.getElementById('svechiPrices');
   if (svp) svp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(sc.retail)+'</span>' +
+    '<span class="pl">Проф. скидка −30%</span><span class="pv" style="color:var(--mid,#5A5A54)">'+fmt(sc.base)+'</span>' +
     '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(scAkc)+'</span>';
   if (S.svechi) {
     if (S.svechiPrice === null) { S.svechiPrice = sc.retail; const el = document.getElementById('svechiPrice'); if(el) el.value = S.svechiPrice; }
