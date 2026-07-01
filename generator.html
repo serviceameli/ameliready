@@ -235,6 +235,15 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 .pcomp .sum-total{display:flex;justify-content:space-between;align-items:baseline;padding:1em 0 0;margin-top:.4em;border-top:2px solid var(--accent);}
 .pcomp .sum-total .nm{font-size:.72em;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:600;}
 .pcomp .sum-total .vl{font-family:'Cormorant',serif;font-size:2.2em;font-weight:600;color:var(--accent);}
+/* ─── СЕРВИРОВКА: свотчи палитр + пер-палитровые слайды ─── */
+.serv-swatches{height:62%;display:flex;gap:3%;padding:3.5% 4%;box-sizing:border-box;background:#faf9f6;align-items:stretch;}
+.serv-swatches .sw-card{flex:1;display:flex;flex-direction:column;border:1px solid var(--rule);overflow:hidden;background:#fff;min-width:0;}
+.serv-swatches .sw-colors{flex:1;display:flex;}
+.serv-swatches .sw-colors i{flex:1;}
+.serv-swatches .sw-nm{padding:.7em .4em;text-align:center;font-size:.95em;font-family:'Cormorant',serif;font-weight:600;color:var(--text);}
+.ptier .pt-swatch{display:flex;gap:2px;margin-top:.7em;height:9px;width:75%;}
+.ptier .pt-swatch i{flex:1;}
+.ptier .pt-palnote{font-size:.72em;color:var(--mid);line-height:1.55;align-self:center;flex:1;}
 </style>
 </head>
 <body>
@@ -260,7 +269,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
     </div>
 
     <div class="block">
-      <div class="kicker">2 · Палитра</div>
+      <div class="kicker">2 · Палитры · можно несколько</div>
       <div class="palrow" id="pals"></div>
     </div>
 
@@ -361,10 +370,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 
     <!-- слайд 2: Сервировка -->
     <div class="page ptier" id="pageTierServ">
-      <div class="pt-photos">
-        <img id="ptServImg1" src="" alt="">
-        <img id="ptServImg2" src="" alt="">
-      </div>
+      <div class="serv-swatches" id="servSwatches"></div>
       <div class="pt-bottom">
         <div class="pt-meta">
           <div class="pt-num">КОМПЛЕКТ СТОЛА</div>
@@ -570,7 +576,7 @@ const PALETTES = {
 };
 
 let S = {
-  pal:'oliva', guests:40, tables:5, tablesManual:false, km:0,
+  pals:['oliva'], pal:'oliva', guests:40, tables:5, tablesManual:false, km:0,
   priceServ:null, priceServManual:false,
   chairs:false, cer:false, svechi:false, chairsPrice:null, cerPrice:null, svechiPrice:null
 };
@@ -585,9 +591,15 @@ function buildPals() {
   const pl = document.getElementById('pals'); pl.innerHTML = '';
   for (const [k, p] of Object.entries(PALETTES)) {
     const d = document.createElement('div');
-    d.className = 'palopt' + (S.pal === k ? ' sel' : '');
+    d.className = 'palopt' + (S.pals.includes(k) ? ' sel' : '');
     d.innerHTML = '<div class="sw">' + p.sw.map(c=>'<i style="background:'+c+'"></i>').join('') + '</div><div class="nm">' + p.name + '</div>';
-    d.onclick = () => { S.pal = k; render(); };
+    d.onclick = () => {
+      const i = S.pals.indexOf(k);
+      if (i === -1) S.pals.push(k);
+      else if (S.pals.length > 1) S.pals.splice(i, 1);
+      S.pal = S.pals[0];
+      render();
+    };
     pl.appendChild(d);
   }
 }
@@ -687,7 +699,7 @@ function updateProfits() {
 }
 
 function renderPreview() {
-  const pal = PALETTES[S.pal].name;
+  const pal = S.pals.map(k=>PALETTES[k].name).join(', ');
 
   document.getElementById('pvTitle').textContent = 'Оформление банкета · ' + pal;
   document.getElementById('pvGuests').textContent = S.guests;
@@ -699,10 +711,30 @@ function renderPreview() {
             || (PHOTOS_BY_PAL.oliva[type] && PHOTOS_BY_PAL.oliva[type][idx]) || '';
     return p;
   };
-  document.getElementById('ptServImg1').src = palPhoto('serv', 0);
-  document.getElementById('ptServImg2').src = palPhoto('serv', 1);
+  document.getElementById('servSwatches').innerHTML = S.pals.map(k=>{
+    const pp = PALETTES[k];
+    return '<div class="sw-card"><div class="sw-colors">'+pp.sw.map(cc=>'<i style="background:'+cc+'"></i>').join('')+'</div><div class="sw-nm">'+pp.name+'</div></div>';
+  }).join('');
   document.getElementById('ptServItems').innerHTML = TIERS.serv.items.map(i=>'<li>'+i+'</li>').join('');
   document.getElementById('ptServPrice').textContent = S.priceServ ? fmt(S.priceServ) : '—';
+
+  document.querySelectorAll('.serv-pal-slide').forEach(n=>n.remove());
+  let palHtml = '';
+  S.pals.forEach(k=>{
+    const pp = PALETTES[k];
+    const photos = ((PHOTOS_BY_PAL[k] && PHOTOS_BY_PAL[k].serv) || []).filter(Boolean);
+    if (!photos.length) return;
+    palHtml += '<div class="page ptier serv-pal-slide">' +
+      '<div class="pt-photos">' + photos.map(u=>'<img src="'+u+'">').join('') + '</div>' +
+      '<div class="pt-bottom">' +
+        '<div class="pt-meta"><div class="pt-num">Палитра</div><div class="pt-name">'+pp.name+'</div>' +
+          '<div class="pt-swatch">'+pp.sw.map(cc=>'<i style="background:'+cc+'"></i>').join('')+'</div>' +
+        '</div>' +
+        '<div class="pt-palnote">Сервировка стола в палитре «'+pp.name+'». Состав комплекта — на слайде «Сервировка».</div>' +
+      '</div>' +
+    '</div>';
+  });
+  document.getElementById('pageTierServ').insertAdjacentHTML('afterend', palHtml);
 
   document.getElementById('pageChairs').style.display = S.chairs ? '' : 'none';
   if (S.chairs) {
@@ -736,7 +768,7 @@ function renderPreview() {
   }
 
   document.getElementById('pvCompCap').textContent =
-    'Расчёт на ' + S.guests + ' гостей · ' + S.tables + ' столов гостей + президиум · палитра «' + pal + '»';
+    'Расчёт на ' + S.guests + ' гостей · ' + S.tables + ' столов гостей + президиум · палитры: ' + pal;
 
   const rows = [['Сервировка стола', S.priceServ]];
   if (S.svechi) rows.push(['Свечи', S.svechiPrice]);
