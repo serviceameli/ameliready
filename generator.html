@@ -257,6 +257,18 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 .pserv-desc .sd-price .val{font-family:'Cormorant',serif;font-size:1.9em;font-weight:600;letter-spacing:-.02em;}
 .pserv-desc .sd-swatches{flex:1;padding:3.5%;box-sizing:border-box;background:#faf9f6;}
 .pserv-desc .serv-swatches{height:100%;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:5%;background:transparent;padding:0;align-items:stretch;}
+.pserv-desc .sd-right{flex:1;padding:3.5%;box-sizing:border-box;background:#faf9f6;}
+.pserv-desc .sd-onepal{height:100%;display:flex;flex-direction:column;gap:.6em;}
+.pserv-desc .sd-onepal-head{font-family:'Cormorant',serif;font-size:1.15em;font-weight:600;display:flex;align-items:center;gap:.6em;flex-shrink:0;}
+.pserv-desc .sd-onepal-ph{flex:1;display:flex;flex-direction:column;gap:4%;min-height:0;}
+.pserv-desc .sd-onepal-ph img{flex:1;min-height:0;width:100%;object-fit:contain;background:#fff;border:1px solid var(--rule);}
+.sd-onepal-head .sw, .pair-row-head .sw{display:flex;width:38px;height:10px;flex-shrink:0;}
+.sd-onepal-head .sw i, .pair-row-head .sw i{flex:1;}
+.pserv-pair{display:flex;flex-direction:column;gap:3%;padding:3%;box-sizing:border-box;background:#faf9f6;}
+.pserv-pair .pair-row{flex:1;display:flex;flex-direction:column;gap:.5em;min-height:0;}
+.pserv-pair .pair-row-head{font-family:'Cormorant',serif;font-size:1.1em;font-weight:600;display:flex;align-items:center;gap:.6em;flex-shrink:0;}
+.pserv-pair .pair-row-photos{flex:1;display:flex;gap:2%;min-height:0;}
+.pserv-pair .pair-row-photos img{flex:1;min-width:0;object-fit:contain;background:#fff;border:1px solid var(--rule);}
 </style>
 </head>
 <body>
@@ -389,7 +401,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
         <ul class="pt-items" id="ptServItems"></ul>
         <div class="sd-price"><div class="cap">цена комплекта</div><div class="val" id="ptServPrice">—</div></div>
       </div>
-      <div class="sd-swatches"><div class="serv-swatches" id="servSwatches"></div></div>
+      <div class="sd-right" id="sdRight"></div>
     </div>
 
 
@@ -719,29 +731,37 @@ function renderPreview() {
             || (PHOTOS_BY_PAL.oliva[type] && PHOTOS_BY_PAL.oliva[type][idx]) || '';
     return p;
   };
-  document.getElementById('servSwatches').innerHTML = S.pals.map(k=>{
-    const pp = PALETTES[k];
-    return '<div class="sw-card"><div class="sw-colors">'+pp.sw.map(cc=>'<i style="background:'+cc+'"></i>').join('')+'</div><div class="sw-nm">'+pp.name+'</div></div>';
-  }).join('');
   document.getElementById('ptServItems').innerHTML = TIERS.serv.items.map(i=>'<li>'+i+'</li>').join('');
   document.getElementById('ptServPrice').textContent = S.priceServ ? fmt(S.priceServ) : '—';
 
+  const servPhotos = (k)=> ((PHOTOS_BY_PAL[k] && PHOTOS_BY_PAL[k].serv) || []).filter(Boolean);
+  const swBar = (k)=> PALETTES[k].sw.map(cc=>'<i style="background:'+cc+'"></i>').join('');
+  const swCard = (k)=>{ const pp=PALETTES[k]; return '<div class="sw-card"><div class="sw-colors">'+swBar(k)+'</div><div class="sw-nm">'+pp.name+'</div></div>'; };
+
+  const sel = S.pals.slice();
+  const sdRight = document.getElementById('sdRight');
+  let pairFrom;
+  if (sel.length % 2 === 1) {
+    const k = sel[0], pp = PALETTES[k];
+    sdRight.innerHTML = '<div class="sd-onepal"><div class="sd-onepal-head"><span class="sw">'+swBar(k)+'</span>'+pp.name+'</div><div class="sd-onepal-ph">'+servPhotos(k).map(u=>'<img src="'+u+'">').join('')+'</div></div>';
+    pairFrom = 1;
+  } else {
+    sdRight.innerHTML = '<div class="serv-swatches">'+sel.map(swCard).join('')+'</div>';
+    pairFrom = 0;
+  }
+
   document.querySelectorAll('.serv-pal-slide').forEach(n=>n.remove());
+  const rest = sel.slice(pairFrom);
   let palHtml = '';
-  S.pals.forEach(k=>{
-    const pp = PALETTES[k];
-    const photos = ((PHOTOS_BY_PAL[k] && PHOTOS_BY_PAL[k].serv) || []).filter(Boolean);
-    if (!photos.length) return;
-    palHtml += '<div class="page ptier serv-pal-slide">' +
-      '<div class="pt-photos">' + photos.map(u=>'<img src="'+u+'">').join('') + '</div>' +
-      '<div class="pt-bottom">' +
-        '<div class="pt-meta"><div class="pt-num">Палитра</div><div class="pt-name">'+pp.name+'</div>' +
-          '<div class="pt-swatch">'+pp.sw.map(cc=>'<i style="background:'+cc+'"></i>').join('')+'</div>' +
-        '</div>' +
-        '<div class="pt-palnote">Сервировка стола в палитре «'+pp.name+'». Состав комплекта — на слайде «Сервировка».</div>' +
-      '</div>' +
+  for (let i=0;i<rest.length;i+=2){
+    const pair = [rest[i], rest[i+1]].filter(Boolean);
+    palHtml += '<div class="page pserv-pair serv-pal-slide">' +
+      pair.map(k=>{ const pp=PALETTES[k];
+        return '<div class="pair-row"><div class="pair-row-head"><span class="sw">'+swBar(k)+'</span>'+pp.name+'</div>' +
+               '<div class="pair-row-photos">'+servPhotos(k).map(u=>'<img src="'+u+'">').join('')+'</div></div>';
+      }).join('') +
     '</div>';
-  });
+  }
   document.getElementById('pageTierServ').insertAdjacentHTML('afterend', palHtml);
 
   document.getElementById('pageChairs').style.display = S.chairs ? '' : 'none';
