@@ -120,9 +120,10 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 
 /* ─── СЛАЙДЫ 4–5: ОПЦИИ ─── */
 .popt{display:flex;}
-.popt .opt-photo{width:52%;background:#ffffff;overflow:hidden;flex-shrink:0;}
-.popt .opt-photo .ph-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;width:100%;height:100%;gap:2px;}
-.popt .opt-photo .ph-grid img{width:100%;height:100%;object-fit:contain;background:#ffffff;}
+.popt .opt-photo{width:52%;background:#ffffff;overflow:hidden;flex-shrink:0;padding:3% 4%;box-sizing:border-box;}
+.popt .opt-photo .ph-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;width:100%;height:100%;gap:3% 2.5%;}
+.popt .opt-photo .ph-grid .ph-cell{border:1px solid var(--rule);border-radius:3px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:6%;box-sizing:border-box;}
+.popt .opt-photo .ph-grid .ph-cell img{width:100%;height:100%;object-fit:contain;background:#fff;display:block;}
 .popt .opt-photo .ph-empty{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#b5b5b2;font-size:.7em;letter-spacing:.2em;text-transform:uppercase;}
 .popt .opt-body{padding:7% 8%;display:flex;flex-direction:column;justify-content:center;}
 .popt .opt-lbl{font-size:.78em;letter-spacing:.32em;text-transform:uppercase;color:var(--light);font-weight:500;margin-bottom:.5em;}
@@ -882,7 +883,7 @@ function renderPreview() {
   if (S.svechi) {
     document.getElementById('pvSvechiPrice').textContent = S.svechiPrice ? fmt(S.svechiPrice) : '—';
     const CANDLES = ['https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D1%81%D0%B2%D0%B5%D1%87%D0%B8%20%D0%B1%D0%B5%D0%BB%206%D1%88%D1%82.jpg&w=900&q=82','https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D1%81%D0%B2%D0%B5%D1%87%D0%B8%20%D1%87%D0%B5%D1%80%D0%BD%206%D1%88%D1%82.jpg&w=900&q=82','https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D1%81%D0%B2%D0%B5%D1%87%D0%B8%20%D1%8F%D0%BD%D1%82%D0%B0%D1%80%D1%8C%206%D1%88%D1%82.jpg&w=900&q=82','https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%9D%D0%B0%D0%B1%D0%BE%D1%80%20%D0%BF%D0%BE%D0%B4%D1%81%D0%B2%D0%B5%D1%87%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%20_%D0%A0%D0%B0%D0%B2%D0%B5%D0%BD%D0%BA%D0%BB%D0%BE_%20%D0%B8%20%D1%81%D0%B2%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D0%BE%D0%B4%D0%BD%D1%8B%D0%B5%20%D1%81%D0%B2%D0%B5%D1%87%D0%B8%20_%D0%9B%D0%B0%D0%B2%D0%B3%D1%83%D0%B4_-1.png&w=900&q=82']
-    document.getElementById('pvSvechiGrid').innerHTML = CANDLES.map(u=>'<img src="'+u+'">').join('');
+    document.getElementById('pvSvechiGrid').innerHTML = CANDLES.map(u=>'<div class="ph-cell"><img src="'+u+'"></div>').join('');
   }
 
   document.getElementById('pvCompCap').textContent =
