@@ -839,9 +839,9 @@ function toggleOpt(o) {
   updateProfits();
   renderPreview();
 }
-document.getElementById('chairsPrice').oninput = e => { S.chairsPrice = +e.target.value||null; renderPreview(); };
-document.getElementById('cerPrice').oninput = e => { S.cerPrice = +e.target.value||null; renderPreview(); };
-document.getElementById('svechiPrice').oninput = e => { S.svechiPrice = +e.target.value||null; renderPreview(); };
+document.getElementById('chairsPrice').oninput = e => { S.chairsPrice = +e.target.value||null; updateProfits(); renderPreview(); };
+document.getElementById('cerPrice').oninput = e => { S.cerPrice = +e.target.value||null; updateProfits(); renderPreview(); };
+document.getElementById('svechiPrice').oninput = e => { S.svechiPrice = +e.target.value||null; updateProfits(); renderPreview(); };
 
 document.getElementById('orgName').oninput = e => { const v = e.target.value||'Ваша студия'; document.querySelectorAll('.cName').forEach(n=>n.textContent=v); };
 document.getElementById('orgPhone').oninput = e => { const v = e.target.value||'+7 ___ ___-__-__'; document.querySelectorAll('.cPhone').forEach(n=>n.textContent=v); };
