@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ameli · Внутренний расчёт тарифов</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#F5C518;
+  --text:#1E1E1C;
+  --mid:#5A5A54;
+  --muted:#8A8A82;
+  --rule:#E6E6E0;
+  --soft:#FAFAF7;
+  --green:#2E7D32;
+  --red:#C0392B;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Montserrat',sans-serif;color:var(--text);background:#fff;line-height:1.5;padding:32px;max-width:1100px;margin:0 auto;}
+h1{font-size:24px;font-weight:700;margin-bottom:4px;}
+.subtitle{font-size:13px;color:var(--muted);margin-bottom:32px;}
+h2{font-size:16px;font-weight:700;margin:36px 0 14px;padding-bottom:8px;border-bottom:2px solid var(--text);}
+h2 .n{color:var(--muted);font-weight:600;margin-right:8px;}
+
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);}
+th{font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);background:var(--soft);}
+td.num,th.num{text-align:right;white-space:nowrap;}
+tr.total td{font-weight:700;border-top:2px solid var(--text);border-bottom:none;}
+
+/* Блок 2 — интерактив */
+.controls{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;background:var(--soft);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;margin-bottom:20px;}
+.controls .fld{display:flex;flex-direction:column;gap:5px;}
+.controls label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+.controls input[type=number]{width:90px;border:1px solid var(--rule);border-radius:6px;padding:8px 10px;font-family:inherit;font-size:14px;outline:none;}
+.controls input[type=number]:focus{border-color:var(--text);}
+.controls .chk{display:flex;align-items:center;gap:7px;font-size:14px;cursor:pointer;padding-bottom:8px;}
+.controls .chk input{width:17px;height:17px;accent-color:var(--text);cursor:pointer;}
+
+.calc-table th.col{text-align:right;font-size:12px;}
+.calc-table th.ameli{background:var(--accent);color:#1E1E1C;}
+.calc-table td.ameli{background:#FEF9E3;font-weight:700;}
+.calc-table tr.hl td{background:var(--soft);font-weight:700;}
+.calc-table tr.hl td.ameli{background:#FEF3C8;}
+.calc-table td.lbl{font-weight:500;}
+.calc-table tr.margin td{color:var(--mid);font-size:12px;}
+
+/* Блок 3 */
+.min-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:10px;}
+.min-card{border:1px solid var(--rule);border-radius:10px;padding:16px 18px;}
+.min-card .d{font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;}
+.min-card .cond{font-size:12px;color:var(--mid);line-height:1.6;}
+.min-card .verdict{margin-top:10px;font-weight:700;font-size:14px;}
+.min-card .verdict.ok{color:var(--green);}
+.min-card .verdict.bad{color:var(--red);}
+.note{font-size:12px;color:var(--muted);line-height:1.7;margin-top:12px;}
+.note code{background:var(--soft);padding:1px 5px;border-radius:4px;font-size:11px;}
+</style>
+</head>
+<body>
+
+<h1>Внутренний расчёт тарифов</h1>
+<div class="subtitle">Ameli Rental · только для внутреннего использования. Не показывать оргам и клиентам.</div>
+
+<!-- ═══ БЛОК 1 — БАЗОВЫЕ ТАРИФЫ ═══ -->
+<h2><span class="n">1</span>Базовые тарифы (цена для клиента)</h2>
+<table>
+  <thead>
+    <tr><th>Позиция</th><th>Описание</th><th class="num">Цена клиенту</th><th>Скидка орга</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Сет на гостя</td><td>Бокалы, тарелка, приборы, стул</td><td class="num">1 550 ₽ / гость</td><td>да</td></tr>
+    <tr><td>Скатерть + номерок</td><td>Текстиль стола, за стол</td><td class="num">2 900 ₽ / стол</td><td>да</td></tr>
+    <tr><td>Свечи</td><td>Композиция на стол, за стол</td><td class="num">1 360 ₽ / стол</td><td>да</td></tr>
+    <tr><td>Зона церемонии</td><td>База до 40 гостей</td><td class="num">43 000 ₽</td><td>да (аренда)</td></tr>
+    <tr><td>Лавка церемонии</td><td>На каждые 4 гостя свыше 40</td><td class="num">1 200 ₽ / лавка</td><td>да</td></tr>
+    <tr><td>Доставка</td><td>Фиксированная</td><td class="num">17 000 ₽</td><td><b>нет</b></td></tr>
+    <tr><td>Монтажник</td><td>За человека (2 при ≤6 столах, 3 при ≥7)</td><td class="num">8 000 ₽ / чел</td><td><b>нет</b></td></tr>
+  </tbody>
+</table>
+<div class="note">Скидка орга применяется <b>только на аренду</b> (гости, скатерти, свечи, аренда церемонии). Доставка, базовый монтаж и монтаж церемонии — <b>всегда без скидки</b>.</div>
+
+<!-- ═══ БЛОК 2 — ИНТЕРАКТИВНЫЙ РАСЧЁТ ═══ -->
+<h2><span class="n">2</span>Расчёт заработка Амели</h2>
+<div class="controls">
+  <div class="fld"><label>Гостей</label><input type="number" id="guests" value="40" min="1" max="200"></div>
+  <div class="fld"><label>Столов</label><input type="number" id="tables" value="5" min="1" max="40"></div>
+  <label class="chk"><input type="checkbox" id="candles"> Свечи</label>
+  <label class="chk"><input type="checkbox" id="ceremony"> Зона церемонии</label>
+</div>
+
+<table class="calc-table">
+  <thead>
+    <tr>
+      <th>Показатель</th>
+      <th class="col">−30%</th>
+      <th class="col">−40%</th>
+      <th class="col">−50%</th>
+    </tr>
+  </thead>
+  <tbody id="calcBody"></tbody>
+</table>
+<div class="note" id="breakdown"></div>
+
+<!-- ═══ БЛОК 3 — МИНИМАЛЬНЫЙ ЗАКАЗ ═══ -->
+<h2><span class="n">3</span>Минимальный заказ · рентабельность</h2>
+<div class="note">Заказ рентабелен, когда дисконтированная аренда покрывает логистику: <code>аренда × (1 − скидка) ≥ логистика</code>. Иначе заказ уходит в минус.</div>
+<div class="min-grid" id="minGrid"></div>
+
+<script>
+const PRICE_GUEST = 1550;
+const PRICE_TABLECLOTH = 2900;
+const PRICE_CANDLES = 1360;
+const PRICE_CEREMONY_BASE = 43000;
+const PRICE_BENCH = 1200;
+const PRICE_DELIVERY = 17000;
+const PRICE_INSTALLER = 8000;
+
+const fmt = n => Math.round(n).toLocaleString('ru-RU') + ' ₽';
+const pct = n => (n*100).toFixed(1).replace('.', ',') + '%';
+
+function compute(guests, tables, withCandles, withCeremony){
+  const rental = guests * PRICE_GUEST + tables * PRICE_TABLECLOTH;
+  const installers = tables <= 6 ? 2 : 3;
+  const installation = installers * PRICE_INSTALLER;
+  const candles = withCandles ? tables * PRICE_CANDLES : 0;
+  const extraBenches = withCeremony ? Math.max(0, Math.ceil((guests - 40) / 4)) : 0;
+  const ceremonyRental = withCeremony ? PRICE_CEREMONY_BASE + extraBenches * PRICE_BENCH : 0;
+  const ceremonyInstaller = withCeremony ? PRICE_INSTALLER : 0;
+
+  const rentalPart = rental + candles + ceremonyRental;      // всё, на что действует скидка
+  const logistics = PRICE_DELIVERY + installation + ceremonyInstaller; // без скидки
+  const totalClient = rentalPart + logistics;
+
+  return { rental, installers, installation, candles, extraBenches, ceremonyRental,
+           ceremonyInstaller, rentalPart, logistics, totalClient };
+}
+
+function render(){
+  const guests = +document.getElementById('guests').value || 0;
+  const tables = +document.getElementById('tables').value || 0;
+  const withCandles = document.getElementById('candles').checked;
+  const withCeremony = document.getElementById('ceremony').checked;
+  const c = compute(guests, tables, withCandles, withCeremony);
+  const rates = [0.30, 0.40, 0.50];
+
+  const perRate = rates.map(d => {
+    const rentalDiscounted = c.rentalPart * (1 - d);
+    const totalOrg = rentalDiscounted + c.logistics;
+    const ameli = c.totalClient - totalOrg;
+    const margin = c.totalClient > 0 ? ameli / c.totalClient : 0;
+    return { rentalDiscounted, totalOrg, ameli, margin };
+  });
+
+  // Таблица блок 2
+  const rows = [
+    ['Цена клиента', perRate.map(()=>fmt(c.totalClient)), 'lbl', false],
+    ['Аренда для орга (со скидкой)', perRate.map(r=>fmt(r.rentalDiscounted)), '', false],
+    ['Логистика (без скидки)', perRate.map(()=>fmt(c.logistics)), '', false],
+    ['Итого орг платит', perRate.map(r=>fmt(r.totalOrg)), 'hl', false],
+    ['Зарабатывает Амели', perRate.map(r=>fmt(r.ameli)), '', true],
+    ['Маржа', perRate.map(r=>pct(r.margin)), 'margin', true],
+  ];
+  document.getElementById('calcBody').innerHTML = rows.map(([lbl, vals, cls, ameliCol]) =>
+    '<tr class="'+cls+'"><td class="lbl">'+lbl+'</td>' +
+    vals.map(v => '<td class="num'+(ameliCol?' ameli':'')+'">'+v+'</td>').join('') + '</tr>'
+  ).join('');
+
+  // Разбивка
+  document.getElementById('breakdown').innerHTML =
+    'Аренда: <b>'+fmt(c.rental)+'</b> · Свечи: <b>'+fmt(c.candles)+'</b> · Церемония (аренда): <b>'+fmt(c.ceremonyRental)+'</b>' +
+    (c.extraBenches ? ' (+'+c.extraBenches+' лавок)' : '') +
+    ' &nbsp;|&nbsp; Доставка: <b>'+fmt(PRICE_DELIVERY)+'</b> · Монтаж: <b>'+c.installers+' × '+fmt(PRICE_INSTALLER)+' = '+fmt(c.installation)+'</b>' +
+    (c.ceremonyInstaller ? ' · Монтажник церемонии: <b>'+fmt(c.ceremonyInstaller)+'</b>' : '');
+
+  // Блок 3 — рентабельность
+  document.getElementById('minGrid').innerHTML = rates.map((d, i) => {
+    const rentalDiscounted = c.rentalPart * (1 - d);
+    const ok = rentalDiscounted >= c.logistics;
+    return '<div class="min-card"><div class="d">Скидка −'+(d*100)+'%</div>' +
+      '<div class="cond">Аренда со скидкой: <b>'+fmt(rentalDiscounted)+'</b><br>Логистика: <b>'+fmt(c.logistics)+'</b></div>' +
+      '<div class="verdict '+(ok?'ok':'bad')+'">'+(ok?'✓ Рентабельно':'✗ В минус')+'</div></div>';
+  }).join('');
+}
+
+['guests','tables'].forEach(id => document.getElementById(id).oninput = render);
+['candles','ceremony'].forEach(id => document.getElementById(id).onchange = render);
+render();
+</script>
+</body>
+</html>
