@@ -276,7 +276,8 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 .pserv-pair .pair-row-photos img{flex:1;min-width:0;object-fit:contain;background:#fff;border:1px solid var(--rule);}
 .incl-note{margin:.3em 0 1em;padding:.6em .8em;background:var(--soft-bg);border-left:3px solid var(--accent);font-size:.8em;color:var(--text);font-weight:600;line-height:1.35;}
 .pkgcard .incl-note{margin:0 0 10px;padding:7px 9px;font-size:11px;}
-.pserv-desc .incl-note{font-size:.82em;}</style>
+.pserv-desc .incl-note{font-size:.82em;}.pserv-desc .sd-intro{font-size:.74em;color:var(--mid);line-height:1.5;margin-bottom:1.1em;}
+</style>
 </head>
 <body>
 
@@ -405,9 +406,10 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       <div class="sd-left">
         <div class="pt-num">Комплект стола</div>
         <div class="pt-name">Сервировка</div>
+        <div class="sd-intro">Вы можете выбрать любые сочетания текстиля и посуды из представленных в презентации. Визуализация цветовой палитры дана для примера.</div>
         <ul class="pt-items" id="ptServItems"></ul>
         <div class="incl-note">✓ Доставка и монтаж включены в стоимость</div>
-        <div class="sd-price"><div class="cap">цена комплекта</div><div class="val" id="ptServPrice">—</div></div>
+        <div class="sd-price"><div class="cap" id="ptServCap">стоимость декора</div><div class="val" id="ptServPrice">—</div></div>
       </div>
       <div class="sd-right" id="sdRight"></div>
     </div>
@@ -589,7 +591,7 @@ const TIERS = {
   serv: {
     name: 'Сервировка',
     retailFix:60000, retailTable:20000, profFix:50000, profTable:17000, baseFix:40000, baseTable:12000,
-    items: ['Скатерть белая / в оттенке палитры','Салфетка белая / в оттенке палитры','Подстановочные тарелки (прозрачные с кантом)','Сет бокалов 3 шт (прозрачные / цветные)','Сет приборов 4 шт (золотые / чёрные)','Номерок для стола']
+    items: ['Скатерть круглая / прямоугольная','Салфетки','Подстановочные тарелки (прозрачные с кантом)','Сет бокалов 3 шт','Сет приборов 4 шт (золотые / чёрные)','Номерок для стола']
   }
 };
 const OPT_CHAIRS = {basePerGuest:600, profPerGuest:850, retailPerGuest:1000};
@@ -742,6 +744,7 @@ function renderPreview() {
   };
   document.getElementById('ptServItems').innerHTML = TIERS.serv.items.map(i=>'<li>'+i+'</li>').join('');
   document.getElementById('ptServPrice').textContent = S.priceServ ? fmt(S.priceServ) : '—';
+  document.getElementById('ptServCap').textContent = 'Стоимость декора на ' + S.guests + ' гостей и ' + S.tables + ' столов';
 
   const servPhotos = (k)=> ((PHOTOS_BY_PAL[k] && PHOTOS_BY_PAL[k].serv) || []).filter(Boolean);
   const swBar = (k)=> PALETTES[k].sw.map(cc=>'<i style="background:'+cc+'"></i>').join('');
