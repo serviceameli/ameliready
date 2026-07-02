@@ -310,7 +310,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
           <div class="prices" id="svechiPrices" style="margin-top:6px"></div>
           <div class="priceline">
             <label>Ваша цена клиенту, ₽</label>
-            <input type="number" id="svechiPrice" step="1000" style="flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none">
+            <input type="text" inputmode="numeric" id="svechiPrice" style="flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none">
           </div>
           <div class="profit" id="svechiProfit">—</div>
         </div>
@@ -325,7 +325,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
           <div class="prices" id="cerPrices" style="margin-top:6px"></div>
           <div class="priceline">
             <label>Ваша цена клиенту, ₽</label>
-            <input type="number" id="cerPrice" step="1000" style="flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none">
+            <input type="text" inputmode="numeric" id="cerPrice" style="flex:1;border:1px solid var(--rule);padding:7px 10px;font-family:inherit;font-size:13px;outline:none">
           </div>
           <div class="profit" id="cerProfit">—</div>
         </div>
@@ -558,6 +558,22 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 const GUESTS_PER_TABLE = 8;
 const MKAD_RATE = 170;
 
+function fmtThousands(n){ return n ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : ''; }
+function parseThousands(s){ return parseInt(String(s).replace(/\s/g,''), 10) || null; }
+function attachPriceMask(inp, onchange){
+  inp.addEventListener('input', function(){
+    const pos = inp.selectionStart;
+    const raw = inp.value.replace(/\s/g,'');
+    const num = parseInt(raw,10);
+    const fmt = num > 0 ? fmtThousands(num) : raw;
+    inp.value = fmt;
+    // восстановим курсор с учётом добавленных пробелов
+    const diff = fmt.length - raw.length;
+    try { inp.setSelectionRange(pos + diff, pos + diff); } catch(e){}
+    if(onchange) onchange(num > 0 ? num : null);
+  });
+}
+
 const TIERS = {
   serv: {
     name: 'Сервировка',
@@ -694,18 +710,18 @@ function buildPkgs() {
           '<span class="pl">В готовом решении</span><span class="pv accent">' + fmt(servCostAkc()) + '</span>' +
         '</div>' +
         '<div class="priceline"><label>Ваша цена клиенту, ₽</label>' +
-          '<input type="number" step="1000" value="' + S[prKey] + '" data-key="' + prKey + '">' +
+          '<input type="text" inputmode="numeric" value="' + fmtThousands(S[prKey]) + '" data-key="' + prKey + '">' +
         '</div>' +
         '<div class="profit" id="profit-' + k + '"></div>' +
       '</div>';
     box.appendChild(card);
   }
   box.querySelectorAll('input[data-key]').forEach(inp => {
-    inp.oninput = e => {
-      const pk = e.target.dataset.key; S[pk] = +e.target.value || null;
+    attachPriceMask(inp, val => {
+      S[inp.dataset.key] = val;
       S.priceServManual = true;
       updateProfits(); renderPreview();
-    };
+    });
   });
   updateProfits();
 }
@@ -738,7 +754,7 @@ function updateProfits() {
     '<span class="pl">Проф. скидка −30%</span><span class="pv" style="color:var(--mid,#5A5A54)">'+fmt(cerc.base)+'</span>' +
     '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(cercAkc)+'</span>';
   if (S.cer) {
-    if (S.cerPrice === null) { S.cerPrice = cerc.retail; const el = document.getElementById('cerPrice'); if(el) el.value = S.cerPrice; }
+    if (S.cerPrice === null) { S.cerPrice = cerc.retail; const el = document.getElementById('cerPrice'); if(el) el.value = fmtThousands(S.cerPrice); }
     const el = document.getElementById('cerProfit');
     if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.cerPrice||0)-cercAkc)) + '</b>';
   }
@@ -751,7 +767,7 @@ function updateProfits() {
     '<span class="pl">Проф. скидка −30%</span><span class="pv" style="color:var(--mid,#5A5A54)">'+fmt(sc.base)+'</span>' +
     '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(scAkc)+'</span>';
   if (S.svechi) {
-    if (S.svechiPrice === null) { S.svechiPrice = sc.retail; const el = document.getElementById('svechiPrice'); if(el) el.value = S.svechiPrice; }
+    if (S.svechiPrice === null) { S.svechiPrice = sc.retail; const el = document.getElementById('svechiPrice'); if(el) el.value = fmtThousands(S.svechiPrice); }
     const el = document.getElementById('svechiProfit');
     if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.svechiPrice||0)-scAkc)) + '</b>';
   }
@@ -891,8 +907,8 @@ function toggleOpt(o) {
   updateProfits();
   renderPreview();
 }
-document.getElementById('cerPrice').oninput = e => { S.cerPrice = +e.target.value||null; updateProfits(); renderPreview(); };
-document.getElementById('svechiPrice').oninput = e => { S.svechiPrice = +e.target.value||null; updateProfits(); renderPreview(); };
+attachPriceMask(document.getElementById('cerPrice'), val => { S.cerPrice = val; updateProfits(); renderPreview(); });
+attachPriceMask(document.getElementById('svechiPrice'), val => { S.svechiPrice = val; updateProfits(); renderPreview(); });
 
 document.getElementById('orgName').oninput = e => { const v = e.target.value||'Ваша студия'; document.querySelectorAll('.cName').forEach(n=>n.textContent=v); };
 document.getElementById('orgPhone').oninput = e => { const v = e.target.value||'+7 ___ ___-__-__'; document.querySelectorAll('.cPhone').forEach(n=>n.textContent=v); };
