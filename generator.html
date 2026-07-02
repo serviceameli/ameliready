@@ -243,7 +243,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 .pserv-pair .pair-row-photos img{flex:1;min-width:0;object-fit:contain;background:#fff;border:1px solid var(--rule);}
 .incl-note{margin:.3em 0 1em;padding:.6em .8em;background:var(--soft-bg);border-left:3px solid var(--accent);font-size:.8em;color:var(--text);font-weight:600;line-height:1.35;}
 .pkgcard .incl-note{margin:0 0 10px;padding:7px 9px;font-size:11px;}
-.pserv-desc .incl-note{font-size:.82em;}.pserv-desc .sd-intro{font-size:.74em;color:var(--mid);line-height:1.5;margin-bottom:1.1em;}
+.pserv-desc .incl-note{font-size:.82em;}.pserv-desc .sd-intro{font-size:.88em;color:var(--text);line-height:1.6;margin-bottom:1.1em;}
 .offer-note{font-size:12px;font-weight:600;color:var(--accent);background:var(--soft-bg);border-left:3px solid var(--accent);padding:8px 10px;margin-bottom:14px;line-height:1.4;}
 .budget .b-row{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--rule);font-size:12px;}
 .budget .b-row .nm{color:var(--mid);}
@@ -289,12 +289,12 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
     </div>
 
     <div class="block">
-      <div class="kicker">2 · Палитры · можно несколько</div>
+      <div class="kicker">2 · Палитры</div>
       <div class="palrow" id="pals"></div>
     </div>
 
     <div class="block">
-      <div class="kicker">3 · Декор стола · ваша цена</div>
+      <div class="kicker">3 · Декор стола</div>
       <div id="pkgs"></div>
     </div>
 
@@ -762,7 +762,7 @@ function renderPreview() {
   const pal = S.pals.map(k=>PALETTES[k].name).join(', ');
 
   document.getElementById('pvGuests').textContent = S.guests;
-  document.getElementById('pvTables').textContent = S.tables + ' + 1'; // гостевые + президиум
+  document.getElementById('pvTables').textContent = S.tables;
 
   document.getElementById('ptServItems').innerHTML = TIERS.serv.items.map(i=>'<li>'+i+'</li>').join('');
   document.getElementById('ptServPrice').textContent = S.priceServ ? fmt(S.priceServ) : '—';
