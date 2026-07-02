@@ -748,7 +748,7 @@ function updateProfits() {
   const cerc = cerCost();
   const cercAkc = cerCostAkc();
   const cerHint = document.getElementById('cerHint');
-  if (cerHint) cerHint.textContent = 'арка + оформление · в готовом решении ' + fmt(cercAkc);
+  if (cerHint) cerHint.textContent = 'на ' + S.guests + ' гостей';
   const cerp = document.getElementById('cerPrices');
   if (cerp) cerp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(cerc.retail)+'</span>' +
     '<span class="pl">Проф. скидка −30%</span><span class="pv" style="color:var(--mid,#5A5A54)">'+fmt(cerc.base)+'</span>' +
@@ -761,7 +761,7 @@ function updateProfits() {
   const sc = svechiCost();
   const scAkc = svechiCostAkc();
   const svHint = document.getElementById('svechiHint');
-  if (svHint) svHint.textContent = S.tables + ' столов · в готовом решении ' + fmt(scAkc);
+  if (svHint) svHint.textContent = 'на ' + S.tables + ' столов';
   const svp = document.getElementById('svechiPrices');
   if (svp) svp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(sc.retail)+'</span>' +
     '<span class="pl">Проф. скидка −30%</span><span class="pv" style="color:var(--mid,#5A5A54)">'+fmt(sc.base)+'</span>' +
