@@ -591,18 +591,57 @@ async function waitForPdfAssets(pages){
   }));
 }
 
+function loadPdfScript(src){
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('Не удалось загрузить '+src));
+    document.head.appendChild(script);
+  });
+}
+
+async function ensurePdfLibraries(status){
+  if (!window.html2canvas) {
+    const html2canvasSources = [
+      'vendor/html2canvas.min.js?v=1.4.1',
+      'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+      'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js'
+    ];
+    for (const src of html2canvasSources) {
+      try { await loadPdfScript(src); if (window.html2canvas) break; } catch (e) {}
+    }
+  }
+  if (!window.jspdf) {
+    const jsPdfSources = [
+      'vendor/jspdf.umd.min.js?v=2.5.1',
+      'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
+      'https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js'
+    ];
+    for (const src of jsPdfSources) {
+      try { await loadPdfScript(src); if (window.jspdf) break; } catch (e) {}
+    }
+  }
+  return !!window.html2canvas && !!window.jspdf;
+}
+
 async function downloadColorPdf(){
   const btn = document.getElementById('pdfDownloadBtn');
   const status = document.getElementById('pdfStatus');
   const pages = Array.from(document.querySelectorAll('.preview .page')).filter(page => getComputedStyle(page).display !== 'none');
-  if (!window.html2canvas || !window.jspdf || !pages.length) {
-    status.textContent = 'Не удалось запустить создание PDF. Обновите страницу и попробуйте ещё раз.';
+  if (!pages.length) {
+    status.textContent = 'Не удалось найти страницы презентации.';
     return;
   }
 
   btn.disabled = true;
-  status.textContent = 'Подготавливаю изображения…';
+  status.textContent = 'Подключаю модуль PDF…';
   try {
+    if (!await ensurePdfLibraries(status)) {
+      throw new Error('PDF-библиотеки недоступны');
+    }
+    status.textContent = 'Подготавливаю изображения…';
     await waitForPdfAssets(pages);
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({orientation:'landscape', unit:'mm', format:'a4', compress:true});
@@ -689,7 +728,7 @@ async function downloadColorPdf(){
     status.textContent = 'Готово: цветной PDF, ' + sizeMb + ' МБ.';
   } catch (error) {
     console.error('PDF generation failed', error);
-    status.textContent = 'Не удалось создать PDF. Проверьте интернет-соединение и попробуйте ещё раз.';
+    status.textContent = 'Не удалось создать PDF. Обновите страницу или используйте ссылку печати ниже.';
   } finally {
     btn.disabled = false;
   }
