@@ -82,75 +82,79 @@ th.akc-h{background:#FEF9E3;color:var(--text);}
       <th>Позиция</th>
       <th>Описание</th>
       <th class="num">Базовая (сайт)</th>
-      <th class="num">Скидка орга −30%</th>
+      <th class="num" id="discountHead">Скидка орга</th>
       <th class="num akc-h">Акционная цена</th>
-      <th class="num akc-h">Заработок</th>
-      <th class="num akc-h">Маржа</th>
+      <th class="num akc-h">Разница к проф.</th>
+      <th class="num akc-h">Отклонение</th>
     </tr>
   </thead>
   <tbody>
-    <tr data-key="guest" data-base="1550" data-discount="yes">
+    <tr data-key="guest" data-discount="yes">
       <td>Сет на гостя</td><td>Бокалы, тарелка, приборы, стул</td>
-      <td class="num">1 550 ₽ / гость</td><td class="num">1 085 ₽</td>
-      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="akc"><input class="base-input" type="number"></td><td class="num discount-value"></td>
+      <td class="akc"><input class="offer-input" type="number"></td>
       <td class="num earn neu" id="earn-guest">—</td>
       <td class="num earn neu" id="marg-guest">—</td>
     </tr>
-    <tr data-key="table" data-base="2900" data-discount="yes">
+    <tr data-key="table" data-discount="yes">
       <td>Скатерть + номерок</td><td>Текстиль стола, за стол</td>
-      <td class="num">2 900 ₽ / стол</td><td class="num">2 030 ₽</td>
-      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="akc"><input class="base-input" type="number"></td><td class="num discount-value"></td>
+      <td class="akc"><input class="offer-input" type="number"></td>
       <td class="num earn neu" id="earn-table">—</td>
       <td class="num earn neu" id="marg-table">—</td>
     </tr>
-    <tr data-key="candles" data-base="1360" data-discount="yes">
+    <tr data-key="candles" data-discount="yes">
       <td>Свечи</td><td>Композиция на стол, за стол</td>
-      <td class="num">1 360 ₽ / стол</td><td class="num">952 ₽</td>
-      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="akc"><input class="base-input" type="number"></td><td class="num discount-value"></td>
+      <td class="akc"><input class="offer-input" type="number"></td>
       <td class="num earn neu" id="earn-candles">—</td>
       <td class="num earn neu" id="marg-candles">—</td>
     </tr>
-    <tr data-key="ceremony" data-base="43000" data-discount="yes">
+    <tr data-key="ceremony" data-discount="yes">
       <td>Зона церемонии</td><td>База до 40 гостей</td>
-      <td class="num">43 000 ₽</td><td class="num">30 100 ₽</td>
-      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="akc"><input class="base-input" type="number"></td><td class="num discount-value"></td>
+      <td class="akc"><input class="offer-input" type="number"></td>
       <td class="num earn neu" id="earn-ceremony">—</td>
       <td class="num earn neu" id="marg-ceremony">—</td>
     </tr>
-    <tr data-key="bench" data-base="1200" data-discount="yes">
+    <tr data-key="bench" data-discount="yes">
       <td>Лавка церемонии</td><td>На каждые 4 гостя свыше 40</td>
-      <td class="num">1 200 ₽ / лавка</td><td class="num">840 ₽</td>
-      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="akc"><input class="base-input" type="number"></td><td class="num discount-value"></td>
+      <td class="akc"><input class="offer-input" type="number"></td>
       <td class="num earn neu" id="earn-bench">—</td>
       <td class="num earn neu" id="marg-bench">—</td>
     </tr>
-    <tr data-key="delivery" data-base="18000" data-discount="no">
+    <tr data-key="delivery" data-discount="no">
       <td>Доставка + разгрузка</td><td>Без скидки · мы платим 15 800 ₽</td>
-      <td class="num">18 000 ₽</td><td class="num" style="color:var(--muted)">нет</td>
-      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="akc"><input class="base-input" type="number"></td><td class="num discount-value" style="color:var(--muted)">нет</td>
+      <td class="akc"><input class="offer-input" type="number"></td>
       <td class="num earn neu" id="earn-delivery">—</td>
       <td class="num earn neu" id="marg-delivery">—</td>
     </tr>
-    <tr data-key="installer" data-base="9200" data-discount="no">
+    <tr data-key="installer" data-discount="no">
       <td>Монтажник</td><td>За человека, монтаж + демонтаж · мы платим 8 000 ₽</td>
-      <td class="num">9 200 ₽ / чел</td><td class="num" style="color:var(--muted)">нет</td>
-      <td class="akc"><input type="number" placeholder="вручную"></td>
+      <td class="akc"><input class="base-input" type="number"></td><td class="num discount-value" style="color:var(--muted)">нет</td>
+      <td class="akc"><input class="offer-input" type="number"></td>
       <td class="num earn neu" id="earn-installer">—</td>
       <td class="num earn neu" id="marg-installer">—</td>
     </tr>
   </tbody>
 </table>
-<div class="note">Акционная цена — спецпредложение на единицу позиции. Заработок = акционная − скидка орга −30% (для аренды). Для логистики заработок = акционная − базовая.</div>
+<div class="note">Базовая цена и цена готового решения загружаются из <code>prices.json</code>. Разница показывает отклонение цены готового решения от стандартной профессиональной цены. Для логистики скидка не применяется.</div>
+<div class="controls" style="margin-top:16px;">
+  <div class="fld"><label>Скидка организатора, %</label><input type="number" id="discount" min="0" max="99" value="30"></div>
+  <div class="fld"><label>За МКАД, ₽/км</label><input type="number" id="mkadRate" min="0" value="170"></div>
+</div>
 <div style="margin-top:16px;">
-  <button id="saveBtn" onclick="saveAll()" style="background:var(--text);color:#fff;border:none;border-radius:8px;padding:11px 24px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;">Сохранить цены → в конструктор</button>
-  <span id="saveMsg" style="display:none;margin-left:14px;font-size:13px;color:var(--green);font-weight:600;">✓ Сохранено</span>
+  <button id="saveBtn" onclick="saveAll()" style="background:var(--text);color:#fff;border:none;border-radius:8px;padding:11px 24px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;">Сохранить черновик и подготовить JSON</button>
+  <span id="saveMsg" style="display:none;margin-left:14px;font-size:13px;color:var(--green);font-weight:600;">✓ Черновик сохранён</span>
 </div>
 
 <!-- Блок передачи цен в генератор -->
 <div id="shareBox" style="display:none;margin-top:18px;border:2px solid var(--text);border-radius:8px;padding:16px 18px;">
   <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px;">Передать цены в генератор</div>
 
-  <div style="font-size:13px;margin-bottom:6px;"><b>Способ 1 · для всех партнёров.</b> Скопируй JSON и вставь его в файл <code>prices.json</code> в репозитории (GitHub → prices.json → ✏️ Edit → вставить → Commit). Через пару минут цены обновятся у всех.</div>
+  <div style="font-size:13px;margin-bottom:6px;"><b>Для всех партнёров.</b> Скопируйте JSON и передайте его мне с командой «Проверь и опубликуй новые цены». После обновления <code>prices.json</code> конструктор и презентация автоматически получат новые значения.</div>
   <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:16px;">
     <textarea id="jsonOut" readonly rows="4" style="flex:1;font-family:monospace;font-size:12px;border:1px solid var(--rule);border-radius:6px;padding:8px 10px;resize:vertical;"></textarea>
     <button onclick="copyShare('jsonOut',this)" style="background:var(--accent);color:var(--text);border:none;border-radius:6px;padding:9px 16px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">Копировать JSON</button>
@@ -179,9 +183,9 @@ th.akc-h{background:#FEF9E3;color:var(--text);}
   <thead>
     <tr>
       <th>Показатель</th>
-      <th class="col">−30%</th>
-      <th class="col">−40%</th>
-      <th class="col">−50%</th>
+      <th class="col">Базовая цена</th>
+      <th class="col">Проф. цена</th>
+      <th class="col">Готовое решение</th>
     </tr>
   </thead>
   <tbody id="calcBody"></tbody>
@@ -191,32 +195,31 @@ th.akc-h{background:#FEF9E3;color:var(--text);}
 
 
 <script>
-const PRICE_GUEST = 1550;
-const PRICE_TABLECLOTH = 2900;
-const PRICE_CANDLES = 1360;
-const PRICE_CEREMONY_BASE = 43000;
-const PRICE_BENCH = 1200;
-const PRICE_DELIVERY = 18000;
-const PRICE_INSTALLER = 9200;
+const DEFAULT_PRICES = {
+  base: { guest:1550, table:2900, candles:1360, ceremony:43000, bench:1200, delivery:18000, installer:9200 },
+  offer: { guest:900, table:1400, candles:800, ceremony:25000, bench:500, delivery:16000, installer:8500 },
+  discount: 30,
+  outsideMkadPerKm: 170
+};
+let prices = JSON.parse(JSON.stringify(DEFAULT_PRICES));
 
 const fmt = n => Math.round(n).toLocaleString('ru-RU') + ' ₽';
 const pct = n => (n*100).toFixed(1).replace('.', ',') + '%';
 
-function compute(guests, tables, withCandles, withCeremony){
-  const rental = guests * PRICE_GUEST + tables * PRICE_TABLECLOTH;
+function computeSet(source, guests, tables, withCandles, withCeremony, applyDiscount){
+  const p = prices[source];
+  const rental = guests * p.guest + tables * p.table;
   const installers = tables <= 6 ? 2 : 3;
-  const installation = installers * PRICE_INSTALLER;
-  const candles = withCandles ? tables * PRICE_CANDLES : 0;
+  const installation = installers * p.installer;
+  const candles = withCandles ? tables * p.candles : 0;
   const extraBenches = withCeremony ? Math.max(0, Math.ceil((guests - 40) / 4)) : 0;
-  const ceremonyRental = withCeremony ? PRICE_CEREMONY_BASE + extraBenches * PRICE_BENCH : 0;
-  const ceremonyInstaller = withCeremony ? PRICE_INSTALLER : 0;
-
-  const rentalPart = rental + candles + ceremonyRental;      // всё, на что действует скидка
-  const logistics = PRICE_DELIVERY + installation + ceremonyInstaller; // без скидки
-  const totalClient = rentalPart + logistics;
-
+  const ceremonyRental = withCeremony ? p.ceremony + extraBenches * p.bench : 0;
+  const ceremonyInstaller = withCeremony ? p.installer : 0;
+  const rentalPart = rental + candles + ceremonyRental;
+  const logistics = p.delivery + installation + ceremonyInstaller;
+  const discountedRental = applyDiscount ? Math.round(rentalPart * (1 - prices.discount / 100)) : rentalPart;
   return { rental, installers, installation, candles, extraBenches, ceremonyRental,
-           ceremonyInstaller, rentalPart, logistics, totalClient };
+           ceremonyInstaller, rentalPart, logistics, total: discountedRental + logistics };
 }
 
 function render(){
@@ -224,25 +227,19 @@ function render(){
   const tables = +document.getElementById('tables').value || 0;
   const withCandles = document.getElementById('candles').checked;
   const withCeremony = document.getElementById('ceremony').checked;
-  const c = compute(guests, tables, withCandles, withCeremony);
-  const rates = [0.30, 0.40, 0.50];
-
-  const perRate = rates.map(d => {
-    const rentalDiscounted = c.rentalPart * (1 - d);
-    const totalOrg = rentalDiscounted + c.logistics;
-    const ameli = c.totalClient - totalOrg;
-    const margin = c.totalClient > 0 ? ameli / c.totalClient : 0;
-    return { rentalDiscounted, totalOrg, ameli, margin };
-  });
+  const retail = computeSet('base', guests, tables, withCandles, withCeremony, false);
+  const professional = computeSet('base', guests, tables, withCandles, withCeremony, true);
+  const offer = computeSet('offer', guests, tables, withCandles, withCeremony, false);
+  const organizerProfit = retail.total - offer.total;
+  const organizerMargin = retail.total > 0 ? organizerProfit / retail.total : 0;
 
   // Таблица блок 2
   const rows = [
-    ['Цена клиента', perRate.map(()=>fmt(c.totalClient)), 'lbl', false],
-    ['Аренда для орга (со скидкой)', perRate.map(r=>fmt(r.rentalDiscounted)), '', false],
-    ['Логистика (без скидки)', perRate.map(()=>fmt(c.logistics)), '', false],
-    ['Итого орг платит', perRate.map(r=>fmt(r.totalOrg)), 'hl', false],
-    ['Зарабатывает Амели', perRate.map(r=>fmt(r.ameli)), '', true],
-    ['Маржа', perRate.map(r=>pct(r.margin)), 'margin', true],
+    ['Итого комплект', [fmt(retail.total), fmt(professional.total), fmt(offer.total)], 'hl', false],
+    ['Арендная часть', [fmt(retail.rentalPart), fmt(professional.total-professional.logistics), fmt(offer.rentalPart)], '', false],
+    ['Логистика', [fmt(retail.logistics), fmt(professional.logistics), fmt(offer.logistics)], '', false],
+    ['Выгода организатора при продаже по базовой цене', ['—', '—', fmt(organizerProfit)], '', true],
+    ['Маржа организатора', ['—', '—', pct(organizerMargin)], 'margin', true],
   ];
   document.getElementById('calcBody').innerHTML = rows.map(([lbl, vals, cls, ameliCol]) =>
     '<tr class="'+cls+'"><td class="lbl">'+lbl+'</td>' +
@@ -251,32 +248,37 @@ function render(){
 
   // Блок логистики
   document.getElementById('logisticsBox').innerHTML =
-    '<div class="lbl">Логистика (входит в цену, без скидки)</div>' +
-    '<div class="row"><span>Доставка:</span><span><b>'+fmt(PRICE_DELIVERY)+'</b></span></div>' +
-    '<div class="row"><span>Монтаж: <b>'+c.installers+' × '+fmt(PRICE_INSTALLER)+' = '+fmt(c.installation)+'</b> ('+c.installers+' монтажника)</span></div>' +
-    (c.ceremonyInstaller ? '<div class="row"><span>Монтажник церемонии:</span><span><b>'+fmt(c.ceremonyInstaller)+'</b></span></div>' : '') +
-    '<div class="total"><span>Итого логистика:</span><span>'+fmt(c.logistics)+'</span></div>';
+    '<div class="lbl">Логистика готового решения</div>' +
+    '<div class="row"><span>Доставка:</span><span><b>'+fmt(prices.offer.delivery)+'</b></span></div>' +
+    '<div class="row"><span>Монтаж: <b>'+offer.installers+' × '+fmt(prices.offer.installer)+' = '+fmt(offer.installation)+'</b> ('+offer.installers+' монтажника)</span></div>' +
+    (offer.ceremonyInstaller ? '<div class="row"><span>Монтажник церемонии:</span><span><b>'+fmt(offer.ceremonyInstaller)+'</b></span></div>' : '') +
+    '<div class="total"><span>Итого логистика:</span><span>'+fmt(offer.logistics)+'</span></div>';
 
   // Разбивка
   document.getElementById('breakdown').innerHTML =
-    'Аренда: <b>'+fmt(c.rental)+'</b> · Свечи: <b>'+fmt(c.candles)+'</b> · Церемония (аренда): <b>'+fmt(c.ceremonyRental)+'</b>' +
-    (c.extraBenches ? ' (+'+c.extraBenches+' лавок)' : '') +
-    ' &nbsp;|&nbsp; Доставка: <b>'+fmt(PRICE_DELIVERY)+'</b> · Монтаж: <b>'+c.installers+' × '+fmt(PRICE_INSTALLER)+' = '+fmt(c.installation)+'</b>' +
-    (c.ceremonyInstaller ? ' · Монтажник церемонии: <b>'+fmt(c.ceremonyInstaller)+'</b>' : '');
+    'Готовое решение · аренда: <b>'+fmt(offer.rental)+'</b> · свечи: <b>'+fmt(offer.candles)+'</b> · церемония: <b>'+fmt(offer.ceremonyRental)+'</b>' +
+    (offer.extraBenches ? ' (+'+offer.extraBenches+' лавок)' : '') +
+    ' &nbsp;|&nbsp; доставка: <b>'+fmt(prices.offer.delivery)+'</b> · монтаж: <b>'+offer.installers+' × '+fmt(prices.offer.installer)+' = '+fmt(offer.installation)+'</b>';
 
 }
 
 ['guests','tables'].forEach(id => document.getElementById(id).oninput = render);
 ['candles','ceremony'].forEach(id => document.getElementById(id).onchange = render);
 
-// Блок 1 — акционные цены
-function updateRowEarn(key, base, hasDiscount, akc){
-  const baseline = hasDiscount ? Math.round(base * 0.7) : base;
+// Блок 1 — единый редактор цен
+function updateRow(row){
+  const key = row.dataset.key;
+  const base = +row.querySelector('.base-input').value || 0;
+  const offer = +row.querySelector('.offer-input').value || 0;
+  const hasDiscount = row.dataset.discount === 'yes';
+  const baseline = hasDiscount ? Math.round(base * (1-prices.discount/100)) : base;
+  const discountEl = row.querySelector('.discount-value');
+  if (hasDiscount) discountEl.textContent = fmt(baseline);
   const earnEl = document.getElementById('earn-'+key);
   const margEl = document.getElementById('marg-'+key);
-  if(!akc){ earnEl.textContent='—'; margEl.textContent='—'; earnEl.className='num earn neu'; margEl.className='num earn neu'; return; }
-  const earn = akc - baseline;
-  const marg = akc > 0 ? earn / akc : 0;
+  if(!offer){ earnEl.textContent='—'; margEl.textContent='—'; earnEl.className='num earn neu'; margEl.className='num earn neu'; return; }
+  const earn = offer - baseline;
+  const marg = offer > 0 ? earn / offer : 0;
   const cls = 'num earn ' + (earn > 0 ? 'pos' : earn < 0 ? 'neg' : 'neu');
   earnEl.textContent = (earn >= 0 ? '+' : '') + fmt(earn);
   earnEl.className = cls;
@@ -284,23 +286,11 @@ function updateRowEarn(key, base, hasDiscount, akc){
   margEl.className = cls;
 }
 
-document.querySelectorAll('#priceTable tbody tr').forEach(row => {
-  const key = row.dataset.key;
-  const base = +row.dataset.base;
-  const hasDiscount = row.dataset.discount === 'yes';
-  const inp = row.querySelector('input');
-  const saved = localStorage.getItem('ameli_akc_'+key);
-  if(saved){ inp.value = saved; updateRowEarn(key, base, hasDiscount, +saved); }
-  inp.oninput = function(){
-    updateRowEarn(key, base, hasDiscount, +this.value || 0);
-  };
-});
-
-function collectAkc(){
-  const o = {};
+function collectPrices(){
+  const o = { base:{}, offer:{}, discount:+document.getElementById('discount').value, outsideMkadPerKm:+document.getElementById('mkadRate').value };
   document.querySelectorAll('#priceTable tbody tr').forEach(row => {
-    const inp = row.querySelector('input');
-    if(inp.value && +inp.value > 0) o[row.dataset.key] = +inp.value;
+    o.base[row.dataset.key] = +row.querySelector('.base-input').value;
+    o.offer[row.dataset.key] = +row.querySelector('.offer-input').value;
   });
   return o;
 }
@@ -308,17 +298,12 @@ function collectAkc(){
 const AKC_SHORT = { guest:'g', table:'t', candles:'c', ceremony:'cer', bench:'b', delivery:'d', installer:'i' };
 
 function saveAll(){
-  const o = collectAkc();
-  // localStorage — чтобы введённые значения не терялись при перезагрузке этой страницы
-  document.querySelectorAll('#priceTable tbody tr').forEach(row => {
-    const inp = row.querySelector('input');
-    if(inp.value) localStorage.setItem('ameli_akc_'+row.dataset.key, inp.value);
-    else localStorage.removeItem('ameli_akc_'+row.dataset.key);
-  });
+  const o = collectPrices();
+  localStorage.setItem('ameli_prices_draft', JSON.stringify(o));
   // JSON для prices.json
   document.getElementById('jsonOut').value = JSON.stringify(o, null, 2);
   // Ссылка на генератор с ценами в URL
-  const params = Object.entries(o).map(([k,v]) => AKC_SHORT[k]+'='+v).join('&');
+  const params = Object.entries(o.offer).map(([k,v]) => AKC_SHORT[k]+'='+v).join('&');
   const genUrl = location.href.replace(/pricing_internal\.html.*$/, 'generator.html');
   document.getElementById('linkOut').value = params ? genUrl+'?'+params : genUrl;
   document.getElementById('shareBox').style.display = 'block';
@@ -326,6 +311,35 @@ function saveAll(){
   msg.style.display = 'inline';
   setTimeout(() => msg.style.display = 'none', 2500);
 }
+
+function applyPrices(o){
+  if (!o || !o.base || !o.offer) return;
+  prices = o;
+  document.getElementById('discount').value = o.discount;
+  document.getElementById('mkadRate').value = o.outsideMkadPerKm;
+  document.getElementById('discountHead').textContent = 'Скидка орга −'+o.discount+'%';
+  document.querySelectorAll('#priceTable tbody tr').forEach(row => {
+    const key = row.dataset.key;
+    row.querySelector('.base-input').value = o.base[key];
+    row.querySelector('.offer-input').value = o.offer[key];
+    updateRow(row);
+  });
+  render();
+}
+
+function syncEditor(){
+  prices = collectPrices();
+  document.getElementById('discountHead').textContent = 'Скидка орга −'+prices.discount+'%';
+  document.querySelectorAll('#priceTable tbody tr').forEach(updateRow);
+  render();
+}
+
+document.querySelectorAll('#priceTable input, #discount, #mkadRate').forEach(inp => inp.addEventListener('input', syncEditor));
+
+fetch('prices.json?v='+Date.now())
+  .then(r => r.ok ? r.json() : Promise.reject())
+  .then(j => applyPrices(j))
+  .catch(() => applyPrices(DEFAULT_PRICES));
 
 function copyShare(id, btn){
   const el = document.getElementById(id);
@@ -337,7 +351,6 @@ function copyShare(id, btn){
   });
 }
 
-render();
 </script>
 </body>
 </html>

@@ -1,9 +1,22 @@
 {
-  "guest": 900,
-  "table": 1400,
-  "candles": 800,
-  "ceremony": 25000,
-  "bench": 500,
-  "delivery": 16000,
-  "installer": 8500
+  "base": {
+    "guest": 1550,
+    "table": 2900,
+    "candles": 1360,
+    "ceremony": 43000,
+    "bench": 1200,
+    "delivery": 18000,
+    "installer": 9200
+  },
+  "offer": {
+    "guest": 900,
+    "table": 1400,
+    "candles": 800,
+    "ceremony": 25000,
+    "bench": 500,
+    "delivery": 16000,
+    "installer": 8500
+  },
+  "discount": 30,
+  "outsideMkadPerKm": 170
 }

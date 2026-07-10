@@ -288,7 +288,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       </div>
       <div class="autohint" style="margin-top:6px">Вы можете поменять количество столов вручную.</div>
       <div class="field"><label>Площадка за МКАД, км</label><input type="number" id="km" value="0" min="0" max="300"></div>
-      <div class="autohint">За МКАД — 170 ₽/км к доставке.</div>
+      <div class="autohint" id="mkadHint">За МКАД — 170 ₽/км к доставке.</div>
     </div>
 
     <div class="block">
@@ -548,7 +548,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       <div class="yrule2"></div>
       <h2>Условия доставки, монтажа и оплаты</h2>
       <ul style="list-style:none;margin-top:1.4em;position:relative;z-index:2;max-width:82%">
-        <li style="display:flex;gap:.8em;align-items:baseline;padding:.55em 0;font-size:.92em;color:var(--mid);line-height:1.6;border-bottom:1px solid var(--rule)"><i style="width:4px;height:4px;background:var(--accent);flex-shrink:0;transform:translateY(-3px)"></i><span><b style="color:var(--text);font-weight:600">География.</b> Цены рассчитаны для площадок в пределах МКАД. За МКАД — доплата к доставке 170 ₽/км.<span id="pvKmLine"></span></span></li>
+        <li style="display:flex;gap:.8em;align-items:baseline;padding:.55em 0;font-size:.92em;color:var(--mid);line-height:1.6;border-bottom:1px solid var(--rule)"><i style="width:4px;height:4px;background:var(--accent);flex-shrink:0;transform:translateY(-3px)"></i><span><b style="color:var(--text);font-weight:600">География.</b> Цены рассчитаны для площадок в пределах МКАД. За МКАД — доплата к доставке <span id="mkadRateText">170 ₽/км</span>.<span id="pvKmLine"></span></span></li>
         <li style="display:flex;gap:.8em;align-items:baseline;padding:.55em 0;font-size:.92em;color:var(--mid);line-height:1.6;border-bottom:1px solid var(--rule)"><i style="width:4px;height:4px;background:var(--accent);flex-shrink:0;transform:translateY(-3px)"></i><span><b style="color:var(--text);font-weight:600">Логистика площадки.</b> Расчёт действителен при зале на 1 этаже либо при наличии грузового лифта. При сложной внутренней логистике — доплата за дополнительных грузчиков от 3 000 до 10 000 ₽.</span></li>
         <li style="display:flex;gap:.8em;align-items:baseline;padding:.55em 0;font-size:.92em;color:var(--mid);line-height:1.6;border-bottom:1px solid var(--rule)"><i style="width:4px;height:4px;background:var(--accent);flex-shrink:0;transform:translateY(-3px)"></i><span><b style="color:var(--text);font-weight:600">Оплата.</b> 70% — при бронировании даты, остаток — за 7 дней до мероприятия.</span></li>
         <li style="display:flex;gap:.8em;align-items:baseline;padding:.55em 0;font-size:.92em;color:var(--mid);line-height:1.6"><i style="width:4px;height:4px;background:var(--accent);flex-shrink:0;transform:translateY(-3px)"></i><span><b style="color:var(--text);font-weight:600">Оттенок палитры.</b> Финальный оттенок подбирается из коллекции сезона за 7 дней до даты — гарантируем единство стиля всего комплекта.</span></li>
@@ -562,7 +562,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 </div><!-- /layout -->
 <script>
 const GUESTS_PER_TABLE = 8;
-const MKAD_RATE = 170;
+let MKAD_RATE = 170;
 
 function fmtThousands(n){ return n ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : ''; }
 function parseThousands(s){ return parseInt(String(s).replace(/\s/g,''), 10) || null; }
@@ -586,43 +586,59 @@ const TIERS = {
     items: ['Скатерть круглая / прямоугольная','Салфетки','Подстановочные тарелки (прозрачные с кантом)','Сет бокалов 3 шт','Сет приборов 4 шт (золотые / чёрные)','Номерок для стола']
   }
 };
-// ── Новая модель цен (см. pricing_internal.html) ──
-const PRICE_GUEST=1550, PRICE_TABLECLOTH=2900, PRICE_CANDLES=1360, PRICE_CEREMONY_BASE=43000, PRICE_BENCH=1200, PRICE_DELIVERY=18000, PRICE_INSTALLER=9200;
-const DISCOUNT=0.30;
-
-// ── Акционные цены ──
-// Приоритет: параметры в URL (?g=900&t=1400...) → prices.json из репозитория → базовые константы.
-const AKC = {};
+// ── Единая модель цен (см. prices.json и pricing_internal.html) ──
+const DEFAULT_PRICES = {
+  base: { guest:1550, table:2900, candles:1360, ceremony:43000, bench:1200, delivery:18000, installer:9200 },
+  offer: { guest:900, table:1400, candles:800, ceremony:25000, bench:500, delivery:16000, installer:8500 },
+  discount: 30,
+  outsideMkadPerKm: 170
+};
+const PRICES = JSON.parse(JSON.stringify(DEFAULT_PRICES));
+const URL_OFFER = {};
 const AKC_URL_KEYS = { g:'guest', t:'table', c:'candles', cer:'ceremony', b:'bench', d:'delivery', i:'installer' };
 (function(){
   const q = new URLSearchParams(location.search);
   for (const [short, key] of Object.entries(AKC_URL_KEYS)) {
     const v = +q.get(short);
-    if (v > 0) AKC[key] = v;
+    if (v > 0) URL_OFFER[key] = v;
   }
 })();
 fetch('prices.json?v=' + Date.now())
   .then(r => r.ok ? r.json() : null)
   .then(j => {
     if (!j) return;
-    let changed = false;
-    for (const k in j) { if (!(k in AKC) && +j[k] > 0) { AKC[k] = +j[k]; changed = true; } }
-    if (changed && typeof refreshAll === 'function') refreshAll();
+    // Поддержка старого плоского формата оставлена для безопасного перехода.
+    const base = j.base || {};
+    const offer = j.offer || (j.base ? {} : j);
+    for (const k in PRICES.base) {
+      if (+base[k] > 0) PRICES.base[k] = +base[k];
+      if (+offer[k] > 0) PRICES.offer[k] = +offer[k];
+    }
+    if (+j.discount >= 0 && +j.discount < 100) PRICES.discount = +j.discount;
+    if (+j.outsideMkadPerKm >= 0) PRICES.outsideMkadPerKm = +j.outsideMkadPerKm;
+    MKAD_RATE = PRICES.outsideMkadPerKm;
+    const mh = document.getElementById('mkadHint');
+    const mt = document.getElementById('mkadRateText');
+    if (mh) mh.textContent = 'За МКАД — ' + fmt(MKAD_RATE).replace(' ₽',' ₽/км') + ' к доставке.';
+    if (mt) mt.textContent = fmt(MKAD_RATE).replace(' ₽',' ₽/км');
+    if (typeof refreshAll === 'function') refreshAll();
   })
   .catch(()=>{}); // file:// или нет файла — работаем на константах
-function akc(key, fallback){ return (AKC[key] > 0) ? AKC[key] : fallback; }
+function basePrice(key){ return PRICES.base[key]; }
+function offerPrice(key){ return URL_OFFER[key] > 0 ? URL_OFFER[key] : PRICES.offer[key]; }
+function discountRate(){ return PRICES.discount / 100; }
 
 function servCostAkc(){
-  const rental = S.guests * akc('guest', PRICE_GUEST) + S.tables * akc('table', PRICE_TABLECLOTH);
+  const rental = S.guests * offerPrice('guest') + S.tables * offerPrice('table');
   const inst = installersCount();
-  const logistics = akc('delivery', PRICE_DELIVERY) + inst * akc('installer', PRICE_INSTALLER);
+  const logistics = offerPrice('delivery') + inst * offerPrice('installer');
   return rental + logistics;
 }
-function svechiCostAkc(){ return S.tables * akc('candles', PRICE_CANDLES); }
+function svechiCostAkc(){ return S.tables * offerPrice('candles'); }
 function cerCostAkc(){
   const benches = Math.max(0, Math.ceil((S.guests-40)/4));
-  const rental = akc('ceremony', PRICE_CEREMONY_BASE) + benches * akc('bench', PRICE_BENCH);
-  return rental + akc('installer', PRICE_INSTALLER);
+  const rental = offerPrice('ceremony') + benches * offerPrice('bench');
+  return rental + offerPrice('installer');
 }
 
 const PALETTES = {
@@ -639,21 +655,21 @@ let S = {
 };
 const r1k = n => Math.round(n/1000)*1000;
 function installersCount(){ return S.tables <= 6 ? 2 : 3; }
-// retail = цена клиента (без скидки), base = в готовом решении (аренда −30%, логистика без скидки)
+// retail = цена клиента, base = профессиональная цена (скидка из prices.json, логистика без скидки)
 function servCost(){
-  const rental = S.guests*PRICE_GUEST + S.tables*PRICE_TABLECLOTH;
-  const logistics = PRICE_DELIVERY + installersCount()*PRICE_INSTALLER;
-  return { retail: rental+logistics, base: Math.round(rental*(1-DISCOUNT))+logistics };
+  const rental = S.guests*basePrice('guest') + S.tables*basePrice('table');
+  const logistics = basePrice('delivery') + installersCount()*basePrice('installer');
+  return { retail: rental+logistics, base: Math.round(rental*(1-discountRate()))+logistics };
 }
 function svechiCost(){
-  const c = S.tables*PRICE_CANDLES;
-  return { retail: c, base: Math.round(c*(1-DISCOUNT)) };
+  const c = S.tables*basePrice('candles');
+  return { retail: c, base: Math.round(c*(1-discountRate())) };
 }
 function cerCost(){
   const benches = Math.max(0, Math.ceil((S.guests-40)/4));
-  const rental = PRICE_CEREMONY_BASE + benches*PRICE_BENCH;
-  const inst = PRICE_INSTALLER;
-  return { retail: rental+inst, base: Math.round(rental*(1-DISCOUNT))+inst };
+  const rental = basePrice('ceremony') + benches*basePrice('bench');
+  const inst = basePrice('installer');
+  return { retail: rental+inst, base: Math.round(rental*(1-discountRate()))+inst };
 }
 
 const fmt = n => n.toLocaleString('ru-RU') + ' ₽';
@@ -712,7 +728,7 @@ function buildPkgs() {
         '<div class="incl-note">✓ Доставка и монтаж включены</div>' +
         '<div class="prices">' +
           '<span class="pl">Без скидки</span><span class="pv strike">' + fmt(c.retail) + '</span>' +
-          '<span class="pl">Проф. скидка −30%</span><span class="pv strike" style="text-decoration:none;color:var(--mid,#5A5A54)">' + fmt(c.base) + '</span>' +
+          '<span class="pl">Проф. скидка −'+PRICES.discount+'%</span><span class="pv strike" style="text-decoration:none;color:var(--mid,#5A5A54)">' + fmt(c.base) + '</span>' +
           '<span class="pl">В готовом решении</span><span class="pv accent">' + fmt(servCostAkc()) + '</span>' +
         '</div>' +
         '<div class="priceline"><label>Ваша цена клиенту, ₽</label>' +
@@ -757,7 +773,7 @@ function updateProfits() {
   if (cerHint) cerHint.textContent = 'на ' + S.guests + ' гостей';
   const cerp = document.getElementById('cerPrices');
   if (cerp) cerp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(cerc.retail)+'</span>' +
-    '<span class="pl">Проф. скидка −30%</span><span class="pv" style="color:var(--mid,#5A5A54)">'+fmt(cerc.base)+'</span>' +
+    '<span class="pl">Проф. скидка −'+PRICES.discount+'%</span><span class="pv" style="color:var(--mid,#5A5A54)">'+fmt(cerc.base)+'</span>' +
     '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(cercAkc)+'</span>';
   if (S.cer) {
     if (S.cerPrice === null) { S.cerPrice = cerc.retail; const el = document.getElementById('cerPrice'); if(el) el.value = fmtThousands(S.cerPrice); }
@@ -770,7 +786,7 @@ function updateProfits() {
   if (svHint) svHint.textContent = 'на ' + S.tables + ' столов';
   const svp = document.getElementById('svechiPrices');
   if (svp) svp.innerHTML = '<span class="pl">Без скидки</span><span class="pv strike">'+fmt(sc.retail)+'</span>' +
-    '<span class="pl">Проф. скидка −30%</span><span class="pv" style="color:var(--mid,#5A5A54)">'+fmt(sc.base)+'</span>' +
+    '<span class="pl">Проф. скидка −'+PRICES.discount+'%</span><span class="pv" style="color:var(--mid,#5A5A54)">'+fmt(sc.base)+'</span>' +
     '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(scAkc)+'</span>';
   if (S.svechi) {
     if (S.svechiPrice === null) { S.svechiPrice = sc.retail; const el = document.getElementById('svechiPrice'); if(el) el.value = fmtThousands(S.svechiPrice); }
