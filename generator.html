@@ -642,17 +642,30 @@ async function downloadColorPdf(){
             const fittedWidth = Math.min(boxWidth, boxHeight * ratio);
             const fittedHeight = fittedWidth / ratio;
 
-            // Фиксируем именно вписанный размер, а не 100% размера flex-ячейки.
-            // Так html2canvas не может растянуть исходную фотографию.
-            img.style.flex = '0 0 auto';
-            img.style.minWidth = '0';
-            img.style.minHeight = '0';
-            img.style.width = fittedWidth + 'px';
-            img.style.height = fittedHeight + 'px';
-            img.style.maxWidth = 'none';
-            img.style.maxHeight = 'none';
-            img.style.objectFit = 'fill';
-            img.style.alignSelf = 'center';
+            // Вставляем готовый canvas вместо img: html2canvas иногда
+            // игнорирует object-fit и снова растягивает flex-изображения.
+            const imageCanvas = clonedDocument.createElement('canvas');
+            const pixelRatio = 2;
+            imageCanvas.width = Math.max(1, Math.round(fittedWidth * pixelRatio));
+            imageCanvas.height = Math.max(1, Math.round(fittedHeight * pixelRatio));
+            imageCanvas.style.width = fittedWidth + 'px';
+            imageCanvas.style.height = fittedHeight + 'px';
+            imageCanvas.style.flex = '0 0 auto';
+            imageCanvas.style.display = 'block';
+            imageCanvas.style.alignSelf = 'center';
+            const imageStyle = getComputedStyle(img);
+            imageCanvas.style.border = imageStyle.border;
+            imageCanvas.style.background = imageStyle.background;
+            const imageContext = imageCanvas.getContext('2d');
+            if (imageContext) {
+              imageContext.drawImage(img, 0, 0, imageCanvas.width, imageCanvas.height);
+              img.replaceWith(imageCanvas);
+            } else {
+              img.style.flex = '0 0 auto';
+              img.style.width = fittedWidth + 'px';
+              img.style.height = fittedHeight + 'px';
+              img.style.objectFit = 'fill';
+            }
           });
         }
       });
