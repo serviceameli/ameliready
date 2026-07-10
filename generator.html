@@ -633,14 +633,26 @@ async function downloadColorPdf(){
             '.pserv-pair .pair-row-photos img, .pserv-desc .sd-onepal-ph img'
           );
           productImages.forEach(img => {
-            img.style.flex = '0 1 auto';
+            const box = img.getBoundingClientRect();
+            const naturalWidth = img.naturalWidth || box.width;
+            const naturalHeight = img.naturalHeight || box.height;
+            const ratio = naturalWidth / naturalHeight;
+            const boxWidth = box.width || parseFloat(getComputedStyle(img).width) || naturalWidth;
+            const boxHeight = box.height || parseFloat(getComputedStyle(img).height) || naturalHeight;
+            const fittedWidth = Math.min(boxWidth, boxHeight * ratio);
+            const fittedHeight = fittedWidth / ratio;
+
+            // Фиксируем именно вписанный размер, а не 100% размера flex-ячейки.
+            // Так html2canvas не может растянуть исходную фотографию.
+            img.style.flex = '0 0 auto';
             img.style.minWidth = '0';
             img.style.minHeight = '0';
-            img.style.width = 'auto';
-            img.style.height = 'auto';
-            img.style.maxWidth = '100%';
-            img.style.maxHeight = '100%';
-            img.style.objectFit = 'contain';
+            img.style.width = fittedWidth + 'px';
+            img.style.height = fittedHeight + 'px';
+            img.style.maxWidth = 'none';
+            img.style.maxHeight = 'none';
+            img.style.objectFit = 'fill';
+            img.style.alignSelf = 'center';
           });
         }
       });
