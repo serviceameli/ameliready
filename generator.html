@@ -633,6 +633,9 @@ async function downloadColorPdf(){
             '.pserv-pair .pair-row-photos img, .pserv-desc .sd-onepal-ph img'
           );
           productImages.forEach(img => {
+            img.style.flex = '0 1 auto';
+            img.style.minWidth = '0';
+            img.style.minHeight = '0';
             img.style.width = 'auto';
             img.style.height = 'auto';
             img.style.maxWidth = '100%';
