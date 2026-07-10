@@ -212,6 +212,18 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
 .ptextile .tx-note{background:var(--soft-bg);border-radius:3px;display:flex;flex-direction:column;justify-content:center;gap:.6em;padding:8% 9%;box-sizing:border-box;min-height:0;margin-bottom:1.08em;}
 .ptextile .tx-note .nk{font-size:.55em;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--light);}
 .ptextile .tx-note p{font-size:.66em;line-height:1.65;color:var(--mid);margin:0;}
+/* ─── СЛАЙД: СТУЛЬЯ ─── */
+.pchairs{display:flex;flex-direction:column;padding:3% 5% 2.5%;overflow:hidden;}
+.pchairs .ch-title{font-family:'Cormorant',serif;font-size:1.9em;font-weight:500;letter-spacing:-.02em;margin-bottom:.2em;flex-shrink:0;}
+.pchairs .ch-sub{font-size:.68em;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);flex-shrink:0;}
+.pchairs .ch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5%;margin-top:3%;align-items:start;}
+.pchairs .ch-card{display:flex;flex-direction:column;min-width:0;}
+.pchairs .ch-ph{width:100%;aspect-ratio:1/1;background:#fff;border:1px solid var(--rule);border-radius:3px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:7%;box-sizing:border-box;}
+.pchairs .ch-ph img{width:100%;height:100%;object-fit:contain;background:#fff;display:block;}
+.pchairs .ch-label{font-size:.6em;color:var(--mid);text-align:center;margin-top:.6em;line-height:1.3;flex-shrink:0;}
+.pchairs .ch-note{margin-top:auto;background:var(--soft-bg);border-radius:3px;padding:1.6% 2%;display:flex;align-items:baseline;gap:1.2em;}
+.pchairs .ch-note .nk{font-size:.55em;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--light);flex-shrink:0;}
+.pchairs .ch-note p{font-size:.66em;line-height:1.55;color:var(--mid);margin:0;}
 .pcomp .summary{margin-top:1.2em;}
 .pcomp .sum-row{display:flex;justify-content:space-between;align-items:baseline;padding:.75em 0;border-bottom:1px solid var(--rule);font-size:.95em;}
 .pcomp .sum-row .nm{color:var(--text);}
@@ -465,15 +477,6 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       </div>
     </div>
 
-    <!-- слайд: Стулья (входят в комплект) -->
-    <div class="page ptextile" id="pageChairs">
-      <div class="tx-title">Стулья</div>
-      <div class="tx-sub">Входят в комплект</div>
-      <div class="tx-grid">
-        <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%93%D0%BE%D1%81%D1%82_%20%D0%BF%D1%80%D0%BE%D0%B7%D1%80%D0%B0%D1%87%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82"></div><div class="tx-label">Гост · прозрачный</div></div><div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%93%D0%BE%D1%81%D1%82_%20%D1%8F%D0%BD%D1%82%D0%B0%D1%80%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82"></div><div class="tx-label">Гост · янтарный</div></div><div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%93%D0%BE%D1%81%D1%82_%20%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82"></div><div class="tx-label">Гост · зелёный</div></div><div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%A1%D0%BE%D1%85%D0%BE_%20%D1%87%D0%B5%D1%80%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82"></div><div class="tx-label">Сохо · чёрный</div></div>
-      </div>
-    </div>
-
     <!-- слайд текстиль: Круглый стол -->
     <div class="page ptextile">
       <div class="tx-title">Скатерти</div>
@@ -504,6 +507,19 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
         <div class="tx-cell"><div class="tx-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D1%82%D1%8C%20%D0%BA%D0%B0%D0%BD%D0%B2%D0%B0%D1%81%20_%D0%93%D0%B0%D0%BC%D0%BC%D0%B0_%20%D1%87%D0%B5%D1%80%D0%BD%D0%B0%D1%8F%20%D0%BF%D1%80%D1%8F%D0%BC%D0%BE%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D0%B0%D1%8F-1.jpg&w=900&q=82" alt=""></div><div class="tx-label">Чёрная · Гамма канвас</div></div>
         <div class="tx-note"><span class="nk">Единая палитра</span><p>Скатерти, салфетки и драпировка зоны церемонии выдержаны в одной палитре и сочетаются между собой.</p></div>
       </div>
+    </div>
+
+    <!-- слайд: Стулья (после всех скатертей) -->
+    <div class="page pchairs" id="pageChairs">
+      <div class="ch-title">Стулья</div>
+      <div class="ch-sub">Посадка в комплекте</div>
+      <div class="ch-grid">
+        <div class="ch-card"><div class="ch-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%93%D0%BE%D1%81%D1%82_%20%D0%BF%D1%80%D0%BE%D0%B7%D1%80%D0%B0%D1%87%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82" alt="Гост · прозрачный"></div><div class="ch-label">Гост · прозрачный</div></div>
+        <div class="ch-card"><div class="ch-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%93%D0%BE%D1%81%D1%82_%20%D1%8F%D0%BD%D1%82%D0%B0%D1%80%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82" alt="Гост · янтарный"></div><div class="ch-label">Гост · янтарный</div></div>
+        <div class="ch-card"><div class="ch-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%93%D0%BE%D1%81%D1%82_%20%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82" alt="Гост · зелёный"></div><div class="ch-label">Гост · зелёный</div></div>
+        <div class="ch-card"><div class="ch-ph"><img src="https://wsrv.nl/?url=raw.githubusercontent.com/serviceameli/ameliready/main/photos/%D0%A1%D1%82%D1%83%D0%BB%20_%D0%A1%D0%BE%D1%85%D0%BE_%20%D1%87%D0%B5%D1%80%D0%BD%D1%8B%D0%B8%CC%86-1.png&w=900&q=82" alt="Сохо · чёрный"></div><div class="ch-label">Сохо · чёрный</div></div>
+      </div>
+      <div class="ch-note"><span class="nk">Посадка</span><p>Стулья входят в комплект и подбираются под формат стола и общую палитру оформления: прозрачные модели визуально облегчают пространство, цветные поддерживают оттенки текстиля.</p></div>
     </div>
 
     <!-- слайд: Свечи (если включено) -->
@@ -703,7 +719,7 @@ async function downloadColorPdf(){
           // и игнорировать object-fit:contain. Для товарных карточек оставляем
           // изображение в его исходных пропорциях внутри рамки.
           const productImages = clonedDocument.querySelectorAll(
-            '.pserv-detail .ph img, .ptextile .tx-ph img, .popt .ph-cell img, ' +
+            '.pserv-detail .ph img, .ptextile .tx-ph img, .pchairs .ch-ph img, .popt .ph-cell img, ' +
             '.pserv-pair .pair-row-photos img, .pserv-desc .sd-onepal-ph img'
           );
           productImages.forEach(img => {
