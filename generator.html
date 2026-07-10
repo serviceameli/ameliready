@@ -606,6 +606,8 @@ async function ensurePdfLibraries(status){
   if (!window.html2canvas) {
     const html2canvasSources = [
       'vendor/html2canvas.min.js?v=1.4.1',
+      'https://serviceameli.github.io/ameliready/vendor/html2canvas.min.js?v=1.4.1',
+      'https://raw.githubusercontent.com/serviceameli/ameliready/main/vendor/html2canvas.min.js',
       'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
       'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js'
     ];
@@ -616,6 +618,8 @@ async function ensurePdfLibraries(status){
   if (!window.jspdf) {
     const jsPdfSources = [
       'vendor/jspdf.umd.min.js?v=2.5.1',
+      'https://serviceameli.github.io/ameliready/vendor/jspdf.umd.min.js?v=2.5.1',
+      'https://raw.githubusercontent.com/serviceameli/ameliready/main/vendor/jspdf.umd.min.js',
       'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
       'https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js'
     ];
