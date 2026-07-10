@@ -625,6 +625,20 @@ async function downloadColorPdf(){
             page.style.boxShadow = 'none';
             page.style.borderRadius = '0';
           });
+          // html2canvas может трактовать width/height:100% как растягивание
+          // и игнорировать object-fit:contain. Для товарных карточек оставляем
+          // изображение в его исходных пропорциях внутри рамки.
+          const productImages = clonedDocument.querySelectorAll(
+            '.pserv-detail .ph img, .ptextile .tx-ph img, .popt .ph-cell img, ' +
+            '.pserv-pair .pair-row-photos img, .pserv-desc .sd-onepal-ph img'
+          );
+          productImages.forEach(img => {
+            img.style.width = 'auto';
+            img.style.height = 'auto';
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '100%';
+            img.style.objectFit = 'contain';
+          });
         }
       });
       const image = canvas.toDataURL('image/jpeg', 0.9);
