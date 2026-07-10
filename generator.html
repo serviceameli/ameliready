@@ -78,6 +78,12 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 .btn{display:block;width:100%;background:var(--accent);color:#fff;border:none;height:52px;border-radius:10px;font-family:inherit;font-weight:600;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;margin-top:18px;transition:opacity .2s;}
 .btn:hover{opacity:0.88;}
 .btn span{opacity:0.6;}
+.btn:disabled{opacity:.55;cursor:wait;}
+.pdf-note{font-size:11px;color:var(--light);margin-top:9px;line-height:1.55;}
+.pdf-status{font-size:11px;color:var(--mid);margin-top:8px;line-height:1.5;min-height:17px;}
+.print-link{display:inline-block;margin-top:12px;padding:0;border:0;background:none;color:var(--mid);font-family:inherit;font-size:12px;font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
+.print-link:hover{color:var(--text);}
+.print-note{font-size:10px;color:var(--light);margin-top:6px;line-height:1.55;}
 
 /* ─── ПРАВАЯ КОЛОНКА ─── */
 .preview-col{overflow-y:auto;height:100%;padding:24px 24px 60px;background:var(--page-bg);}
@@ -346,8 +352,11 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       <input type="file" id="logoInput" accept="image/*" style="display:none">
       <div class="field" style="margin-top:14px"><label>Имя / название студии</label><input type="text" id="orgName" placeholder="Студия «Ваше имя»"></div>
       <div class="field"><label>Телефон / Telegram</label><input type="text" id="orgPhone" placeholder="+7 ___ ___-__-__"></div>
-      <button class="btn" onclick="window.print()">Скачать PDF <span>↓</span></button>
-      <p style="font-size:11px;color:var(--light);margin-top:10px;line-height:1.6;">В диалоге печати: «Сохранить как PDF», альбомная ориентация, поля — нет.</p>
+      <button class="btn" id="pdfDownloadBtn" onclick="downloadColorPdf()">Скачать цветной PDF <span>↓</span></button>
+      <p class="pdf-note">Обычно файл весит примерно 5–12 МБ, в зависимости от выбранных опций.</p>
+      <p class="pdf-status" id="pdfStatus" aria-live="polite"></p>
+      <button class="print-link" type="button" onclick="window.print()">Печать и системное сохранение в PDF</button>
+      <p class="print-note">Настройки: «Сохранить как PDF», цветная печать, альбомная ориентация, поля — нет, фоновые изображения — включены.</p>
     </div>
 
     <div class="block">
@@ -560,12 +569,89 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
   </div><!-- /preview-col -->
 
 </div><!-- /layout -->
+<script src="vendor/html2canvas.min.js?v=1.4.1"></script>
+<script src="vendor/jspdf.umd.min.js?v=2.5.1"></script>
 <script>
 const GUESTS_PER_TABLE = 8;
 let MKAD_RATE = 170;
 
 function fmtThousands(n){ return n ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : ''; }
 function parseThousands(s){ return parseInt(String(s).replace(/\s/g,''), 10) || null; }
+
+async function waitForPdfAssets(pages){
+  if (document.fonts && document.fonts.ready) await document.fonts.ready;
+  const images = pages.flatMap(page => Array.from(page.querySelectorAll('img')));
+  await Promise.all(images.map(img => {
+    if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+    if (typeof img.decode === 'function') return img.decode().catch(() => {});
+    return new Promise(resolve => {
+      img.addEventListener('load', resolve, {once:true});
+      img.addEventListener('error', resolve, {once:true});
+    });
+  }));
+}
+
+async function downloadColorPdf(){
+  const btn = document.getElementById('pdfDownloadBtn');
+  const status = document.getElementById('pdfStatus');
+  const pages = Array.from(document.querySelectorAll('.preview .page')).filter(page => getComputedStyle(page).display !== 'none');
+  if (!window.html2canvas || !window.jspdf || !pages.length) {
+    status.textContent = 'Не удалось запустить создание PDF. Обновите страницу и попробуйте ещё раз.';
+    return;
+  }
+
+  btn.disabled = true;
+  status.textContent = 'Подготавливаю изображения…';
+  try {
+    await waitForPdfAssets(pages);
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'landscape', unit:'mm', format:'a4', compress:true});
+    const pageWidth = 297;
+    const pageHeight = 210;
+
+    for (let i = 0; i < pages.length; i++) {
+      status.textContent = 'Создаю страницу ' + (i + 1) + ' из ' + pages.length + '…';
+      const canvas = await html2canvas(pages[i], {
+        scale: 2,
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: '#ffffff',
+        logging: false,
+        scrollX: 0,
+        scrollY: 0,
+        onclone: clonedDocument => {
+          const clonedPages = clonedDocument.querySelectorAll('.preview .page');
+          clonedPages.forEach(page => {
+            page.style.boxShadow = 'none';
+            page.style.borderRadius = '0';
+          });
+        }
+      });
+      const image = canvas.toDataURL('image/jpeg', 0.9);
+      if (i > 0) pdf.addPage('a4', 'landscape');
+      pdf.addImage(image, 'JPEG', 0, 0, pageWidth, pageHeight, undefined, 'FAST');
+      canvas.width = 1;
+      canvas.height = 1;
+    }
+
+    const blob = pdf.output('blob');
+    const sizeMb = (blob.size / 1024 / 1024).toFixed(1).replace('.', ',');
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'Ameli-Rental-presentation.pdf';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+    status.textContent = 'Готово: цветной PDF, ' + sizeMb + ' МБ.';
+  } catch (error) {
+    console.error('PDF generation failed', error);
+    status.textContent = 'Не удалось создать PDF. Проверьте интернет-соединение и попробуйте ещё раз.';
+  } finally {
+    btn.disabled = false;
+  }
+}
 function attachPriceMask(inp, onchange){
   inp.addEventListener('input', function(){
     const pos = inp.selectionStart;
