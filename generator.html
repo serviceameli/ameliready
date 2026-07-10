@@ -591,6 +591,36 @@ async function waitForPdfAssets(pages){
   }));
 }
 
+function blobToDataUrl(blob){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function preparePdfImages(pages){
+  const sources = Array.from(new Set(
+    pages.flatMap(page => Array.from(page.querySelectorAll('img')))
+      .map(img => img.currentSrc || img.src)
+      .filter(src => src && !src.startsWith('data:'))
+  ));
+  const result = new Map();
+  await Promise.all(sources.map(async src => {
+    try {
+      const response = await fetch(src, {mode:'cors', cache:'force-cache'});
+      if (!response.ok) return;
+      const blob = await response.blob();
+      result.set(src, await blobToDataUrl(blob));
+    } catch (e) {
+      // Если конкретный ресурс не дал себя прочитать, html2canvas
+      // попробует использовать его обычным способом.
+    }
+  }));
+  return result;
+}
+
 function loadPdfScript(src){
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
@@ -647,6 +677,7 @@ async function downloadColorPdf(){
     }
     status.textContent = 'Подготавливаю изображения…';
     await waitForPdfAssets(pages);
+    const pdfImageData = await preparePdfImages(pages);
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({orientation:'landscape', unit:'mm', format:'a4', compress:true});
     const pageWidth = 297;
@@ -697,6 +728,14 @@ async function downloadColorPdf(){
             img.style.objectFit = 'fill';
             img.style.display = 'block';
             img.style.alignSelf = 'center';
+          });
+
+          // Переводим все удалённые изображения в data URL после расчёта
+          // размеров, чтобы итоговый canvas PDF не блокировался CORS.
+          clonedDocument.querySelectorAll('img').forEach(img => {
+            const source = img.currentSrc || img.src;
+            const safeSrc = pdfImageData.get(source);
+            if (safeSrc) img.src = safeSrc;
           });
         }
       });
