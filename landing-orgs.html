@@ -69,19 +69,20 @@ nav .container{align-items:center;display:flex;gap:24px;justify-content:space-be
 .nav-cta{background:var(--gold);color:var(--ink);font-size:10px;font-weight:600;letter-spacing:.08em;min-height:43px;padding:12px 17px;text-decoration:none;text-transform:uppercase}
 
 /* Первый экран */
-.hero{padding-top:clamp(62px,7vw,94px)}
-.hero-grid{align-items:center;display:grid;gap:clamp(44px,6vw,78px);grid-template-columns:minmax(0,.92fr) minmax(460px,1.08fr)}
-.hero-copy .lead{margin-top:24px}
-.hero-copy .button-row{margin-top:29px}
-.hero-notes{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.hero{padding:clamp(30px,4.5vh,58px) 0}
+.hero-grid{align-items:center;display:grid;gap:clamp(28px,4vw,56px);grid-template-columns:minmax(0,.92fr) minmax(460px,1.08fr)}
+.hero-copy h1{font-size:clamp(40px,4.3vw,58px)}
+.hero-copy .lead{font-size:clamp(15px,1.25vw,17px);line-height:1.58;margin-top:18px}
+.hero-copy .button-row{margin-top:20px}
+.hero-notes{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .hero-notes span{border:1px solid var(--rule);color:var(--mid);font-size:11px;font-weight:500;letter-spacing:.06em;padding:9px 12px;text-transform:uppercase}
-.hero-condition{color:var(--muted);font-size:12px;margin-top:18px}
-.hero-visual{padding:18px 32px 54px 0;position:relative}
+.hero-condition{color:var(--muted);font-size:11px;margin-top:11px}
+.hero-visual{padding:12px 26px 34px 0;position:relative}
 .hero-photo{background:#eae6dc;box-shadow:0 24px 60px rgba(33,31,26,.13);padding:12px}
 .hero-photo img{height:auto;width:100%}
 .hero-pdf{background:#fff;bottom:0;box-shadow:0 20px 50px rgba(27,25,21,.25);padding:7px;position:absolute;right:0;transform:rotate(2deg);width:43%}
 .hero-pdf img{height:auto;width:100%}
-.hero-stamp{background:var(--ink);color:#fff;font-size:10px;left:20px;letter-spacing:.13em;padding:11px 14px;position:absolute;text-transform:uppercase;top:0}
+.hero-stamp{background:var(--ink);color:#fff;font-size:9px;left:14px;letter-spacing:.13em;padding:9px 12px;position:absolute;text-transform:uppercase;top:0}
 
 /* Визуальный сценарий */
 .walkthrough{background:var(--ink);color:#fff}
@@ -220,9 +221,10 @@ footer{background:var(--ink);color:#918d83;font-size:10px;letter-spacing:.09em;p
   .brand span,.brand i{display:none}
   .brand strong{font-size:12px;letter-spacing:.11em}
   .nav-cta{font-size:9px;padding:11px 12px}
-  h1{font-size:clamp(41px,12vw,56px)}
+  h1{font-size:clamp(37px,10.5vw,44px)}
   h2{font-size:clamp(35px,10vw,48px)}
   .button{width:100%}
+  .hero{padding:24px 0 32px}
   .hero-grid{display:flex;flex-direction:column;gap:0}
   .hero-copy{display:contents}
   .hero-copy .eyebrow{order:1}
@@ -233,10 +235,16 @@ footer{background:var(--ink);color:#918d83;font-size:10px;letter-spacing:.09em;p
   .hero-copy .button-row{order:6}
   .hero-notes{order:7}
   .hero-condition{order:8}
-  .hero-notes span{flex:1 1 130px;text-align:center}
-  .hero-visual{margin-top:22px;padding:12px 8px 0 0}
-  .hero-pdf{bottom:auto;margin:-30px 0 0 auto;position:relative;right:auto;width:68%}
-  .hero-stamp{left:8px;top:0}
+  .hero-copy .rule{margin:10px 0 14px}
+  .hero-copy .lead{font-size:15px;line-height:1.52;margin-top:18px}
+  .hero-copy .button-row{margin-top:17px}
+  .hero-notes{margin-top:12px}
+  .hero-notes span{flex:1 1 130px;padding:7px 8px;text-align:center}
+  .hero-condition{font-size:10.5px;margin-top:10px;text-align:center}
+  .hero-visual{margin-top:14px;max-width:360px;padding:8px 22px 20px 0}
+  .hero-photo{padding:6px}
+  .hero-pdf{bottom:0;margin:0;position:absolute;right:0;width:43%}
+  .hero-stamp{font-size:8px;left:6px;padding:7px 9px;top:0}
   .walk-intro{grid-template-columns:1fr}
   .walk-intro p{justify-self:start}
   .walk-grid{grid-template-columns:1fr}
@@ -264,7 +272,7 @@ footer{background:var(--ink);color:#918d83;font-size:10px;letter-spacing:.09em;p
   .walk-screen{min-height:220px}
   .palette-card{grid-template-columns:1fr}
   .palette-media{aspect-ratio:4/3}
-  .hero-notes{display:grid;grid-template-columns:1fr}
+  .hero-copy .button-row .secondary,.hero-notes{display:none}
   .page-card{flex-basis:92%}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}}
