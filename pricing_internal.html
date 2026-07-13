@@ -96,6 +96,17 @@ input:focus,textarea:focus{border-color:var(--text)}
 .alert.good{display:block;color:var(--green);background:var(--green-soft)}
 .alert.warn{display:block;color:var(--orange);background:var(--orange-soft)}
 .alert.danger{display:block;color:var(--red);background:var(--red-soft)}
+.project-discount{border:2px solid var(--text);border-radius:12px;padding:17px 18px;margin-top:16px}
+.project-discount-head{font-size:13px;font-weight:700;margin-bottom:3px}
+.project-discount-sub{font-size:11px;color:var(--muted);margin-bottom:13px}
+.project-discount-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.project-discount-card{background:var(--soft);border:1px solid var(--rule);border-radius:9px;padding:13px 14px}
+.project-discount-card.accent{background:var(--accent-soft);border-color:#E8CD61}
+.project-discount-card .k{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.project-discount-card .pct{font-size:27px;font-weight:700;line-height:1.2;margin-top:4px}
+.project-discount-card .rub{font-size:12px;font-weight:600;margin-top:3px}
+.project-discount-card .flow{font-size:10px;color:var(--muted);margin-top:4px}
+.project-discount-note{font-size:10px;color:var(--muted);line-height:1.5;margin-top:10px}
 
 .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:15px}
 .btn{border:none;border-radius:8px;padding:11px 18px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
@@ -120,6 +131,7 @@ input:focus,textarea:focus{border-color:var(--text)}
 @media(max-width:520px){
   body{padding:15px}
   .grid,.grid.two,.cards{grid-template-columns:1fr}
+  .project-discount-grid{grid-template-columns:1fr}
   .copy-row{flex-direction:column}
   .copy-row textarea,.copy-row input,.copy-row button{width:100%}
 }
@@ -355,6 +367,26 @@ input:focus,textarea:focus{border-color:var(--text)}
     </div>
     <div class="alert" id="priceAlert"></div>
   </div>
+</div>
+
+<div class="project-discount">
+  <div class="project-discount-head">Итоговая скидка партнёра по выбранному проекту</div>
+  <div class="project-discount-sub">Сравнение спеццены с базовой ценой для текущего количества гостей, столов и дополнений.</div>
+  <div class="project-discount-grid">
+    <div class="project-discount-card">
+      <div class="k">С учётом логистики</div>
+      <div class="pct" id="fullOrderDiscountPct">—</div>
+      <div class="rub" id="fullOrderDiscountRub">—</div>
+      <div class="flow" id="fullOrderDiscountFlow">—</div>
+    </div>
+    <div class="project-discount-card accent">
+      <div class="k">Без логистики — только аренда</div>
+      <div class="pct" id="rentalOrderDiscountPct">—</div>
+      <div class="rub" id="rentalOrderDiscountRub">—</div>
+      <div class="flow" id="rentalOrderDiscountFlow">—</div>
+    </div>
+  </div>
+  <div class="project-discount-note">Логистика включает доставку, монтаж и доплату за МКАД. Стирка — внутренний расход Ameli и на скидку партнёра не влияет.</div>
 </div>
 
 <h2><span class="n">4</span>Передача цен в генератор</h2>
@@ -698,12 +730,15 @@ function compute(){
   const extraDiscountPct = professional.rental > 0 ? extraDiscountRub / professional.rental : NaN;
   const organizerBenefitRub = retail.rental - offer.rental;
   const organizerBenefitPct = retail.rental > 0 ? organizerBenefitRub / retail.rental : NaN;
+  const fullOrderDiscountRub = retail.total - offer.total;
+  const fullOrderDiscountPct = retail.total > 0 ? fullOrderDiscountRub / retail.total : NaN;
 
   return {
     s, chargedInstallerCount, baseRental, offerRental, retail, professional, offer,
     automaticLaundry, laundry, laundryMissing, actualDelivery, actualInstallation, actualMkad,
     directCosts, profit, margin, rentalEarning, logisticsResult, minimumPrice, reserve,
-    extraDiscountRub, extraDiscountPct, organizerBenefitRub, organizerBenefitPct
+    extraDiscountRub, extraDiscountPct, organizerBenefitRub, organizerBenefitPct,
+    fullOrderDiscountRub, fullOrderDiscountPct
   };
 }
 
@@ -807,6 +842,12 @@ function render(){
   document.getElementById('priceReserve').textContent = Number.isFinite(c.reserve) ? fmtSigned(c.reserve) : '—';
   document.getElementById('extraDiscount').textContent = fmt(c.extraDiscountRub)+' · '+fmtPct(c.extraDiscountPct);
   document.getElementById('organizerBenefit').textContent = fmt(c.organizerBenefitRub)+' · '+fmtPct(c.organizerBenefitPct);
+  document.getElementById('fullOrderDiscountPct').textContent = fmtPct(c.fullOrderDiscountPct);
+  document.getElementById('fullOrderDiscountRub').textContent = 'Разница: '+fmt(c.fullOrderDiscountRub);
+  document.getElementById('fullOrderDiscountFlow').textContent = fmt(c.retail.total)+' → '+fmt(c.offer.total);
+  document.getElementById('rentalOrderDiscountPct').textContent = fmtPct(c.organizerBenefitPct);
+  document.getElementById('rentalOrderDiscountRub').textContent = 'Разница: '+fmt(c.organizerBenefitRub);
+  document.getElementById('rentalOrderDiscountFlow').textContent = fmt(c.retail.rental)+' → '+fmt(c.offer.rental);
 
   const alert = document.getElementById('priceAlert');
   if (c.profit < 0) {
