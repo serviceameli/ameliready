@@ -6,7 +6,7 @@
     "ceremony": 43000,
     "bench": 1200,
     "delivery": 18000,
-    "installer": 9200
+    "installer": 9700
   },
   "offer": {
     "guest": 900,
@@ -14,8 +14,8 @@
     "candles": 800,
     "ceremony": 25000,
     "bench": 500,
-    "delivery": 16000,
-    "installer": 8500
+    "delivery": 18000,
+    "installer": 9700
   },
   "discount": 30,
   "outsideMkadPerKm": 170
