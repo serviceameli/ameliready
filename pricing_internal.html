@@ -217,9 +217,9 @@ input:focus,textarea:focus{border-color:var(--text)}
 <div class="note">Скидка применяется только к аренде. Доставка, километры за МКАД и монтаж всегда добавляются полностью.</div>
 <div class="usp-box">
   <div>
-    <div class="usp-kicker">Итоговый расчёт для УТП</div>
-    <div class="usp-main">До <span id="uspDiscount">—</span> дополнительно</div>
-    <div class="usp-sub">к профессиональной цене на аренду готового комплекта</div>
+    <div class="usp-kicker">Итоговая скидка для профи</div>
+    <div class="usp-main">До <span id="uspDiscount">—</span> от базовой цены</div>
+    <div class="usp-sub">на аренду готового комплекта</div>
   </div>
   <div>
     <div class="usp-copy" id="uspPhrase">Расчёт загружается…</div>
@@ -351,7 +351,7 @@ input:focus,textarea:focus{border-color:var(--text)}
       <div class="decision"><div class="k">Мин. цена при целевой марже</div><div class="v" id="minimumPrice">—</div></div>
       <div class="decision"><div class="k">Запас к минимальной цене</div><div class="v" id="priceReserve">—</div></div>
       <div class="decision"><div class="k">Доп. скидка к профцене аренды</div><div class="v" id="extraDiscount">—</div></div>
-      <div class="decision"><div class="k">Выгода партнёра к базовой</div><div class="v" id="organizerBenefit">—</div></div>
+      <div class="decision"><div class="k">Итоговая скидка от базовой цены аренды</div><div class="v" id="organizerBenefit">—</div></div>
     </div>
     <div class="alert" id="priceAlert"></div>
   </div>
@@ -696,8 +696,8 @@ function compute(){
   const reserve = offer.total - minimumPrice;
   const extraDiscountRub = professional.rental - offer.rental;
   const extraDiscountPct = professional.rental > 0 ? extraDiscountRub / professional.rental : NaN;
-  const organizerBenefitRub = retail.total - offer.total;
-  const organizerBenefitPct = retail.total > 0 ? organizerBenefitRub / retail.total : NaN;
+  const organizerBenefitRub = retail.rental - offer.rental;
+  const organizerBenefitPct = retail.rental > 0 ? organizerBenefitRub / retail.rental : NaN;
 
   return {
     s, chargedInstallerCount, baseRental, offerRental, retail, professional, offer,
@@ -737,7 +737,8 @@ function renderUspSummary(){
     const professionalRental = Math.round(publicRental * (1 - discountRate));
     const offerRental = guests * state.public.offer.guest + tables * state.public.offer.table;
     const additionalRate = professionalRental > 0 ? (professionalRental - offerRental) / professionalRental : NaN;
-    if (Number.isFinite(additionalRate)) scenarios.push({ guests, tables, additionalRate });
+    const totalRate = publicRental > 0 ? (publicRental - offerRental) / publicRental : NaN;
+    if (Number.isFinite(additionalRate) && Number.isFinite(totalRate)) scenarios.push({ guests, tables, additionalRate, totalRate });
   }
 
   const discountEl = document.getElementById('uspDiscount');
@@ -750,14 +751,15 @@ function renderUspSummary(){
     return;
   }
 
-  const best = scenarios.reduce((a,b) => b.additionalRate > a.additionalRate ? b : a);
-  const worst = scenarios.reduce((a,b) => b.additionalRate < a.additionalRate ? b : a);
-  const safeWholePercent = Math.max(0, Math.floor(best.additionalRate * 100 + 0.000001));
+  const best = scenarios.reduce((a,b) => b.totalRate > a.totalRate ? b : a);
+  const worst = scenarios.reduce((a,b) => b.totalRate < a.totalRate ? b : a);
+  const bestAdditional = scenarios.reduce((a,b) => b.additionalRate > a.additionalRate ? b : a);
+  const safeWholePercent = Math.max(0, Math.floor(best.totalRate * 100 + 0.000001));
   discountEl.textContent = safeWholePercent + '%';
   phraseEl.textContent = safeWholePercent > 0
-    ? 'Для УТП: «Дополнительная скидка до '+safeWholePercent+'% к профессиональной цене»'
-    : 'Сейчас спеццена не даёт дополнительной скидки к профессиональной цене.';
-  detailsEl.textContent = 'Точный максимум — '+fmtPct(best.additionalRate)+' при '+best.guests+' гостях и '+best.tables+' столах. Диапазон 40–60 гостей: '+fmtPct(worst.additionalRate)+'–'+fmtPct(best.additionalRate)+'. Расчёт по базовому комплекту, без доставки и монтажа.';
+    ? 'Для УТП: «Скидка до '+safeWholePercent+'% от базовой цены»'
+    : 'Сейчас спеццена не даёт скидки относительно базовой цены.';
+  detailsEl.textContent = 'Точный максимум — '+fmtPct(best.totalRate)+' при '+best.guests+' гостях и '+best.tables+' столах. Диапазон 40–60 гостей: '+fmtPct(worst.totalRate)+'–'+fmtPct(best.totalRate)+'. Стандартная профскидка — '+state.public.discount+'%, дополнительная скидка к профцене — до '+fmtPct(bestAdditional.additionalRate)+'. Проценты не складываются напрямую. Без доставки и монтажа.';
 }
 
 function render(){
