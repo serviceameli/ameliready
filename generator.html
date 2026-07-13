@@ -763,7 +763,11 @@ async function downloadColorPdf(){
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'Ameli-Rental-presentation.pdf';
+    const partnerName = document.getElementById('orgName').value.trim()
+      .replace(/[<>:"/\\|?*\u0000-\u001F]/g, '')
+      .replace(/\s+/g, ' ')
+      .slice(0, 60);
+    link.download = (partnerName || 'Свадебная сервировка') + ' — презентация.pdf';
     document.body.appendChild(link);
     link.click();
     link.remove();
