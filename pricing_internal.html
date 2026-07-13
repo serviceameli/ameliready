@@ -42,6 +42,13 @@ tr.total td{font-weight:700;border-top:2px solid var(--text);border-bottom:none}
 .price-table input{width:112px}
 .delta.good{color:var(--green);font-weight:600}
 .delta.bad{color:var(--orange);font-weight:600}
+.usp-box{display:grid;grid-template-columns:.9fr 1.1fr;gap:24px;align-items:center;background:var(--text);color:#fff;border-radius:12px;padding:18px 20px;margin-top:16px}
+.usp-kicker{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:5px}
+.usp-main{font-size:21px;font-weight:700;line-height:1.2}
+.usp-main span{color:var(--accent);font-size:30px}
+.usp-sub{font-size:11px;color:#C9C9C3;margin-top:5px;line-height:1.5}
+.usp-copy{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:8px;padding:10px 12px;font-size:13px;font-weight:600;line-height:1.45}
+.usp-meta{font-size:10px;color:#C9C9C3;line-height:1.55;margin-top:7px}
 
 .panel{background:var(--soft);border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin:14px 0 20px}
 .panel.private{border:2px solid var(--text);background:#fff}
@@ -107,7 +114,7 @@ input:focus,textarea:focus{border-color:var(--text)}
 @media(max-width:850px){
   body{padding:20px}
   .grid,.cards{grid-template-columns:repeat(2,1fr)}
-  .details{grid-template-columns:1fr}
+  .details,.usp-box{grid-template-columns:1fr}
   .table-wrap{overflow-x:auto}
 }
 @media(max-width:520px){
@@ -208,6 +215,17 @@ input:focus,textarea:focus{border-color:var(--text)}
 </table>
 </div>
 <div class="note">Скидка применяется только к аренде. Доставка, километры за МКАД и монтаж всегда добавляются полностью.</div>
+<div class="usp-box">
+  <div>
+    <div class="usp-kicker">Итоговый расчёт для УТП</div>
+    <div class="usp-main">До <span id="uspDiscount">—</span> дополнительно</div>
+    <div class="usp-sub">к профессиональной цене на аренду готового комплекта</div>
+  </div>
+  <div>
+    <div class="usp-copy" id="uspPhrase">Расчёт загружается…</div>
+    <div class="usp-meta" id="uspDetails"></div>
+  </div>
+</div>
 
 <h2><span class="n">2</span>Внутренние расходы</h2>
 <div class="section-note">Эти значения нужны только для расчёта заработка Ameli. Они сохраняются в локальном черновике и не попадают в JSON или ссылку для генератора.</div>
@@ -332,7 +350,7 @@ input:focus,textarea:focus{border-color:var(--text)}
       <div class="decision"><div class="k">Результат логистики</div><div class="v" id="logisticsResult">—</div></div>
       <div class="decision"><div class="k">Мин. цена при целевой марже</div><div class="v" id="minimumPrice">—</div></div>
       <div class="decision"><div class="k">Запас к минимальной цене</div><div class="v" id="priceReserve">—</div></div>
-      <div class="decision"><div class="k">Доп. скидка к профцене</div><div class="v" id="extraDiscount">—</div></div>
+      <div class="decision"><div class="k">Доп. скидка к профцене аренды</div><div class="v" id="extraDiscount">—</div></div>
       <div class="decision"><div class="k">Выгода партнёра к базовой</div><div class="v" id="organizerBenefit">—</div></div>
     </div>
     <div class="alert" id="priceAlert"></div>
@@ -676,8 +694,8 @@ function compute(){
   const targetRate = state.internal.targetMargin / 100;
   const minimumPrice = targetRate < 1 ? directCosts / (1 - targetRate) : Infinity;
   const reserve = offer.total - minimumPrice;
-  const extraDiscountRub = professional.total - offer.total;
-  const extraDiscountPct = professional.total > 0 ? extraDiscountRub / professional.total : NaN;
+  const extraDiscountRub = professional.rental - offer.rental;
+  const extraDiscountPct = professional.rental > 0 ? extraDiscountRub / professional.rental : NaN;
   const organizerBenefitRub = retail.total - offer.total;
   const organizerBenefitPct = retail.total > 0 ? organizerBenefitRub / retail.total : NaN;
 
@@ -710,9 +728,42 @@ function renderPriceRows(){
   document.querySelectorAll('#discountQuick .chip').forEach(btn => btn.classList.toggle('active', +btn.dataset.discount === discount));
 }
 
+function renderUspSummary(){
+  const discountRate = state.public.discount / 100;
+  const scenarios = [];
+  for (let guests = 40; guests <= 60; guests++) {
+    const tables = Math.ceil(guests / 8);
+    const publicRental = guests * state.public.base.guest + tables * state.public.base.table;
+    const professionalRental = Math.round(publicRental * (1 - discountRate));
+    const offerRental = guests * state.public.offer.guest + tables * state.public.offer.table;
+    const additionalRate = professionalRental > 0 ? (professionalRental - offerRental) / professionalRental : NaN;
+    if (Number.isFinite(additionalRate)) scenarios.push({ guests, tables, additionalRate });
+  }
+
+  const discountEl = document.getElementById('uspDiscount');
+  const phraseEl = document.getElementById('uspPhrase');
+  const detailsEl = document.getElementById('uspDetails');
+  if (!scenarios.length) {
+    discountEl.textContent = '—';
+    phraseEl.textContent = 'Заполните базовые и специальные цены.';
+    detailsEl.textContent = '';
+    return;
+  }
+
+  const best = scenarios.reduce((a,b) => b.additionalRate > a.additionalRate ? b : a);
+  const worst = scenarios.reduce((a,b) => b.additionalRate < a.additionalRate ? b : a);
+  const safeWholePercent = Math.max(0, Math.floor(best.additionalRate * 100 + 0.000001));
+  discountEl.textContent = safeWholePercent + '%';
+  phraseEl.textContent = safeWholePercent > 0
+    ? 'Для УТП: «Дополнительная скидка до '+safeWholePercent+'% к профессиональной цене»'
+    : 'Сейчас спеццена не даёт дополнительной скидки к профессиональной цене.';
+  detailsEl.textContent = 'Точный максимум — '+fmtPct(best.additionalRate)+' при '+best.guests+' гостях и '+best.tables+' столах. Диапазон 40–60 гостей: '+fmtPct(worst.additionalRate)+'–'+fmtPct(best.additionalRate)+'. Расчёт по базовому комплекту, без доставки и монтажа.';
+}
+
 function render(){
   renderPriceRows();
   const c = compute();
+  renderUspSummary();
   const discount = state.public.discount;
   document.getElementById('compareDiscountHead').textContent = 'Проф. цена −'+discount+'%';
 
