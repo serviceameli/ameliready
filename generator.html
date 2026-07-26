@@ -931,7 +931,6 @@ function buildPkgs() {
   for (const [k, t] of Object.entries(TIERS)) {
     const c = servCost();
     const prKey = 'priceServ';
-    if (S.priceServ === null || !S.priceServManual) S.priceServ = c.retail;
     const photos = PHOTOS[k] || [];
     const thumbHtml = photos.filter(Boolean).map(s=>'<img src="'+s+'">').join('');
     const card = document.createElement('div'); card.className = 'pkgcard';
@@ -971,16 +970,16 @@ function updateBudget(){
   let total=0, profit=0, html='';
   rows.forEach(function(r){ const nm=r[0], pr=r[1], base=r[2]; const p=pr||0; total+=p; profit+=Math.max(0,p-base);
     html += '<div class="b-row"><span class="nm">'+nm+'</span><span class="vl">'+(pr?fmt(pr):'—')+'</span></div>'; });
-  html += '<div class="b-total"><span class="nm">Бюджет клиента</span><span class="vl">'+fmt(total)+'</span></div>';
-  html += '<div class="b-profit"><span class="nm">Ваша выгода со всего</span><span class="vl">'+fmt(profit)+'</span></div>';
+  html += '<div class="b-total"><span class="nm">Бюджет клиента</span><span class="vl">'+(total ? fmt(total) : '—')+'</span></div>';
+  html += '<div class="b-profit"><span class="nm">Ваша выгода со всего</span><span class="vl">'+(total ? fmt(profit) : '—')+'</span></div>';
   el.innerHTML = html;
 }
 
 function updateProfits() {
   {
-    const pr = S.priceServ || 0;
+    const pr = S.priceServ;
     const el = document.getElementById('profit-serv');
-    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,pr-servCostAkc())) + '</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + (pr ? fmt(Math.max(0,pr-servCostAkc())) : '—') + '</b>';
   }
   const cerc = cerCost();
   const cercAkc = cerCostAkc();
@@ -991,9 +990,8 @@ function updateProfits() {
     '<span class="pl">Проф. скидка −'+PRICES.discount+'%</span><span class="pv" style="color:var(--mid,#5A5A54)">'+fmt(cerc.base)+'</span>' +
     '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(cercAkc)+'</span>';
   if (S.cer) {
-    if (S.cerPrice === null) { S.cerPrice = cerc.retail; const el = document.getElementById('cerPrice'); if(el) el.value = fmtThousands(S.cerPrice); }
     const el = document.getElementById('cerProfit');
-    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.cerPrice||0)-cercAkc)) + '</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + (S.cerPrice ? fmt(Math.max(0,S.cerPrice-cercAkc)) : '—') + '</b>';
   }
   const sc = svechiCost();
   const scAkc = svechiCostAkc();
@@ -1004,9 +1002,8 @@ function updateProfits() {
     '<span class="pl">Проф. скидка −'+PRICES.discount+'%</span><span class="pv" style="color:var(--mid,#5A5A54)">'+fmt(sc.base)+'</span>' +
     '<span class="pl">В готовом решении</span><span class="pv accent">'+fmt(scAkc)+'</span>';
   if (S.svechi) {
-    if (S.svechiPrice === null) { S.svechiPrice = sc.retail; const el = document.getElementById('svechiPrice'); if(el) el.value = fmtThousands(S.svechiPrice); }
     const el = document.getElementById('svechiProfit');
-    if (el) el.innerHTML = 'Ваша выгода: <b>' + fmt(Math.max(0,(S.svechiPrice||0)-scAkc)) + '</b>';
+    if (el) el.innerHTML = 'Ваша выгода: <b>' + (S.svechiPrice ? fmt(Math.max(0,S.svechiPrice-scAkc)) : '—') + '</b>';
   }
   updateBudget();
 }
