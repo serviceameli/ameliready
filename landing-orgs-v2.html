@@ -7,10 +7,10 @@
 <meta name="description" content="Соберите декор свадьбы и готовую презентацию за 5 минут под вашим брендом со скидкой до 44%. Сразу увидите стоимость от Ameli Rental и свой заработок.">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#191916">
-<link rel="canonical" href="https://serviceameli.github.io/ameliready/landing-orgs.html">
+<link rel="canonical" href="https://serviceameli.github.io/ameliready/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
-<meta property="og:url" content="https://serviceameli.github.io/ameliready/landing-orgs.html">
+<meta property="og:url" content="https://serviceameli.github.io/ameliready/">
 <meta property="og:title" content="Декор свадьбы и презентация за 5 минут — Ameli Rental">
 <meta property="og:description" content="Готовая презентация под вашим брендом, скидка до 44% и прозрачный расчёт заработка организатора.">
 <meta property="og:image" content="https://raw.githubusercontent.com/serviceameli/ameliready/main/assets/landing/live-green-table.jpg">
@@ -614,6 +614,10 @@ footer{background:var(--ink);color:#918d83;font-size:10px;letter-spacing:.09em;p
 <footer>AMELI RENTAL · ПРОКАТ ДЕКОРА ДЛЯ МЕРОПРИЯТИЙ · МОСКВА И МО</footer>
 <script>
 (() => {
+  if (location.hostname === 'serviceameli.github.io' && location.pathname.endsWith('/landing-orgs-v2.html')) {
+    history.replaceState(null, '', '/ameliready/');
+  }
+
   document.querySelectorAll('[data-slideshow]').forEach((player) => {
     const slides = [...player.querySelectorAll('.demo-slide')];
     const dots = [...player.querySelectorAll('[data-demo-index]')];
