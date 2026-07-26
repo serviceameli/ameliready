@@ -77,6 +77,8 @@ body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--page
 .logo-drop{border:1px dashed var(--field-border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;font-size:12px;color:var(--muted);transition:.15s;}
 .logo-drop:hover{border-color:var(--accent);color:var(--text);}
 .logo-drop img{max-height:44px;max-width:80%;}
+.logo-remove{display:block;margin:8px 0 0 auto;padding:0;border:0;background:none;color:var(--mid);font:inherit;font-size:11px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;}
+.logo-remove:hover{color:var(--text);}
 .btn{display:block;width:100%;background:var(--accent);color:#fff;border:none;height:52px;border-radius:10px;font-family:inherit;font-weight:600;font-size:13px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;margin-top:18px;transition:opacity .2s;}
 .btn:hover{opacity:0.88;}
 .btn span{opacity:0.6;}
@@ -359,6 +361,7 @@ input[type=number]{-moz-appearance:textfield;}input[type=number]::-webkit-outer-
       <div class="kicker">6 · Ваш бренд</div>
       <div class="logo-drop" id="logoDrop">Нажмите, чтобы загрузить логотип<br>(PNG / JPG)</div>
       <input type="file" id="logoInput" accept="image/*" style="display:none">
+      <button type="button" class="logo-remove" id="logoRemove" hidden>Удалить логотип</button>
       <div class="field" style="margin-top:14px"><label>Имя / название студии</label><input type="text" id="orgName" placeholder="Студия «Ваше имя»"></div>
       <button class="btn" id="pdfDownloadBtn" onclick="downloadColorPdf()">Скачать PDF <span>↓</span></button>
       <p class="pdf-note">Обычно файл весит примерно 5–12 МБ, в зависимости от выбранных опций.</p>
@@ -1161,12 +1164,20 @@ function updateBrandVisibility() {
 document.getElementById('orgName').oninput = e => { pvStudioName.textContent = e.target.value.trim(); updateBrandVisibility(); };
 
 const drop = document.getElementById('logoDrop'), inp = document.getElementById('logoInput');
+const logoRemove = document.getElementById('logoRemove');
 drop.onclick = () => inp.click();
 inp.onchange = e => {
   const f = e.target.files[0]; if (!f) return;
   const r = new FileReader();
-  r.onload = () => { drop.innerHTML = '<img src="'+r.result+'">'; pvLogoMark.innerHTML = '<img src="'+r.result+'">'; updateBrandVisibility(); };
+  r.onload = () => { drop.innerHTML = '<img src="'+r.result+'">'; pvLogoMark.innerHTML = '<img src="'+r.result+'">'; logoRemove.hidden = false; updateBrandVisibility(); };
   r.readAsDataURL(f);
+};
+logoRemove.onclick = () => {
+  inp.value = '';
+  drop.innerHTML = 'Нажмите, чтобы загрузить логотип<br>(PNG / JPG)';
+  pvLogoMark.innerHTML = '';
+  logoRemove.hidden = true;
+  updateBrandVisibility();
 };
 
 function render() { buildPals(); buildPkgs(); renderPreview(); }
