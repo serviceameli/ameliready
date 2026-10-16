@@ -1,0 +1,1170 @@
+[
+  {
+    "id": "5",
+    "category": "Мебель",
+    "name": "Пуф круглый · 40 см",
+    "sourceName": "Пуф круг 40 см",
+    "sourceRow": 5,
+    "variants": [
+      {
+        "size": "40 см",
+        "price": "2 400 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/5367.jpg",
+    "catalogName": "Пуфик \"Фуфик\" мини кокосовый раф бархат",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/pufy-fufik-znh-byq-zef-qay-fbe-qwg-knd-oea/5367",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/9031dd53-09fc-4718-a366-34d25d8a8226_temp_image.jpg",
+    "note": ""
+  },
+  {
+    "id": "6",
+    "category": "Мебель",
+    "name": "Пуф круглый · 60 см",
+    "sourceName": "Пуф круг 60 см",
+    "sourceRow": 6,
+    "variants": [
+      {
+        "size": "60 см",
+        "price": "5 200 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/5324.jpg",
+    "catalogName": "Пуфик \"Фуфик\" миди кокосовый раф бархат",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/pufy-fufik-znh-byq-zef-qay-fbe-qwg-knd-oea/5324",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/8f977d71-1db8-4f43-9848-a8ccc81779a3_temp_image.jpg",
+    "note": ""
+  },
+  {
+    "id": "7",
+    "category": "Мебель",
+    "name": "Пуф круглый · 80 см",
+    "sourceName": "Пуф круг 80 см",
+    "sourceRow": 7,
+    "variants": [
+      {
+        "size": "80 см",
+        "price": "7 300 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/5188.jpg",
+    "catalogName": "Пуфик \"Фуфик\" макс кокосовый раф бархат",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/pufy-fufik-znh-byq-zef-qay-fbe-qwg-knd-oea/5188",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/4c8b7503-96ab-4e0f-8a6c-764eaaa974fe_temp_image.jpg",
+    "note": ""
+  },
+  {
+    "id": "8",
+    "category": "Мебель",
+    "name": "Комплект круглых пуфов",
+    "sourceName": "Пуфы круг комплект 3 пуфа",
+    "sourceRow": 8,
+    "variants": [
+      {
+        "size": "3 пуфа · Ø 40 + 60 + 80 см",
+        "price": "14 900 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/3955.jpg",
+    "catalogName": "Набор пуфов \"Фуфик\" кокосовый раф бархат",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/pufy-fufik-znh-byq-zef-qay-fbe-qwg-knd-oea/3955",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/97b07ebd-3635-4c8c-96a5-b705e505a4e4_temp_image.jpg",
+    "note": ""
+  },
+  {
+    "id": "9",
+    "category": "Мебель",
+    "name": "Чехлы на круглые пуфы",
+    "sourceName": "Чехлы на пуфы 3 шт",
+    "sourceRow": 9,
+    "variants": [
+      {
+        "size": "3 чехла · Ø 40 + 60 + 80 см",
+        "price": "5 000 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/3955.jpg",
+    "catalogName": "Набор пуфов \"Фуфик\" кокосовый раф бархат",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/pufy-fufik-znh-byq-zef-qay-fbe-qwg-knd-oea/3955",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/97b07ebd-3635-4c8c-96a5-b705e505a4e4_temp_image.jpg",
+    "note": "На фото пуф с чехлом. В эту цену входит только чехол."
+  },
+  {
+    "id": "10",
+    "category": "Мебель",
+    "name": "Пуф «Квадро»",
+    "sourceName": "Пуф квадро 45 на 45",
+    "sourceRow": 10,
+    "variants": [
+      {
+        "size": "45 × 45 см",
+        "price": "4 200 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/5075.jpg",
+    "catalogName": "Пуфик \"Квадро\" кокосовый раф бархат",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/pufy-kvadro-cgp-aie-ilt-xzp-bct-dpq-jiw-eaa-fkk/5075",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/2ff09287-13be-4e47-82f4-0e428a62689e_temp_image.jpg",
+    "note": ""
+  },
+  {
+    "id": "11",
+    "category": "Мебель",
+    "name": "Чехол на пуф «Квадро»",
+    "sourceName": "Чехол на пуф квадро",
+    "sourceRow": 11,
+    "variants": [
+      {
+        "size": "",
+        "price": "800 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/5075.jpg",
+    "catalogName": "Пуфик \"Квадро\" кокосовый раф бархат",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/pufy-kvadro-cgp-aie-ilt-xzp-bct-dpq-jiw-eaa-fkk/5075",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/2ff09287-13be-4e47-82f4-0e428a62689e_temp_image.jpg",
+    "note": "На фото пуф с чехлом. В эту цену входит только чехол."
+  },
+  {
+    "id": "12",
+    "category": "Мебель",
+    "name": "Пуф «Боу»",
+    "sourceName": "Пуф боу",
+    "sourceRow": 12,
+    "variants": [
+      {
+        "size": "60 × 40 см",
+        "price": "5 600 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/4902.jpg",
+    "catalogName": "Пуфик \"Боу\" мини кокосовый раф бархат",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/pufy-bou-rcb-gvu-cjs-rwy-yni-jme-yjo-eyv/4902",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/830b0a22-0100-4dfd-9078-2b9575c2612c_temp_image.jpg",
+    "note": ""
+  },
+  {
+    "id": "14",
+    "category": "Мебель",
+    "name": "Стул «Кроссбэк»",
+    "sourceName": "Стул кроссбэк деревянный",
+    "sourceRow": 14,
+    "variants": [
+      {
+        "size": "",
+        "price": "7 500 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/6846.jpg",
+    "catalogName": "Стул \"Кроссбэк\" старинный орех",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/stulja-swe-aoa-dld-qkt-ddo/6846",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/ameli-rental/32e31823-0c8b-4c1a-aa02-7c5ed0a65fc4_temp_image.jpg",
+    "note": ""
+  },
+  {
+    "id": "15",
+    "category": "Мебель",
+    "name": "Стул «Кроссбэк» с мягким сиденьем",
+    "sourceName": "Стул Кроссбэк деревянный с мягкой сидушкой",
+    "sourceRow": 15,
+    "variants": [
+      {
+        "size": "",
+        "price": "7 900 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/6846.jpg",
+    "catalogName": "Стул \"Кроссбэк\" старинный орех",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/stulja-swe-aoa-dld-qkt-ddo/6846",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/ameli-rental/32e31823-0c8b-4c1a-aa02-7c5ed0a65fc4_temp_image.jpg",
+    "note": "На фото базовая модель. Цена этой позиции включает мягкое сиденье."
+  },
+  {
+    "id": "16",
+    "category": "Мебель",
+    "name": "Стул «Марсель»",
+    "sourceName": "Стул марсель",
+    "sourceRow": 16,
+    "variants": [
+      {
+        "size": "",
+        "price": "По запросу"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/11160.jpg",
+    "catalogName": "Стул \"Марсель\" золотой, жемчужный бархат",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/stulja-marsel-zaq/11160",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/cc8d1de4-f5a7-48f3-afcf-1a9c9316e736_page.png",
+    "note": ""
+  },
+  {
+    "id": "17",
+    "category": "Мебель",
+    "name": "Стул «Вашингтон»",
+    "sourceName": "Сутл вашингтон",
+    "sourceRow": 17,
+    "variants": [
+      {
+        "size": "",
+        "price": "По запросу"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/6145.jpg",
+    "catalogName": "Стул \"Вашингтон\" золотой, жемчужный бархат",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/stulja-vashington-tme-wpx-ena-dci-xdv/6145",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/ameli-rental/104d3e08-fe52-4b80-bc80-67f98b80753e_temp_image.jpg",
+    "note": ""
+  },
+  {
+    "id": "19",
+    "category": "Мебель",
+    "name": "Круглый стол, ЛДСП",
+    "sourceName": "Стол круг 180 см ЛДСП",
+    "sourceRow": 19,
+    "variants": [
+      {
+        "size": "Ø 180 см",
+        "price": "По запросу"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/3071.jpg",
+    "catalogName": "Банкетный стол \"Вольф\" круглый белый 180",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/banketnye-stoly-vfa-zoq-mlk-swm/3071",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/9b7022d2-95ab-4678-846d-2c49f315b2ed_temp_image.jpg",
+    "note": ""
+  },
+  {
+    "id": "20",
+    "category": "Мебель",
+    "name": "Прямоугольный стол",
+    "sourceName": "Стол прямоугольный",
+    "sourceRow": 20,
+    "variants": [
+      {
+        "size": "",
+        "price": "По запросу"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/2798.jpg",
+    "catalogName": "Банкетный стол \"Вольф\" прямоугольный белый 200",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/banketnye-stoly-vfa-zoq-mlk-swm/2798",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/e12ba231-b6ec-4781-a952-4b732543b720_temp_image.jpg",
+    "note": "На фото пример модели. Размер и комплектацию согласуем."
+  },
+  {
+    "id": "21",
+    "category": "Мебель",
+    "name": "Стол «Змейка»",
+    "sourceName": "Стол змейка",
+    "sourceRow": 21,
+    "variants": [
+      {
+        "size": "",
+        "price": "По запросу"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/3063.jpg",
+    "catalogName": "Банкетный стол \"Вольф\" змейка белый",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/banketnye-stoly-vfa-zoq-mlk-swm/3063",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/ameli-rental/a2dac944-d0d6-4632-b0e4-a12dae1d9495_temp_image.jpg",
+    "note": "На фото пример модели. Размер и комплектацию согласуем."
+  },
+  {
+    "id": "22",
+    "category": "Мебель",
+    "name": "Круглый коктейльный стол",
+    "sourceName": "Стол коктейль круг",
+    "sourceRow": 22,
+    "variants": [
+      {
+        "size": "",
+        "price": "По запросу"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/cocktail.jpg",
+    "note": "На фото стол с чехлом. Размер и комплектацию согласуем при заказе.",
+    "catalogName": "Круглый коктейльный стол с чехлом",
+    "photoSource": "Фотография коктейльного стола с сайта Ameli Rental, рабочая копия"
+  },
+  {
+    "id": "25",
+    "category": "Текстиль",
+    "name": "Круглая скатерть · бархат",
+    "sourceName": "Скатерть круг бархат",
+    "sourceRow": 25,
+    "variants": [
+      {
+        "size": "330 см",
+        "price": "4 100 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/pdf-25.jpg",
+    "note": "",
+    "catalogName": "Круглая скатерть · бархат",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 2"
+  },
+  {
+    "id": "26",
+    "category": "Текстиль",
+    "name": "Прямоугольная скатерть · бархат",
+    "sourceName": "Скатерть прямоуг бархат",
+    "sourceRow": 26,
+    "variants": [
+      {
+        "size": "300 × 400 см",
+        "price": "4 200 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/pdf-26.jpg",
+    "note": "",
+    "catalogName": "Прямоугольная скатерть · бархат",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 2"
+  },
+  {
+    "id": "27",
+    "category": "Текстиль",
+    "name": "Круглая скатерть · канвас",
+    "sourceName": "Скатерть круг канвас",
+    "sourceRow": 27,
+    "variants": [
+      {
+        "size": "330 см",
+        "price": "4 200 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/pdf-27.jpg",
+    "note": "",
+    "catalogName": "Круглая скатерть · канвас",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 5"
+  },
+  {
+    "id": "28",
+    "category": "Текстиль",
+    "name": "Прямоугольная скатерть · канвас",
+    "sourceName": "Скатерть прямоуг канвас",
+    "sourceRow": 28,
+    "variants": [
+      {
+        "size": "300 × 400 см",
+        "price": "4 400 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/pdf-28.jpg",
+    "note": "",
+    "catalogName": "Прямоугольная скатерть · канвас",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 5"
+  },
+  {
+    "id": "29",
+    "category": "Текстиль",
+    "name": "Круглая скатерть · дак",
+    "sourceName": "Скатерть круг дак",
+    "sourceRow": 29,
+    "variants": [
+      {
+        "size": "330 см",
+        "price": "7 700 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/pdf-29.jpg",
+    "note": "На фото примеры скатертей из ткани дак.",
+    "catalogName": "Круглая скатерть · дак",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 7"
+  },
+  {
+    "id": "30",
+    "category": "Текстиль",
+    "name": "Прямоугольная скатерть · дак",
+    "sourceName": "Скатерть прямоуг дак",
+    "sourceRow": 30,
+    "variants": [
+      {
+        "size": "300 × 400 см",
+        "price": "8 200 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/pdf-30.jpg",
+    "note": "На фото примеры скатертей из ткани дак.",
+    "catalogName": "Прямоугольная скатерть · дак",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 7"
+  },
+  {
+    "id": "31",
+    "category": "Текстиль",
+    "name": "Круглая скатерть · хлопок ранфорс",
+    "sourceName": "Скатерть круг хлопок ранфорс",
+    "sourceRow": 31,
+    "variants": [
+      {
+        "size": "330 см",
+        "price": "6 000 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/pdf-31.jpg",
+    "note": "",
+    "catalogName": "Круглая скатерть · хлопок ранфорс",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 7"
+  },
+  {
+    "id": "32",
+    "category": "Текстиль",
+    "name": "Прямоугольная скатерть · хлопок ранфорс",
+    "sourceName": "Скатерть прямоуг хлопок ранфорс",
+    "sourceRow": 32,
+    "variants": [
+      {
+        "size": "300 × 400 см",
+        "price": "6 500 ₽"
+      }
+    ],
+    "customColor": true,
+    "photo": "assets/pdf-32.jpg",
+    "note": "На фото пример ткани. Форма скатерти прямоугольная.",
+    "catalogName": "Прямоугольная скатерть · хлопок ранфорс",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 7"
+  },
+  {
+    "id": "35",
+    "category": "Бокалы",
+    "name": "«Симпл» · вино",
+    "sourceName": "\"Симпл\" вино",
+    "sourceRow": 35,
+    "variants": [
+      {
+        "size": "25/26/28 см",
+        "price": "670 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-35.jpg",
+    "note": "",
+    "catalogName": "«Симпл» · вино",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 8"
+  },
+  {
+    "id": "36",
+    "category": "Бокалы",
+    "name": "«Симпл» · шампанское",
+    "sourceName": "\"Симпл\" шамп",
+    "sourceRow": 36,
+    "variants": [
+      {
+        "size": "26 см",
+        "price": "650 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-36.jpg",
+    "note": "",
+    "catalogName": "«Симпл» · шампанское",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 8"
+  },
+  {
+    "id": "37",
+    "category": "Бокалы",
+    "name": "«Симпл» · стакан",
+    "sourceName": "\"Симпл\" стакан",
+    "sourceRow": 37,
+    "variants": [
+      {
+        "size": "",
+        "price": "600 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": null,
+    "note": ""
+  },
+  {
+    "id": "38",
+    "category": "Бокалы",
+    "name": "«Лавлейс» без линий · вино",
+    "sourceName": "\"Лавлейс\" без линий вино",
+    "sourceRow": 38,
+    "variants": [
+      {
+        "size": "560 мл",
+        "price": "460 ₽"
+      },
+      {
+        "size": "460 мл",
+        "price": "430 ₽"
+      },
+      {
+        "size": "360 мл",
+        "price": "390 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-38.jpg",
+    "note": "",
+    "catalogName": "«Лавлейс» без линий · вино",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 10"
+  },
+  {
+    "id": "39",
+    "category": "Бокалы",
+    "name": "«Лавлейс» без линий · флюте",
+    "sourceName": "\"Лавлейс\" без линий флюте",
+    "sourceRow": 39,
+    "variants": [
+      {
+        "size": "220 мл",
+        "price": "430 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-39.jpg",
+    "note": "",
+    "catalogName": "«Лавлейс» без линий · флюте",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 10"
+  },
+  {
+    "id": "40",
+    "category": "Бокалы",
+    "name": "«Лавлейс» без линий · стакан",
+    "sourceName": "\"Лавлейс\" без линий стакан",
+    "sourceRow": 40,
+    "variants": [
+      {
+        "size": "",
+        "price": "360 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": null,
+    "note": ""
+  },
+  {
+    "id": "41",
+    "category": "Бокалы",
+    "name": "«Лавлейс» с линиями · вино",
+    "sourceName": "\"Лавлейс\" с линиями вино",
+    "sourceRow": 41,
+    "variants": [
+      {
+        "size": "560 мл",
+        "price": "500 ₽"
+      },
+      {
+        "size": "460 мл",
+        "price": "470 ₽"
+      },
+      {
+        "size": "360 мл",
+        "price": "430 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/3098.jpg",
+    "catalogName": "Бокал \"Лавлейс\" прозрачный винный",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/bokaly-drf-knl-afa-nmq/3098",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/5e87a479-e5d4-46ac-a31e-9c3883408189_Бокал_Лавлеис_прозрачныи_винныи-1.png",
+    "note": ""
+  },
+  {
+    "id": "42",
+    "category": "Бокалы",
+    "name": "«Лавлейс» с линиями · флюте",
+    "sourceName": "\"Лавлейс\" с линиями флюте",
+    "sourceRow": 42,
+    "variants": [
+      {
+        "size": "220 мл",
+        "price": "470 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/3096.jpg",
+    "catalogName": "Бокал \"Лавлейс\" прозрачный под шампанское",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/bokaly-drf-knl-afa-nmq/3096",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/234bce52-e69d-483a-9bf3-3d9e1100be40_temp_image.jpg",
+    "note": ""
+  },
+  {
+    "id": "43",
+    "category": "Бокалы",
+    "name": "«Лавлейс» с линиями · стакан",
+    "sourceName": "\"Лавлейс\"с линиями стакан",
+    "sourceRow": 43,
+    "variants": [
+      {
+        "size": "",
+        "price": "370 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/3093.jpg",
+    "catalogName": "Стакан \"Лавлейс\" прозрачный",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/bokaly-drf-knl-afa-nmq/3093",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/171b547a-ef9e-4905-8fd5-3d3dd6a23559_temp_image.jpg",
+    "note": ""
+  },
+  {
+    "id": "44",
+    "category": "Бокалы",
+    "name": "«Рейв» · вино",
+    "sourceName": "\"Рейв\" вино",
+    "sourceRow": 44,
+    "variants": [
+      {
+        "size": "600 мл",
+        "price": "490 ₽"
+      },
+      {
+        "size": "450 мл",
+        "price": "460 ₽"
+      },
+      {
+        "size": "400 мл",
+        "price": "440 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-44.jpg",
+    "note": "",
+    "catalogName": "«Рейв» · вино",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 12"
+  },
+  {
+    "id": "45",
+    "category": "Бокалы",
+    "name": "«Рейв» · флюте",
+    "sourceName": "\"Рейв\" флюте",
+    "sourceRow": 45,
+    "variants": [
+      {
+        "size": "180 мл",
+        "price": "440 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-45.jpg",
+    "note": "",
+    "catalogName": "«Рейв» · флюте",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 12"
+  },
+  {
+    "id": "46",
+    "category": "Бокалы",
+    "name": "«Рейв» · стакан",
+    "sourceName": "\"Рейв\" стакан",
+    "sourceRow": 46,
+    "variants": [
+      {
+        "size": "300 мл",
+        "price": "350 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-46.jpg",
+    "note": "",
+    "catalogName": "«Рейв» · стакан",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 12"
+  },
+  {
+    "id": "47",
+    "category": "Бокалы",
+    "name": "«Мэгик» с линиями · вино",
+    "sourceName": "\"Мэгик\" с линиями вино",
+    "sourceRow": 47,
+    "variants": [
+      {
+        "size": "350 мл",
+        "price": "340 ₽"
+      },
+      {
+        "size": "250 мл",
+        "price": "310 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-47.jpg",
+    "note": "",
+    "catalogName": "«Мэгик» с линиями · вино",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 13"
+  },
+  {
+    "id": "48",
+    "category": "Бокалы",
+    "name": "«Мэгик» с линиями · флюте",
+    "sourceName": "\"Мэгик\" с линиями флюте",
+    "sourceRow": 48,
+    "variants": [
+      {
+        "size": "190 мл",
+        "price": "310 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-48.jpg",
+    "note": "",
+    "catalogName": "«Мэгик» с линиями · флюте",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 13"
+  },
+  {
+    "id": "49",
+    "category": "Бокалы",
+    "name": "«Хрусталь» · вино, продольная огранка",
+    "sourceName": "\"Хрусталь\" продольная огранка вино",
+    "sourceRow": 49,
+    "variants": [
+      {
+        "size": "300/230 мл",
+        "price": "По запросу"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-49.jpg",
+    "note": "",
+    "catalogName": "«Хрусталь» · вино, продольная огранка",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 14"
+  },
+  {
+    "id": "50",
+    "category": "Бокалы",
+    "name": "«Хрусталь» · флюте, продольная огранка",
+    "sourceName": "\"Хрусталь\" продольная огранка флюте",
+    "sourceRow": 50,
+    "variants": [
+      {
+        "size": "",
+        "price": "По запросу"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-50.jpg",
+    "note": "",
+    "catalogName": "«Хрусталь» · флюте, продольная огранка",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 14"
+  },
+  {
+    "id": "51",
+    "category": "Бокалы",
+    "name": "«Хрусталь» · ромбовидная огранка",
+    "sourceName": "\"Хрусталь\" ромбовидная огранка",
+    "sourceRow": 51,
+    "variants": [
+      {
+        "size": "",
+        "price": "По запросу"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-51.jpg",
+    "note": "",
+    "catalogName": "«Хрусталь» · ромбовидная огранка",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 15"
+  },
+  {
+    "id": "52",
+    "category": "Бокалы",
+    "name": "Коллекция «Роулинг»",
+    "sourceName": "\"Роулинг\"",
+    "sourceRow": 52,
+    "variants": [
+      {
+        "size": "",
+        "price": "По запросу"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/2886.jpg",
+    "catalogName": "Набор бокалов \"Роулинг\" пыльно-розовых",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/bokaly-drf-knl-afa-nmq/2886",
+    "photoSource": "https://cdn.frents.ru/ameli-rental/ameli-rental/c02c2ca0-a52f-4c4b-8aea-173613acbbf5_temp_image.jpg",
+    "note": "На фото пример коллекции. Состав и стоимость уточняются."
+  },
+  {
+    "id": "53",
+    "category": "Бокалы",
+    "name": "«Санд» · вино",
+    "sourceName": "\"Санд\" вино",
+    "sourceRow": 53,
+    "variants": [
+      {
+        "size": "22 см",
+        "price": "350 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-53.jpg",
+    "note": "",
+    "catalogName": "«Санд» · вино",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 19"
+  },
+  {
+    "id": "54",
+    "category": "Бокалы",
+    "name": "«Санд» · флюте",
+    "sourceName": "\"Санд\" флюте",
+    "sourceRow": 54,
+    "variants": [
+      {
+        "size": "22 см",
+        "price": "340 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-54.jpg",
+    "note": "",
+    "catalogName": "«Санд» · флюте",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 19"
+  },
+  {
+    "id": "55",
+    "category": "Бокалы",
+    "name": "«Санд» · стакан",
+    "sourceName": "\"Санд\" стакан",
+    "sourceRow": 55,
+    "variants": [
+      {
+        "size": "10 см",
+        "price": "320 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-55.jpg",
+    "note": "",
+    "catalogName": "«Санд» · стакан",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 19"
+  },
+  {
+    "id": "58",
+    "category": "Тарелки",
+    "name": "Тарелка «Барто»",
+    "sourceName": "Тарелка \"Барто\"",
+    "sourceRow": 58,
+    "variants": [
+      {
+        "size": "35 см",
+        "price": "950 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-58.jpg",
+    "catalogName": "Тарелка «Барто»",
+    "catalogUrl": "https://catalog.ameli-rental.ru/catalog/tarelki-oir-djg/5824",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 21",
+    "note": ""
+  },
+  {
+    "id": "59",
+    "category": "Тарелки",
+    "name": "Тарелка «Вейв»",
+    "sourceName": "Тарелка \"Вейв\"",
+    "sourceRow": 59,
+    "variants": [
+      {
+        "size": "30 см",
+        "price": "1 200 ₽"
+      },
+      {
+        "size": "25,5 см",
+        "price": "990 ₽"
+      },
+      {
+        "size": "20 см",
+        "price": "770 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-59.jpg",
+    "note": "",
+    "catalogName": "Тарелка «Вейв»",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 24"
+  },
+  {
+    "id": "60",
+    "category": "Тарелки",
+    "name": "Тарелка «Мистраль» цветная, без каймы",
+    "sourceName": "Тарелка \"Мистраль\" цветная без каймы",
+    "sourceRow": 60,
+    "variants": [
+      {
+        "size": "32 см",
+        "price": "720 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-60.jpg",
+    "note": "Диаметр подтвердим при заказе.",
+    "catalogName": "Тарелка «Мистраль» цветная, без каймы",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 22"
+  },
+  {
+    "id": "61",
+    "category": "Тарелки",
+    "name": "Тарелка «Мистраль» прозрачная, с каймой",
+    "sourceName": "Тарелка \"Мистраль\" прозрачная с каймой",
+    "sourceRow": 61,
+    "variants": [
+      {
+        "size": "32 см",
+        "price": "По запросу"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-61.jpg",
+    "note": "На фото деталь прозрачной тарелки с золотой каймой. Диаметр подтвердим при заказе.",
+    "catalogName": "Тарелка «Мистраль» прозрачная, с каймой",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 23"
+  },
+  {
+    "id": "62",
+    "category": "Тарелки",
+    "name": "Тарелка «Френдли»",
+    "sourceName": "Тарелка \"Френдли\"",
+    "sourceRow": 62,
+    "variants": [
+      {
+        "size": "",
+        "price": "По запросу"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-62.jpg",
+    "note": "",
+    "catalogName": "Тарелка «Френдли»",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 25"
+  },
+  {
+    "id": "63",
+    "category": "Тарелки",
+    "name": "Тарелка «Фигурный край»",
+    "sourceName": "Тарелка \"Фигурный край\"",
+    "sourceRow": 63,
+    "variants": [
+      {
+        "size": "33 см",
+        "price": "1 450 ₽"
+      },
+      {
+        "size": "26 см",
+        "price": "1 280 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-63.jpg",
+    "note": "",
+    "catalogName": "Тарелка «Фигурный край»",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 27"
+  },
+  {
+    "id": "64",
+    "category": "Тарелки",
+    "name": "Тарелка «Голубая кайма»",
+    "sourceName": "Тарелка \"Голубая кайма\"",
+    "sourceRow": 64,
+    "variants": [
+      {
+        "size": "26 см",
+        "price": "1 050 ₽"
+      },
+      {
+        "size": "21 см",
+        "price": "820 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-64.jpg",
+    "note": "",
+    "catalogName": "Тарелка «Голубая кайма»",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 27"
+  },
+  {
+    "id": "67",
+    "category": "Приборы",
+    "name": "«Веддинг классик» · вилки",
+    "sourceName": "\"Веддинг классик\" вилки",
+    "sourceRow": 67,
+    "variants": [
+      {
+        "size": "Столовые",
+        "price": "235 ₽"
+      },
+      {
+        "size": "Десертные",
+        "price": "185 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-67.jpg",
+    "note": "На фото вилки и ножи коллекции. Цена за одну вилку.",
+    "catalogName": "«Веддинг классик» · вилки",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 29"
+  },
+  {
+    "id": "68",
+    "category": "Приборы",
+    "name": "«Веддинг классик» · ножи",
+    "sourceName": "\"Веддинг классик\" нож",
+    "sourceRow": 68,
+    "variants": [
+      {
+        "size": "Столовые",
+        "price": "230 ₽"
+      },
+      {
+        "size": "Десертные",
+        "price": "180 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-68.jpg",
+    "note": "На фото вилки и ножи коллекции. Цена за один нож.",
+    "catalogName": "«Веддинг классик» · ножи",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 29"
+  },
+  {
+    "id": "69",
+    "category": "Приборы",
+    "name": "«Си вью» · вилки",
+    "sourceName": "\"Си вью\" вилки",
+    "sourceRow": 69,
+    "variants": [
+      {
+        "size": "Столовые",
+        "price": "300 ₽"
+      },
+      {
+        "size": "Десертные",
+        "price": "260 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-69.jpg",
+    "note": "На фото вилки и ножи коллекции. Цена за одну вилку.",
+    "catalogName": "«Си вью» · вилки",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 31"
+  },
+  {
+    "id": "70",
+    "category": "Приборы",
+    "name": "«Си вью» · ножи",
+    "sourceName": "\"Си вью\" ножи",
+    "sourceRow": 70,
+    "variants": [
+      {
+        "size": "Столовые",
+        "price": "300 ₽"
+      },
+      {
+        "size": "Десертные",
+        "price": "260 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-70.jpg",
+    "note": "На фото вилки и ножи коллекции. Цена за один нож.",
+    "catalogName": "«Си вью» · ножи",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 31"
+  },
+  {
+    "id": "71",
+    "category": "Приборы",
+    "name": "«Эко» · вилки",
+    "sourceName": "\"Эко\" вилки",
+    "sourceRow": 71,
+    "variants": [
+      {
+        "size": "20,8 см",
+        "price": "135 ₽"
+      },
+      {
+        "size": "15,6 см",
+        "price": "130 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-71.jpg",
+    "note": "",
+    "catalogName": "«Эко» · вилки",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 32"
+  },
+  {
+    "id": "72",
+    "category": "Приборы",
+    "name": "«Эко» · ножи",
+    "sourceName": "\"Эко\" ножи",
+    "sourceRow": 72,
+    "variants": [
+      {
+        "size": "22,7 см",
+        "price": "150 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-72.jpg",
+    "note": "",
+    "catalogName": "«Эко» · ножи",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 32"
+  },
+  {
+    "id": "73",
+    "category": "Приборы",
+    "name": "«Сапо» · вилки",
+    "sourceName": "\"Сапо\" вилки",
+    "sourceRow": 73,
+    "variants": [
+      {
+        "size": "19 см",
+        "price": "300 ₽"
+      },
+      {
+        "size": "Второй размер",
+        "price": "290 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-73.jpg",
+    "note": "Размер второй вилки уточняется при заказе.",
+    "catalogName": "«Сапо» · вилки",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 33"
+  },
+  {
+    "id": "74",
+    "category": "Приборы",
+    "name": "«Сапо» · ножи",
+    "sourceName": "\"Сапо\" ножи",
+    "sourceRow": 74,
+    "variants": [
+      {
+        "size": "21 см",
+        "price": "340 ₽"
+      },
+      {
+        "size": "20 см",
+        "price": "330 ₽"
+      }
+    ],
+    "customColor": false,
+    "photo": "assets/pdf-74.jpg",
+    "note": "",
+    "catalogName": "«Сапо» · ножи",
+    "photoSource": "AMELI_КП_посуда и текстиль.pdf, страница 33"
+  }
+]
